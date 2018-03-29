@@ -9,13 +9,15 @@
     }
 }
 
+
 <h2>Index</h2>
 <p>
     @{
         var createAttributes = new Dictionary<string, object>();
         createAttributes.Add("Id", "postCreateForm");
     }
-    @using (Html.BeginForm("Create", "Folder", FormMethod.Post, createAttributes)) {
+    @using (Html.BeginForm("Create", "Folder", FormMethod.Post, createAttributes))
+    {
         @Html.Hidden("folderName", null)
     }
 
@@ -52,14 +54,16 @@
             @Html.Hidden("actionParameter", null)
             @foreach (var item in Model)
             {
+                
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.name)
+                    <td style="align-content:center">
+                        <img src="~/images/Filetype.png" style="width:50px;height:50px" /><br />
+                       @Html.DisplayFor(modelItem => item.name)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.date)
+                    <td style="vertical-align:middle">
+                       @Html.DisplayFor(modelItem => item.date)
                     </td>
-                    <td>
+                    <td style="vertical-align:middle">
                         <button type="button" id="r+@item._id" name="@item.name" onclick="renameFile(this.id, this.name)">Rename</button>
                         <button type="button" id="d+@item._id" name="@item.name" onclick="deleteFile(this.id, this.name)">Delete</button>
                         @if (item.type.Equals("file"))
@@ -68,7 +72,7 @@
                             <button type="button" id="m+@item._id" onclick="">Copy</button>
                         }
                     </td>
-                    <td>
+                    <td style="vertical-align:middle">
                         @Html.DisplayFor(modelItem => item.date)
                     </td>
                 </tr>
