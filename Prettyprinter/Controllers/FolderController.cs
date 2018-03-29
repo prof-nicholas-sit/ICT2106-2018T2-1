@@ -34,20 +34,44 @@ namespace Prettyprinter.Controllers
         }
 
         // GET: Folder
-        public ActionResult Index()
+        public ActionResult Index(String param,String id)
         {
+            var path = "";
             //System.Diagnostics.Debug.WriteLine("*** HAHA"+ HttpContext.Request.Path.ToString(), "HAHA");
-            if (HttpContext.Session.GetString("Path") == null)
-                HttpContext.Session.SetString("Path", "root");
-            var path = HttpContext.Session.GetString("Path");
+            if (String.IsNullOrEmpty(param))
+            {
+                if (HttpContext.Session.GetString("Path") == null)
+                    HttpContext.Session.SetString("Path", "root");
+                else
+                    HttpContext.Session.SetString("Path", "root");
+
+            }
+            else
+            {
+                //Append the SESSION PATH
+                var currentPath = HttpContext.Session.GetString("Path") + "/" + param;
+                HttpContext.Session.SetString("Path", currentPath);
+               
+            }
+            path = HttpContext.Session.GetString("Path");
             ViewBag.Path = path;
+
             return View(folderGateway.SelectAll(path));
+
         }
 
+
         // POST: Folder/Create
-        public ActionResult Create(string folderName)
+        public ActionResult Create(string folderName,String theParentID)
         {
             string parentId = HttpContext.Session.GetString("Path");
+
+            //This is the part im abit confused
+            System.Diagnostics.Debug.WriteLine("*** HAHA" + theParentID, "HAHA");
+            if (!String.IsNullOrEmpty(theParentID)) {
+                parentId = theParentID;
+            }
+
             string type = "folder";
             string name = folderName;
             string id = Guid.NewGuid().ToString();
@@ -101,6 +125,11 @@ namespace Prettyprinter.Controllers
             createFolder(createdId, copyPath);
             return RedirectToAction(nameof(Index));
         }
+
+     
+
+
+
 
         // ================================================= FILE SERVER MANAGER METHODS ===================================================
 

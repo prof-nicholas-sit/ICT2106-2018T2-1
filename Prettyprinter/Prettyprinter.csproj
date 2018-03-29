@@ -20,8 +20,4 @@
     <None Include="wwwroot\images\folder_yellow.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Images\" />
-  </ItemGroup>
-
 </Project>

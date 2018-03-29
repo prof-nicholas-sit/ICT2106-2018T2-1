@@ -10,7 +10,7 @@
 }
 
 
-<h3>Root</h3>
+<h3 style="text-transform:uppercase">@ViewBag.Path</h3>
 <p>
     @{
         var createAttributes = new Dictionary<string, object>();
@@ -56,30 +56,42 @@
             @Html.Hidden("actionParameter", null)
             @foreach (var item in Model)
             {
-                <tr>
-                    <td style="align-content:center">
-                        <img src="~/images/folder.png" style="width:50px;height:50px" /> &nbsp;
-                       @Html.DisplayFor(modelItem => item.name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.date)
-                    </td>
-                    <td style="vertical-align:middle">
-                        <div style="text-transform:uppercase"> @Html.DisplayFor(modelItem => item.type)</div>
-                    </td>
-                    <td style="vertical-align:middle">
-                        <button type="button" id="r+@item._id" name="@item.name" onclick="renameFile(this.id, this.name)">Rename</button>
-                        <button type="button" id="d+@item._id" name="@item.name" onclick="deleteFile(this.id, this.name)">Delete</button>
-                        @if (item.type.Equals("file"))
-                        {
-                            <button type="button" id="m+@item._id" onclick="">Move</button>
-                            <button type="button" id="m+@item._id" onclick="">Copy</button>
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.date)
-                    </td>
-                </tr>
+        <tr>
+            <td style="align-content:center">
+                @if (item.type.Equals("folder"))
+    {
+            <img src="~/images/folder.png" style="width:50px;height:50px" />
+}
+else
+{
+            <img src="~/images/Filetype.png" style="width:50px;height:50px" />}
+                &nbsp;
+
+                @Html.ActionLink(item.name, "Index", "Folder", new { @param = item.name}, null)
+
+
+
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.parentId)
+            </td>
+            <td style="vertical-align:middle">
+                <div style="text-transform:uppercase"> @Html.DisplayFor(modelItem => item.type)</div>
+            </td>
+            <td style="vertical-align:middle">
+                <button type="button" id="r+@item._id" name="@item.name" onclick="renameFile(this.id, this.name)">Rename</button>
+                <button type="button" id="d+@item._id" name="@item.name" onclick="deleteFile(this.id, this.name)">Delete</button>
+                @if (item.type.Equals("file"))
+        {
+            <button type="button" id="m+@item._id" onclick="">Move</button>
+            <button type="button" id="m+@item._id" onclick="">Copy</button>
+}
+            </td>
+            <td style="vertical-align:middle">
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+        </tr>
             }
         }
         @{
