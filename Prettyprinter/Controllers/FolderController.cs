@@ -50,7 +50,8 @@ namespace Prettyprinter.Controllers
             folder.date = dateNow;
 
             folderGateway.CreateFile(folder);
-
+            createFolder(parentId, id);
+            
             return RedirectToAction(nameof(Index));
         }
 
@@ -95,10 +96,7 @@ namespace Prettyprinter.Controllers
         {
             String pathToFile = serverPath + @"\" + file + ".txt";
             List<String> lines = System.IO.File.ReadAllLines(pathToFile).ToList();
-            foreach (String line in lines)
-            {
-                Console.WriteLine(line);
-            }
+        
         }
 
         //GET ALL FOLDERS
@@ -109,12 +107,11 @@ namespace Prettyprinter.Controllers
 
             foreach (String line in AllEntries)
             {
-                String folderName = line;
-                folderName = folderName.Replace(pathToFile + @"\", "");
-
-                Console.WriteLine(folderName);
+                String folderId = line;
+                folderId = folderId.Replace(pathToFile + @"\", "");
+                System.Diagnostics.Debug.WriteLine("*** HAHA111 - " + folderId, "HAHA");
             }
-            Console.WriteLine("\n");
+        
 
         }
 
@@ -143,33 +140,35 @@ namespace Prettyprinter.Controllers
         }
 
         //CREATE A NEW FOLDER
-        public static Boolean createFolder(String location, String folderName)
+        public static Boolean createFolder(String location, String folderId)
         {
-            Directory.CreateDirectory(location + @"\" + folderName);
+            String path = serverPath + location;
+            
 
-            String pathToFile = location;
+            String pathToFile = path;
             List<String> AllEntries = Directory.GetDirectories(pathToFile).ToList();
 
-            Console.WriteLine("\n\n");
+           // Console.WriteLine("\n\n");
             foreach (String line in AllEntries)
             {
                 String currentFolder = line;
                 currentFolder = currentFolder.Replace(pathToFile + @"\", "");
-                if (currentFolder.Equals(folderName))
+                if (currentFolder.Equals(folderId))
                 {
+                   
                     return false;
                 }
             }
-
+            Directory.CreateDirectory(path + @"\" + folderId);
             return true;
         }
 
         //CREATE A NEW TXT FILE
-        public static Boolean createFile(String location, String folderName)
+        public static Boolean createFile(String location, String fileId)
         {
             Console.WriteLine("\n");
 
-            String pathToFile = location + @"\" + folderName + ".txt";
+            String pathToFile = serverPath +  location + @"\" + fileId + ".txt";
             if (System.IO.File.Exists(pathToFile))
             {
 
@@ -181,22 +180,22 @@ namespace Prettyprinter.Controllers
         }
 
         //DELETE A TXT FILE
-        public static Boolean deleteFile(String location, String fileName)
+        public static Boolean deleteFile(String location, String fileId)
         {
 
-            if (System.IO.File.Exists(location + @"\" + fileName + ".txt"))
+            if (System.IO.File.Exists(serverPath + location + @"\" + fileId + ".txt"))
             {
-                System.IO.File.Delete(location + @"\" + fileName + ".txt");
+                System.IO.File.Delete(serverPath + location + @"\" + fileId + ".txt");
             }
             return true;
         }
 
         //DELETE A FOLDER
-        public static void deleteFolder(String location, String fileName)
+        public static void deleteFolder(String location, String fileId)
         {
             try
             {
-                var dir = new DirectoryInfo(location + @"\" + fileName);
+                var dir = new DirectoryInfo(serverPath + location + @"\" + fileId);
                 dir.Attributes = dir.Attributes & ~FileAttributes.ReadOnly;
                 dir.Delete(true);
 

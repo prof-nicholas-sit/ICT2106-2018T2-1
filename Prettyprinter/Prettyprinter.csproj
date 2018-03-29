@@ -13,4 +13,15 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\images\filetext.png" />
+    <None Include="wwwroot\images\Filetype.png" />
+    <None Include="wwwroot\images\folder.png" />
+    <None Include="wwwroot\images\folder_yellow.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Images\" />
+  </ItemGroup>
+
 </Project>
