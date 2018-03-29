@@ -15,7 +15,7 @@ namespace Prettyprinter.Controllers
     public class FolderController : Controller
     {
         public FolderGateway folderGateway;
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
         private static String serverPath = @"2107 File Server";
         public FolderController(ApplicationDbContext context)
         {
@@ -237,12 +237,21 @@ namespace Prettyprinter.Controllers
         }
 
 
+        // MOVE FROM ONE PATH TO ANTOHER
+        // add to new place
+        // Remove current one
+        
+        public static Boolean MoveFile(String location, String newLocation, String oldName)
+        {
+            if (!System.IO.File.Exists(serverPath + newLocation + @"\" + oldName + ".txt"))
+            {
 
+                System.IO.File.Move(serverPath + location + @"\" + oldName + ".txt", serverPath + newLocation + @"\" + oldName + ".txt");
+                return true;
 
-
-
-
-
+            }
+            return false;
+        }
 
 
     }
