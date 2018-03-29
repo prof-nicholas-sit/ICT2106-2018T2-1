@@ -61,6 +61,7 @@ namespace Prettyprinter.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             folderGateway.DeleteFile(id);
+            deleteFile(HttpContext.Session.GetString("serverPath"), id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -69,7 +70,24 @@ namespace Prettyprinter.Controllers
             return (folderGateway.SelectById(id) != null);
         }
 
+        // POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Move(string moveId, string movePath)
+        {
+            folderGateway.MoveFile(moveId, movePath);
+            return RedirectToAction(nameof(Index));
+        }
 
+        // POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Copy(string copyId, string copyPath)
+        {
+            string createdId = folderGateway.CopyFile(copyId, copyPath);
+            createFolder(createdId, copyPath);
+            return RedirectToAction(nameof(Index));
+        }
 
         // ================================================= FILE SERVER MANAGER METHODS ===================================================
 
@@ -144,7 +162,6 @@ namespace Prettyprinter.Controllers
             Directory.CreateDirectory(path + @"\" + folderId);
             return true;
         }
-
 
         //CREATE A NEW TXT FILE
         public static Boolean createFile(String location, String fileId)

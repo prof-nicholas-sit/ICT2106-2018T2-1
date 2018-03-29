@@ -16,8 +16,7 @@
         var createAttributes = new Dictionary<string, object>();
         createAttributes.Add("Id", "postCreateForm");
     }
-    @using (Html.BeginForm("Create", "Folder", FormMethod.Post, createAttributes))
-    {
+    @using (Html.BeginForm("Create", "Folder", FormMethod.Post, createAttributes)) {
         @Html.Hidden("folderName", null)
     }
 
@@ -57,14 +56,13 @@
             @Html.Hidden("actionParameter", null)
             @foreach (var item in Model)
             {
-                
                 <tr>
                     <td style="align-content:center">
                         <img src="~/images/folder.png" style="width:50px;height:50px" /> &nbsp;
                        @Html.DisplayFor(modelItem => item.name)
                     </td>
-                    <td style="vertical-align:middle">
-                       @Html.DisplayFor(modelItem => item.date)
+                    <td>
+                        @Html.DisplayFor(modelItem => item.date)
                     </td>
                     <td style="vertical-align:middle">
                         <div style="text-transform:uppercase"> @Html.DisplayFor(modelItem => item.type)</div>
@@ -78,19 +76,39 @@
                             <button type="button" id="m+@item._id" onclick="">Copy</button>
                         }
                     </td>
-                    <td style="vertical-align:middle">
+                    <td>
                         @Html.DisplayFor(modelItem => item.date)
                     </td>
                 </tr>
             }
         }
         @{
-            var delAttributes = new Dictionary<string, object>();
-            delAttributes.Add("Id", "postDeleteForm");
+            var deleteAttributes = new Dictionary<string, object>();
+            deleteAttributes.Add("Id", "postDeleteForm");
         }
-        @using (Html.BeginForm("Delete", "Folder", FormMethod.Post, delAttributes))
+        @using (Html.BeginForm("Delete", "Folder", FormMethod.Post, deleteAttributes))
         {
             @Html.Hidden("deleteId", null)
+        }
+
+        @{
+            var moveAttributes = new Dictionary<string, object>();
+            moveAttributes.Add("Id", "postMoveForm");
+        }
+        @using (Html.BeginForm("Move", "Folder", FormMethod.Post, moveAttributes))
+        {
+            @Html.Hidden("moveId", null)
+            @Html.Hidden("movePath", null)
+        }
+
+        @{
+            var copyAttributes = new Dictionary<string, object>();
+            copyAttributes.Add("Id", "postCopyForm");
+        }
+        @using (Html.BeginForm("Copy", "Folder", FormMethod.Post, moveAttributes))
+        {
+            @Html.Hidden("copyId", null)
+            @Html.Hidden("copyPath", null)
         }
 
     </tbody>
@@ -122,6 +140,42 @@
             var hiddenId = document.getElementById("deleteId");
             hiddenId.value = id.substring(2);
             document.getElementById("postDeleteForm").submit();
+        }
+    }
+    function moveFile(id, fileName) {
+        // prompt user for new filepath
+        var newFilename = prompt("Input a new fileName path to move to: ");
+
+        // proceed if user input something
+        if (newFilename != 0 && newFilename != "") {
+            // confirmation to proceed
+            var fileName = confirm("Are you sure you want to move the file - " + fileName + " ?");
+            if (fileName == true) {
+                // get the value of the moce element
+                var hiddenPath = document.getElementById("movePath");
+                hiddenPath.value = newFilename;
+                var hiddenId = document.getElementById("moveId");
+                hiddenId.value = id;
+                document.getElementById("postMoveForm").submit();
+            }
+        }
+    }
+    function copyFile(id, fileName) {
+        // prompt user for new filepath
+        var newFilename = prompt("Input a new fileName path to copy to: ");
+
+        // proceed if user input something
+        if (newFilename != 0 && newFilename != "") {
+            // confirmation to proceed
+            var fileName = confirm("Are you sure you want to copy the file - " + fileName + " ?");
+            if (fileName == true) {
+                // get the value of the moce element
+                var hiddenPath = document.getElementById("copyPath");
+                hiddenPath.value = newFilename;
+                var hiddenId = document.getElementById("copyId");
+                hiddenId.value = id;
+                document.getElementById("postCopyForm").submit();
+            }
         }
     }
 </script>
