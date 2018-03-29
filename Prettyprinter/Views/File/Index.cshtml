@@ -42,7 +42,7 @@
                 <td>
                     <button type="button" id="r+@item._id" name="@item.name" onclick="renameFile(this.id, this.name)">Rename</button> 
                     <button type="button" id="d+@item._id" name="@item.name" onclick="deleteFile(this.id, this.name)">Delete</button> 
-                    <button type="button" id="m+@item._id" onclick="">Move</button>
+                    <button type="button" id="m+@item._id" name="@item.name" onclick="moveFile(this.id, this.name)">onclick="">Move</button>
                 </td>
             </tr>
     }
@@ -78,4 +78,24 @@
             document.getElementById("postDeleteForm").submit();
         }
     }
+
+    function moveFile(id, fileName) {
+        // prompt user for new filepath
+        var newFilename = prompt("Input a new fileName path: ");
+
+        // proceed if user input something
+        if (newFilename != 0 && newFilename != "") {
+            // confirmation to proceed
+            var fileName = confirm("Are you sure you want to move the file - " + fileName + " ?");
+            if (fileName == true) {
+                // get the value of the moce element
+                var hiddenAction = document.getElementById("move");
+                hiddenAction.value = "moves"
+                hiddenInput.value = newFilename;
+                document.getElementById("postMoveForm").submit();
+            }
+        }
+    }
+
+
 </script>

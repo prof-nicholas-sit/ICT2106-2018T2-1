@@ -15,8 +15,8 @@ namespace Prettyprinter.Controllers
     public class FolderController : Controller
     {
         public FolderGateway folderGateway;
-        private readonly ApplicationDbContext _context;
-        private static String serverPath = @"2107 File Server\";
+        //private readonly ApplicationDbContext _context;
+        private static String serverPath = @"2107 File Server";
         public FolderController(ApplicationDbContext context)
         {
             folderGateway = new FolderGateway(context);
@@ -26,12 +26,6 @@ namespace Prettyprinter.Controllers
         public ActionResult Index()
         {
             //System.Diagnostics.Debug.WriteLine("*** HAHA"+ HttpContext.Request.Path.ToString(), "HAHA");
-            //HttpContext.Session.SetString("serverPath", HttpContext.Session.GetString("currentUserID"));
-            if (HttpContext.Session.GetString("serverPath") == null)
-                HttpContext.Session.SetString("serverPath", "currentUserID");
-            var serverPath = HttpContext.Session.GetString("serverPath");
-            ViewBag.SeverPath = serverPath;
-
             if (HttpContext.Session.GetString("Path") == null)
                 HttpContext.Session.SetString("Path", "root");
             var path = HttpContext.Session.GetString("Path");
@@ -45,12 +39,10 @@ namespace Prettyprinter.Controllers
             string parentId = HttpContext.Session.GetString("Path");
             string type = "folder";
             string name = folderName;
-            string id = Guid.NewGuid().ToString();
             DateTime dateNow = DateTime.Now;
             AccessController accessController = new AccessController();
             accessController.createMetaData(new MetaData("", name, parentId, type, new string[4], dateNow));
             Folder folder = new Folder();
-            folder._id = id;
             folder.parentId = parentId;
             folder.type = "folder";
             folder.name = name;
@@ -66,10 +58,9 @@ namespace Prettyprinter.Controllers
         // POST: Folder/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string deleteId)
+        public ActionResult DeleteConfirmed(string id)
         {
-            folderGateway.DeleteFile(deleteId);
-            deleteFile(HttpContext.Session.GetString("serverPath"), deleteId);
+            folderGateway.DeleteFile(id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -78,20 +69,22 @@ namespace Prettyprinter.Controllers
             return (folderGateway.SelectById(id) != null);
         }
 
+
+
         // ================================================= FILE SERVER MANAGER METHODS ===================================================
 
         // READ A TXT FILE
-        public static void ReadTextFile(String fileId)
+        public static void ReadTextFile(String file)
         {
-            String pathToFile = serverPath + @"\" + fileId + ".txt";
+            String pathToFile = serverPath + @"\" + file + ".txt";
             List<String> lines = System.IO.File.ReadAllLines(pathToFile).ToList();
         
         }
 
         //GET ALL FOLDERS
-        public static void getAllFolders(String fileId)
+        public static void getAllFolders(String file)
         {
-            String pathToFile = serverPath + fileId;
+            String pathToFile = serverPath + file;
             List<String> AllEntries = Directory.GetDirectories(pathToFile).ToList();
 
             foreach (String line in AllEntries)
@@ -105,31 +98,31 @@ namespace Prettyprinter.Controllers
         }
 
         //GET ALL FILES
-        public static void getAllFiles(String fileId)
+        public static void getAllFiles(String file)
         {
-            String pathToFile = serverPath + fileId;
+            String pathToFile = serverPath + file;
             List<String> AllEntries = Directory.GetFiles(pathToFile).ToList();
 
             foreach (String line in AllEntries)
             {
-                String folderId = line;
-                folderId = folderId.Replace(pathToFile + @"\", "");
+                String folderName = line;
+                folderName = folderName.Replace(pathToFile + @"\", "");
 
-                Console.WriteLine(folderId);
+                Console.WriteLine(folderName);
             }
             Console.WriteLine("\n");
 
         }
 
         //GET PARENT PATH OF FILE/FOLDER
-        public static String getParentOfFile(String fileId)
+        public static String getParentOfFile(String parent)
         {
-            String parentId = Directory.GetParent(fileId).ToString();
-            return parentId;
+            String ParentName = Directory.GetParent(parent).ToString();
+            return ParentName;
         }
 
         //CREATE A NEW FOLDER
-        public static Boolean createFolder(String location, String folderId)
+        public static Boolean createFolder(String location, String folderName)
         {
             String path = serverPath + location;
             
@@ -142,7 +135,7 @@ namespace Prettyprinter.Controllers
             {
                 String currentFolder = line;
                 currentFolder = currentFolder.Replace(pathToFile + @"\", "");
-                if (currentFolder.Equals(folderId))
+                if (currentFolder.Equals(folderName))
                 {
                    
                     return false;
@@ -154,13 +147,14 @@ namespace Prettyprinter.Controllers
 
 
         //CREATE A NEW TXT FILE
-        public static Boolean createFile(String location, String fileId)
+        public static Boolean createFile(String location, String folderName)
         {
             Console.WriteLine("\n");
 
             String pathToFile = serverPath +  location + @"\" + fileId + ".txt";
             if (System.IO.File.Exists(pathToFile))
             {
+
                 return false;
             }
 
@@ -169,7 +163,7 @@ namespace Prettyprinter.Controllers
         }
 
         //DELETE A TXT FILE
-        public static Boolean deleteFile(String location, String fileId)
+        public static Boolean deleteFile(String location, String fileName)
         {
 
             if (System.IO.File.Exists(serverPath + location + @"\" + fileId + ".txt"))
@@ -180,13 +174,14 @@ namespace Prettyprinter.Controllers
         }
 
         //DELETE A FOLDER
-        public static void deleteFolder(String location, String fileId)
+        public static void deleteFolder(String location, String fileName)
         {
             try
             {
                 var dir = new DirectoryInfo(serverPath + location + @"\" + fileId);
                 dir.Attributes = dir.Attributes & ~FileAttributes.ReadOnly;
                 dir.Delete(true);
+
             }
             catch (IOException ex)
             {
@@ -194,35 +189,68 @@ namespace Prettyprinter.Controllers
             }
         }
 
-        //MOVING A TXT FILE FROM ONE PATH TO ANOTHER
-        public static Boolean moveFile(String location, String newLocation, String fileId)
+        //RENAMING A FOLDER
+        public static Boolean renameFolder(String location, String oldName, String newName)
         {
-            if (!System.IO.File.Exists(serverPath + newLocation + @"\" + fileId + ".txt"))
+            if (!System.IO.File.Exists(serverPath + location + @"\" + newName))
             {
-                System.IO.File.Move(serverPath + location + @"\" + fileId + ".txt", serverPath + newLocation + @"\" + fileId + ".txt");
+                Directory.Move(serverPath + location + @"\" + oldName, serverPath + location + @"\" + newName);
                 return true;
+            }
+            return false;
+        }
+
+        //RENAMING A TXT FILE
+        public static Boolean renameFile(String location, String oldName, String newName)
+        {
+            if (!System.IO.File.Exists(serverPath + location + @"\" + newName + ".txt"))
+            {
+                System.IO.File.Move(serverPath + location + @"\" + oldName + ".txt", serverPath + location + @"\" + newName + ".txt");
+                return true;
+            }
+            return false;
+        }
+
+        //MOVING A TXT FILE FROM ONE PATH TO ANOTHER
+        public static Boolean moveFile(String location, String newLocation, String oldName)
+        {
+            if (!System.IO.File.Exists(serverPath + newLocation + @"\" + oldName + ".txt"))
+            {
+                System.IO.File.Move(serverPath + location + @"\" + oldName + ".txt", serverPath + newLocation + @"\" + oldName + ".txt");
+                return true;
+
             }
             return false;
         }
 
         //COPYING A TXT FILE FROM ONE PATH TO ANTOHER
-        public static Boolean copyFile(String location, String newLocation, String fileId)
+        public static Boolean copyFile(String location, String newLocation, String oldName)
         {
-            if (!System.IO.File.Exists(serverPath + newLocation + @"\" + fileId + ".txt"))
+            if (!System.IO.File.Exists(serverPath + newLocation + @"\" + oldName + ".txt"))
             {
-                System.IO.File.Copy(serverPath + location + @"\" + fileId + ".txt", serverPath + newLocation + @"\" + fileId + ".txt");
+                System.IO.File.Copy(serverPath + location + @"\" + oldName + ".txt", serverPath + newLocation + @"\" + oldName + ".txt");
                 return true;
+
             }
             return false;
         }
 
 
+        // MOVE FROM ONE PATH TO ANTOHER
+        // add to new place
+        // Remove current one
+        
+        public static Boolean MoveFile(String location, String newLocation, String oldName)
+        {
+            if (!System.IO.File.Exists(serverPath + newLocation + @"\" + oldName + ".txt"))
+            {
 
+                System.IO.File.Move(serverPath + location + @"\" + oldName + ".txt", serverPath + newLocation + @"\" + oldName + ".txt");
+                return true;
 
-
-
-
-
+            }
+            return false;
+        }
 
 
     }
