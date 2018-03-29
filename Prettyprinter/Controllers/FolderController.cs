@@ -122,7 +122,7 @@ namespace Prettyprinter.Controllers
         }
 
         //CREATE A NEW FOLDER
-        public static Boolean createFolder(String location, String folderName)
+        public static Boolean createFolder(String location, String folderId)
         {
             String path = serverPath + location;
             
@@ -135,7 +135,7 @@ namespace Prettyprinter.Controllers
             {
                 String currentFolder = line;
                 currentFolder = currentFolder.Replace(pathToFile + @"\", "");
-                if (currentFolder.Equals(folderName))
+                if (currentFolder.Equals(folderId))
                 {
                    
                     return false;
@@ -147,7 +147,7 @@ namespace Prettyprinter.Controllers
 
 
         //CREATE A NEW TXT FILE
-        public static Boolean createFile(String location, String folderName)
+        public static Boolean createFile(String location, String fileId)
         {
             Console.WriteLine("\n");
 
@@ -163,7 +163,7 @@ namespace Prettyprinter.Controllers
         }
 
         //DELETE A TXT FILE
-        public static Boolean deleteFile(String location, String fileName)
+        public static Boolean deleteFile(String location, String fileId)
         {
 
             if (System.IO.File.Exists(serverPath + location + @"\" + fileId + ".txt"))
@@ -174,7 +174,7 @@ namespace Prettyprinter.Controllers
         }
 
         //DELETE A FOLDER
-        public static void deleteFolder(String location, String fileName)
+        public static void deleteFolder(String location, String fileId)
         {
             try
             {
