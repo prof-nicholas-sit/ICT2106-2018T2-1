@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Prettyprinter.Models.Files>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.ActionLink("Name", "Index", "Files", new { sortName = ViewBag.sortName == null ? 1 : ViewBag.sortName })
+                </th>
+                <th>
+                    Last Modified
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@{
+    var attributes = new Dictionary<string, object>();
+    attributes.Add("Id", "postActionForm");
+}
+@using (Html.BeginForm("Index", "Files", FormMethod.Post, attributes))
+{
+    @Html.Hidden("id", null)
+    @Html.Hidden("action", null)
+    @Html.Hidden("actionParameter", null)
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td>
+                    <button type="button" id="r+@item._id" name="@item.name" onclick="renameFile(this.id, this.name)">Rename</button> 
+                    <button type="button" id="d+@item._id" name="@item.name" onclick="deleteFile(this.id, this.name)">Delete</button> 
+                    <button type="button" id="m+@item._id" onclick="">Move</button>
+                </td>
+            </tr>
+    }
+}
+@{
+    var delAttributes = new Dictionary<string, object>();
+    delAttributes.Add("Id", "postDeleteForm");
+}
+@using (Html.BeginForm("Delete", "Files", FormMethod.Post, delAttributes))
+{
+    @Html.Hidden("deleteId", null)
+}
+</tbody>
+</table>
+<script type="text/javascript">
+    function renameFile(id, originalFileName){
+        var fileName = prompt("What would you like to rename the file to?", originalFileName);
+        if (fileName != null && fileName != "") {
+            var hiddenId = document.getElementById("id");
+            hiddenId.value = id.substring(2);
+            var hiddenAction = document.getElementById("action");
+            hiddenAction.value = "rename"
+            var hiddenInput = document.getElementById("actionParameter");
+            hiddenInput.value = fileName;
+            document.getElementById("postActionForm").submit();
+        }
+    }
+    function deleteFile(id, fileName) {
+        var fileName = confirm("Are you sure you want to delete the file - " + fileName + " ?");
+        if (fileName == true) {
+            var hiddenId = document.getElementById("deleteId");
+            hiddenId.value = id.substring(2);
+            document.getElementById("postDeleteForm").submit();
+        }
+    }
+</script>
