@@ -7,8 +7,8 @@ namespace DBLayer.DAL
 {
     public class DataGateway<T> : IDataGateway<T> where T : class 
     {
-        private DbObj db;
-        private GenericSet<T> data;
+        protected DbObj db;
+        protected GenericSet<T> data;
 
         public DataGateway(DbObj dbObj)
         {
@@ -37,9 +37,9 @@ namespace DBLayer.DAL
             data.RegisterDirty(obj);
         }
 
-        public void Delete(string id)
+        public void Delete(T obj)
         {
-            data.RegisterRemoved(id);
+            data.RegisterRemoved(obj);
         }
 
         public void Save()

@@ -21,35 +21,48 @@ namespace DBLayer
             var db1 = new DbObj();
             var db2 = new DbObj();
             var accGateway = new AccountGateway(db1);
-            var fileGateway = new DataGateway<ItemModel>(db2);
+            var fileGateway = new ItemGateway(db2);
 
-            // 0: nothing; 1: create; 2: read; 3: update; 4: delete; 5: select by ID, 6: get account model by email
-            int demo = 6;
-            string email = "ryan@email.com";
-
+            // 0: whatever you want to test; 1: create; 2: read; 3: update; 4: delete; 5: select by ID, 6: get account model by email
+            // 7 : Create file
+            int demo = 0;
+            string email = "caifeng@email.com";
+            ObjectId objId;
+            AccountModel acc;
+            
             switch (demo)
             {
+                case 0:
+                    // TEST ANYTHING HERE
+                    objId = ObjectId.GenerateNewId();
+                    AccountModel testAcc = new AccountModel(objId, "Ng Cai Feng", "Mr",
+                        "caifeng@email.com", "password1", DateTime.Now, true, "", "Bio");
+                    
+                    accGateway.Insert(testAcc);
+
+                    testAcc.Bio = "ABC";
+                    testAcc.Name = "UPDATED";
+                    accGateway.Update(testAcc);
+                    // accGateway.Delete(testAcc);
+                    
+                    accGateway.Save();
+                    break;
                 case 1:
                     // CREATE
-                    ObjectId id1 = ObjectId.GenerateNewId();
-                    accGateway.Insert(new AccountModel(id1, "Ng Cai Feng", "Mr",
+                    objId = ObjectId.GenerateNewId();
+                    accGateway.Insert(new AccountModel(objId, "Ng Cai Feng", "Mr",
                         "caifeng@email.com", "password1", DateTime.Now, true, "", "Bio"));
-                    ObjectId id2 = ObjectId.GenerateNewId();
-                    accGateway.Insert(new AccountModel(id2, "Chua Xiang Wei, Jerahmeel", "Mr",
+                    objId = ObjectId.GenerateNewId();
+                    accGateway.Insert(new AccountModel(objId, "Chua Xiang Wei, Jerahmeel", "Mr",
                         "jerry@email.com", "password2", DateTime.Now, true, "", "Bio"));
-                    ObjectId id3 = ObjectId.GenerateNewId();
-                    accGateway.Insert(new AccountModel(id3, "Ryan Chia Dong Yi", "Mr",
+                    objId = ObjectId.GenerateNewId();
+                    accGateway.Insert(new AccountModel(objId, "Ryan Chia Dong Yi", "Mr",
                         "ryan@email.com", "password3", DateTime.Now, true, "", "Bio"));
-                    ObjectId id4 = ObjectId.GenerateNewId();
-                    accGateway.Insert(new AccountModel(id4, "Lim Jing Pei", "Ms",
+                    objId = ObjectId.GenerateNewId();
+                    accGateway.Insert(new AccountModel(objId, "Lim Jing Pei", "Ms",
                         "phoebe@test.com", "password4", DateTime.Now, true, "", "Bio"));
                     accGateway.Save();
                     
-                    AccessControlModel asModel = new AccessControlModel(ObjectId.GenerateNewId(), id1.ToString(), true, true );
-                    BsonArray permissionArray = new BsonArray();
-                    permissionArray.Add(asModel.ToBsonDocument());
-                    fileGateway.Insert(new ItemModel(ObjectId.GenerateNewId(), "test.txt", "", 0, DateTime.Now, "", "", permissionArray));
-                    fileGateway.Save();
                     break;
 
                 case 2:
@@ -68,18 +81,26 @@ namespace DBLayer
 
                 case 3:
                     // UPDATE
-                    ObjectId objId = ObjectId.Parse("5a8e6c5fdc25a0bcf64faee3"); // copy ID here
-                    accGateway.Update(new AccountModel(objId, "Bobby Cai Feng Ng", "Mr", "ngcaifeng@email.com", "password1",
-                        DateTime.Now, true, "", "Bio"));
-                    
-                    accGateway.Save();
+                    acc = accGateway.SelectByEmail(email);
+                    if (acc != null)
+                    {
+                        acc.Name = "Bobby Cai Feng Ng";
+                        acc.Title = "Mister";
+
+                        accGateway.Update(acc);
+                        accGateway.Save();
+                    }
 
                     break;
 
                 case 4:
                     // DELETE
-                    accGateway.Delete("5a8e6437dc25a0bc1be8f5d9"); // copy ID here
-                    accGateway.Save();
+                    acc = accGateway.SelectByEmail(email);
+                    if (acc != null)
+                    {
+                        accGateway.Delete(acc);
+                        accGateway.Save();
+                    }
 
                     break;
 
@@ -91,13 +112,23 @@ namespace DBLayer
                 
                 case 6:
                     // SELECT ACCOUNT MODEL BY EMAIL
-                    AccountModel acc = accGateway.SelectByEmail(email);
+                    acc = accGateway.SelectByEmail(email);
                     if (acc != null)
                     {
                         Console.WriteLine("Name of " + email + ": " + acc.Name); 
                         Console.WriteLine("Password of " + email + ": " + acc.Password); 
                     }
 
+                    break;
+                
+                case 7:
+                    // CREATE FILE
+                    AccessControlModel asModel = new AccessControlModel(ObjectId.GenerateNewId(), email, true, true );
+                    BsonArray permissionArray = new BsonArray();
+                    permissionArray.Add(asModel.ToBsonDocument());
+                    fileGateway.Insert(new ItemModel(ObjectId.GenerateNewId(), "test.txt", "", 0, DateTime.Now, "", "", permissionArray));
+                    fileGateway.Save();
+                    
                     break;
             }
 

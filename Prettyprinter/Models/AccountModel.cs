@@ -26,23 +26,23 @@ namespace DBLayer
         [BsonElement(elementName:"_id")]
         public ObjectId ID { get; set; }
         [BsonElement(elementName:"Name")]
-        private string Name { get; set; }
+        public string Name { get; set; }
         [BsonElement(elementName:"Title")]
-        private string Title { get; set; }
+        public string Title { get; set; }
         [BsonElement(elementName:"Email")]
-        private string Email { get; set; }
+        public string Email { get; set; }
         [BsonElement(elementName:"Password")]
-        private string Password { get; set; }
+        public string Password { get; set; }
         [BsonElement(elementName:"Birthday")]
         [BsonRepresentation(BsonType.DateTime)]
-        private DateTime Birthday { get; set; }
+        public DateTime Birthday { get; set; }
         [BsonElement(elementName:"AdminRole")]
         [BsonRepresentation(BsonType.Boolean)]
-        private Boolean AdminRole { get; set; }
+        public Boolean AdminRole { get; set; }
         [BsonElement(elementName:"DisplayPicURL")]
-        private string DisplayPicURL { get; set; }
+        public string DisplayPicURL { get; set; }
         [BsonElement(elementName:"Bio")]
-        private string Bio { get; set; }
+        public string Bio { get; set; }
         
         public override string ToString()
         {

@@ -9,7 +9,7 @@ namespace DBLayer.DAL
         T SelectById(string id);
         void Insert(T obj);
         void Update(T obj);
-        void Delete(string id);
+        void Delete(T obj);
         void Save();
     }
 }

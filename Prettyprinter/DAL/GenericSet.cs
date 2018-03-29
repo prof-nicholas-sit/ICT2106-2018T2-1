@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using MongoDB.Bson;
 
 namespace DBLayer.DAL
 {
@@ -7,15 +9,13 @@ namespace DBLayer.DAL
     {
         internal List<T> NewList { get; }
         internal List<T> DirtyList { get; }
-        internal List<string> RemovedList { get; }
-        // internal List<T> CleanList { get; }
+        internal List<T> RemovedList { get; }
         
         public GenericSet()
         {
             NewList = new List<T>();
             DirtyList = new List<T>();
-            RemovedList = new List<string>();
-            // CleanList = new List<T>();
+            RemovedList = new List<T>();
         }
 
         public void RegisterNew(T obj)
@@ -24,19 +24,32 @@ namespace DBLayer.DAL
             NewList.Add(obj);
         }
 
-        public void RegisterRemoved(string id)
+        public void RegisterRemoved(T obj)
         {
-            RemovedList.Add(id);
+            // remove from dirty list (nothing will happen even if the obj not inside the dirty list)
+            DirtyList.Remove(obj);
+            
+            if (NewList.Contains(obj))
+            {
+                // if obj is newly created, not yet saved in db, then just remove it from new list
+                Console.WriteLine("Delete from new list.");
+                NewList.Remove(obj);
+            }
+            else if (!RemovedList.Contains(obj))
+            {
+                // only add obj into removed list if its not already inside
+                RemovedList.Add(obj);
+            }
         }
 
         public void RegisterDirty(T obj)
         {
-            DirtyList.Add(obj);
+            if (!NewList.Contains(obj) && !RemovedList.Contains(obj))
+            {
+                DirtyList.Add(obj);
+            }
+            // Console.WriteLine("Updating: " + obj.ToBsonDocument()[0]);\
         }
 
-//        public void RegisterClean(T obj)
-//        {
-//            CleanList.Add(obj);
-//        }
     }
 }

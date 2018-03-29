@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 namespace DBLayer
 {
     [BsonIgnoreExtraElements]
-    internal class ItemModel
+    public class ItemModel
     {
         /*
          * _id

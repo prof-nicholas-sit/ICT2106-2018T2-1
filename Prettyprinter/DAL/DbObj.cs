@@ -9,6 +9,7 @@ namespace DBLayer.DAL
 {
     public class DbObj
     {
+        // private const string DbAddress = "mongodb://localhost:27017";
         private const string DbAddress = "mongodb://52.91.110.127:27017";
         private const string DbName = "ICT2106";
 
@@ -211,10 +212,10 @@ namespace DBLayer.DAL
                 }
                 
                 // DELETE
-                foreach (var doc in set.RemovedList)
+                foreach (var doc in set.RemovedList  as List<AccountModel>)
                 {
                     Console.WriteLine("Writing Delete to AccountModel database");
-                    await _bsonuserCollection.DeleteOneAsync(Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(doc)));
+                    await _bsonuserCollection.DeleteOneAsync(Builders<BsonDocument>.Filter.Eq("_id", doc.ID));
                 }
             }
             
@@ -236,10 +237,10 @@ namespace DBLayer.DAL
                 }
                 
                 // DELETE
-                foreach (var doc in set.RemovedList)
+                foreach (var doc in set.RemovedList as List<ItemModel>)
                 {
                     Console.WriteLine("Writing Delete to Files database");
-                    await _bsonfilesCollection.DeleteOneAsync(Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(doc)));
+                    await _bsonfilesCollection.DeleteOneAsync(Builders<BsonDocument>.Filter.Eq("_id", doc.ID));
                 }
             }
             

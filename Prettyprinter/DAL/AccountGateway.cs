@@ -1,4 +1,6 @@
-﻿namespace DBLayer.DAL
+﻿using System;
+
+namespace DBLayer.DAL
 {
     public class AccountGateway : DataGateway<AccountModel>
     {
@@ -18,6 +20,84 @@
             }
 
             return null;
+        }
+
+        public bool SetUserPassword(string email, string pw)
+        {
+            var acc = SelectByEmail(email);
+            if (acc == null) return false;
+            
+            acc.Password = pw;
+            Update(acc);
+            
+            return true;
+        }
+        
+        public bool SetUserBio(string email, string bio)
+        {
+            var acc = SelectByEmail(email);
+            if (acc == null) return false;
+            
+            acc.Bio = bio;
+            Update(acc);
+            
+            return true;
+        }
+        
+        public bool SetUserDisplayPicUrl(string email, string url)
+        {
+            var acc = SelectByEmail(email);
+            if (acc == null) return false;
+            
+            acc.DisplayPicURL = url;
+            Update(acc);
+            
+            return true;
+        }
+        
+        public bool SetUserTitle(string email, string title)
+        {
+            var acc = SelectByEmail(email);
+            if (acc == null) return false;
+            
+            acc.Title = title;
+            Update(acc);
+            
+            return true;
+        }
+        
+        public bool SetUserName(string email, string name)
+        {
+            var acc = SelectByEmail(email);
+            if (acc == null) return false;
+            
+            acc.Name = name;
+            Update(acc);
+            
+            return true;
+        }
+        
+        public bool SetUserBirthDate(string email, int year, int month, int day)
+        {
+            var acc = SelectByEmail(email);
+            if (acc == null) return false;
+            
+            acc.Birthday = new DateTime(year, month, day);
+            Update(acc);
+            
+            return true;
+        }
+
+        public bool DeleteAccount(string email)
+        {
+            var acc = SelectByEmail(email);
+            if (acc == null) return false;
+            
+            // TODO: delete all files belonging to this account
+            // TODO: delete all access controls??
+            Delete(acc);
+
+            return true;
         }
     }
 }
