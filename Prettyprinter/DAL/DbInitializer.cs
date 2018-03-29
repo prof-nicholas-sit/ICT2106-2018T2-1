@@ -11,10 +11,10 @@ namespace Prettyprinter.DAL
         public static void Initialize(ApplicationDbContext context)
         {
             context.Database.EnsureCreated();
-            if (!context.Files.Any())
+            if (!context.File.Any())
             {
                 var file = new File { };
-                context.Files.Add(file);
+                context.File.Add(file);
                 context.SaveChanges();
             }
             if (!context.Folder.Any())

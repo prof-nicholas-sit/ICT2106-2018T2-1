@@ -10,15 +10,15 @@ using Prettyprinter.Models;
 
 namespace Prettyprinter.Controllers
 {
-    public class FilesController : Controller
+    public class FileController : Controller
     {
         public FileGateway dataGateway;
-        public FilesController(ApplicationDbContext context)
+        public FileController(ApplicationDbContext context)
         {
             dataGateway = new FileGateway(context);
         }
 
-        // GET: Files
+        // GET: File
         [HttpGet]
         public ActionResult Index(string folderId, int? sortName)
         {
@@ -53,7 +53,7 @@ namespace Prettyprinter.Controllers
             return NotFound();
         }
 
-        // POST: Files/Delete/5
+        // POST: File/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string deleteId)

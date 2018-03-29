@@ -47,11 +47,11 @@ namespace Prettyprinter.DAL
         {
             if(folderId == null)
             {
-                return data.FromSql("SELECT * FROM Files WHERE parent IS NULL");
+                return data.FromSql("SELECT * FROM [File] WHERE parentId IS NULL");
             }
             else
             {
-                return data.FromSql("SELECT * FROM Files WHERE parent = '" + folderId + "'");
+                return data.FromSql("SELECT * FROM [File] WHERE parentId = '" + folderId + "'");
             }
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,22 +11,25 @@ using Prettyprinter.Models;
 
 namespace Prettyprinter.Controllers
 {
-    public class FoldersController : Controller
+    public class FolderController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public FoldersController(ApplicationDbContext context)
+        public FolderController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Folders
+        // GET: Folder
         public async Task<IActionResult> Index()
         {
+            //System.Diagnostics.Debug.WriteLine("*** HAHA"+ HttpContext.Request.Path.ToString(), "HAHA");
+            var path = HttpContext.Session.GetString("Path");
+            ViewBag.Path = path;
             return View(await _context.Folder.ToListAsync());
         }
 
-        // GET: Folders/Details/5
+        // GET: Folder/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -43,16 +47,16 @@ namespace Prettyprinter.Controllers
             return View(folder);
         }
 
-        // GET: Folders/Create
+        // GET: Folder/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Folders/Create
+        // POST: Folder/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("_id,name,parent,type,date")] Folder folder)
+        public async Task<IActionResult> Create([Bind("_id,name,parentId,type,date")] Folder folder)
         {
             if (ModelState.IsValid)
             {
@@ -63,7 +67,7 @@ namespace Prettyprinter.Controllers
             return View(folder);
         }
 
-        // GET: Folders/Edit/5
+        // GET: Folder/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -79,10 +83,10 @@ namespace Prettyprinter.Controllers
             return View(folder);
         }
 
-        // POST: Folders/Edit/5
+        // POST: Folder/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("_id,name,parent,type,date")] Folder folder)
+        public async Task<IActionResult> Edit(string id, [Bind("_id,name,parentId,type,date")] Folder folder)
         {
             if (id != folder._id)
             {
@@ -112,7 +116,7 @@ namespace Prettyprinter.Controllers
             return View(folder);
         }
 
-        // GET: Folders/Delete/5
+        // GET: Folder/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -130,7 +134,7 @@ namespace Prettyprinter.Controllers
             return View(folder);
         }
 
-        // POST: Folders/Delete/5
+        // POST: Folder/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
