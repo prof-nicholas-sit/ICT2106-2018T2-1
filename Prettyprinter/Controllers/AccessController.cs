@@ -25,5 +25,10 @@ namespace Prettyprinter.Controllers
 
             return result;
         }
+
+        public void createMetaData(MetaData metaData)
+        {
+            System.Diagnostics.Debug.WriteLine("Create MetaData DONE !");
+        }
     }
 }

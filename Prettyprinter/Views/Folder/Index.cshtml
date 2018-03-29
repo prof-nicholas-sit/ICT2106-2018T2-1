@@ -11,7 +11,15 @@
 
 <h2>Index</h2>
 <p>
-    @Html.ActionLink("Create New Folder", "Create", "Folder", new { path = ViewBag.Path }) |
+    @{
+        var createAttributes = new Dictionary<string, object>();
+        createAttributes.Add("Id", "postCreateForm");
+    }
+    @using (Html.BeginForm("Create", "Folder", FormMethod.Post, createAttributes)) {
+        @Html.Hidden("folderName", null)
+    }
+
+    <button type="button" onclick="createFolder()">Create New Folder</button> |
     @Html.ActionLink("Create New File", "Create", "File", new { path = ViewBag.Path, newFile = true })
 </p>
 <table class="table">
@@ -54,7 +62,14 @@
                     <td>
                         <button type="button" id="r+@item._id" name="@item.name" onclick="renameFile(this.id, this.name)">Rename</button>
                         <button type="button" id="d+@item._id" name="@item.name" onclick="deleteFile(this.id, this.name)">Delete</button>
-                        <button type="button" id="m+@item._id" onclick="">Move</button>
+                        @if (item.type.Equals("file"))
+                        {
+                            <button type="button" id="m+@item._id" onclick="">Move</button>
+                            <button type="button" id="m+@item._id" onclick="">Copy</button>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.date)
                     </td>
                 </tr>
             }
@@ -67,9 +82,18 @@
         {
             @Html.Hidden("deleteId", null)
         }
+
     </tbody>
 </table>
 <script type="text/javascript">
+    function createFolder() {
+        var folderName = prompt("What would you like to name the new folder?");
+        if (folderName != null && folderName != "") {
+            var creationPath = document.getElementById("folderName");
+            creationPath.value = folderName;
+            document.getElementById("postCreateForm").submit();
+        }
+    }
     function renameFile(id, originalFileName) {
         var fileName = prompt("What would you like to rename the file to?", originalFileName);
         if (fileName != null && fileName != "") {

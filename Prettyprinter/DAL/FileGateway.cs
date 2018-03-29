@@ -12,18 +12,5 @@ namespace Prettyprinter.DAL
         {
 
         }
-        public new void MoveFile(string fileId, string parentId)
-        {
-            File file = data.Find(fileId);
-            file.parentId = parentId;
-            data.Update(file);
-        }
-        public new void RenameFile(string fileId, string fileName)
-        {
-            File file = data.Find(fileId);
-            file.name = fileName;
-            data.Update(file);
-            base.SaveChanges();
-        }
     }
 }

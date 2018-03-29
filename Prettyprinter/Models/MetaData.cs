@@ -22,6 +22,6 @@ namespace Prettyprinter.Models
             this.type = type;
             this.accessControl = (string[])accessControl.Clone();
             this.date = date;
-    }
+        }
     }
 }

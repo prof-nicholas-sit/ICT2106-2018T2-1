@@ -45,14 +45,7 @@ namespace Prettyprinter.DAL
 
         public IEnumerable<T> SelectAll(string folderId)
         {
-            if(folderId == null)
-            {
-                return data.FromSql("SELECT * FROM [File] WHERE parentId IS NULL");
-            }
-            else
-            {
-                return data.FromSql("SELECT * FROM [File] WHERE parentId = '" + folderId + "'");
-            }
+            return data.FromSql("SELECT * FROM [Folder] WHERE parentId = '" + folderId + "'");
         }
 
         public T SelectById(string fileId)
