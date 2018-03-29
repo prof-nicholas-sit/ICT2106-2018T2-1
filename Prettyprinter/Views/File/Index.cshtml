@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Prettyprinter.Models.Files>
+﻿@model IEnumerable<Prettyprinter.Models.File>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,7 +13,7 @@
     <thead>
         <tr>
                 <th>
-                    @Html.ActionLink("Name", "Index", "Files", new { sortName = ViewBag.sortName == null ? 1 : ViewBag.sortName })
+                    @Html.ActionLink("Name", "Index", "File", new { sortName = ViewBag.sortName == null ? 1 : ViewBag.sortName })
                 </th>
                 <th>
                     Last Modified
@@ -26,7 +26,7 @@
     var attributes = new Dictionary<string, object>();
     attributes.Add("Id", "postActionForm");
 }
-@using (Html.BeginForm("Index", "Files", FormMethod.Post, attributes))
+@using (Html.BeginForm("Index", "File", FormMethod.Post, attributes))
 {
     @Html.Hidden("id", null)
     @Html.Hidden("action", null)
@@ -51,7 +51,7 @@
     var delAttributes = new Dictionary<string, object>();
     delAttributes.Add("Id", "postDeleteForm");
 }
-@using (Html.BeginForm("Delete", "Files", FormMethod.Post, delAttributes))
+@using (Html.BeginForm("Delete", "File", FormMethod.Post, delAttributes))
 {
     @Html.Hidden("deleteId", null)
 }

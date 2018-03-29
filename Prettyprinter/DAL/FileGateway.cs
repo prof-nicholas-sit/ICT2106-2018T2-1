@@ -6,7 +6,7 @@ using Prettyprinter.Models;
 
 namespace Prettyprinter.DAL
 {
-    public class FileGateway : DataGateway<Files>
+    public class FileGateway : DataGateway<File>
     {
         public FileGateway(ApplicationDbContext context) : base(context)
         {
@@ -14,13 +14,13 @@ namespace Prettyprinter.DAL
         }
         public new void MoveFile(string fileId, string parentId)
         {
-            Files file = data.Find(fileId);
-            file.parent = parentId;
+            File file = data.Find(fileId);
+            file.parentId = parentId;
             data.Update(file);
         }
         public new void RenameFile(string fileId, string fileName)
         {
-            Files file = data.Find(fileId);
+            File file = data.Find(fileId);
             file.name = fileName;
             data.Update(file);
             base.SaveChanges();

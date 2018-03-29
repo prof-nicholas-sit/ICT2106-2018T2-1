@@ -11,9 +11,10 @@ namespace Prettyprinter.Models
     {
         [Key]
         public string _id { get; set; }
-        public string name { get; set; }
-        public string parent { get; set; }
+        public string parentId { get; set; }
         public string type { get; set; }
+
+        public string name { get; set; }
         [NotMapped]
         public string[] accessControl { get; set; }
         public DateTime date { get; set; }

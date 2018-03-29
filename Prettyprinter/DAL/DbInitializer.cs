@@ -13,7 +13,7 @@ namespace Prettyprinter.DAL
             context.Database.EnsureCreated();
             if (!context.Files.Any())
             {
-                var file = new Files { };
+                var file = new File { };
                 context.Files.Add(file);
                 context.SaveChanges();
             }

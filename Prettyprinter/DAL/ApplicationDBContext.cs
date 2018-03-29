@@ -19,7 +19,7 @@ namespace Prettyprinter.DAL
             base.OnModelCreating(builder);
         }
 
-        public DbSet<Files> Files { get; set; }
+        public DbSet<File> Files { get; set; }
         public DbSet<Folder> Folder { get; set; }
     }
 }
