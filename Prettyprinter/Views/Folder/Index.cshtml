@@ -10,7 +10,7 @@
 }
 
 
-<h2>Index</h2>
+<h3>Root</h3>
 <p>
     @{
         var createAttributes = new Dictionary<string, object>();
@@ -22,7 +22,7 @@
     }
 
     <button type="button" onclick="createFolder()">Create New Folder</button> |
-    @Html.ActionLink("Create New File", "Create", "File", new { path = ViewBag.Path, newFile = true })
+    @Html.ActionLink("Create New File", "Create", "File", new { path = ViewBag.Path})
 </p>
 <table class="table">
     <thead>
@@ -35,6 +35,9 @@
             </th>
             <th>
                 Type
+            </th>
+            <th>
+                Operations
             </th>
             <th>
                 Date Created
@@ -57,11 +60,14 @@
                 
                 <tr>
                     <td style="align-content:center">
-                        <img src="~/images/Filetype.png" style="width:50px;height:50px" /><br />
+                        <img src="~/images/folder.png" style="width:50px;height:50px" /> &nbsp;
                        @Html.DisplayFor(modelItem => item.name)
                     </td>
                     <td style="vertical-align:middle">
                        @Html.DisplayFor(modelItem => item.date)
+                    </td>
+                    <td style="vertical-align:middle">
+                        <div style="text-transform:uppercase"> @Html.DisplayFor(modelItem => item.type)</div>
                     </td>
                     <td style="vertical-align:middle">
                         <button type="button" id="r+@item._id" name="@item.name" onclick="renameFile(this.id, this.name)">Rename</button>
