@@ -59,7 +59,7 @@ namespace Prettyprinter.Controllers
 
             folderGateway.CreateFile(folder);
             createFolder(parentId, id);
-
+            
             return RedirectToAction(nameof(Index));
         }
 
@@ -85,10 +85,7 @@ namespace Prettyprinter.Controllers
         {
             String pathToFile = serverPath + @"\" + fileId + ".txt";
             List<String> lines = System.IO.File.ReadAllLines(pathToFile).ToList();
-            foreach (String line in lines)
-            {
-                Console.WriteLine(line);
-            }
+        
         }
 
         //GET ALL FOLDERS
@@ -101,10 +98,9 @@ namespace Prettyprinter.Controllers
             {
                 String folderId = line;
                 folderId = folderId.Replace(pathToFile + @"\", "");
-
-                Console.WriteLine(folderId);
+                System.Diagnostics.Debug.WriteLine("*** HAHA111 - " + folderId, "HAHA");
             }
-            Console.WriteLine("\n");
+        
 
         }
 
@@ -135,22 +131,24 @@ namespace Prettyprinter.Controllers
         //CREATE A NEW FOLDER
         public static Boolean createFolder(String location, String folderId)
         {
-            Directory.CreateDirectory(location + @"\" + folderId);
+            String path = serverPath + location;
+            
 
-            String pathToFile = location;
+            String pathToFile = path;
             List<String> AllEntries = Directory.GetDirectories(pathToFile).ToList();
 
-            Console.WriteLine("\n\n");
+           // Console.WriteLine("\n\n");
             foreach (String line in AllEntries)
             {
                 String currentFolder = line;
                 currentFolder = currentFolder.Replace(pathToFile + @"\", "");
                 if (currentFolder.Equals(folderId))
                 {
+                   
                     return false;
                 }
             }
-
+            Directory.CreateDirectory(path + @"\" + folderId);
             return true;
         }
 
@@ -160,7 +158,7 @@ namespace Prettyprinter.Controllers
         {
             Console.WriteLine("\n");
 
-            String pathToFile = location + @"\" + fileId + ".txt";
+            String pathToFile = serverPath +  location + @"\" + fileId + ".txt";
             if (System.IO.File.Exists(pathToFile))
             {
                 return false;
@@ -174,9 +172,9 @@ namespace Prettyprinter.Controllers
         public static Boolean deleteFile(String location, String fileId)
         {
 
-            if (System.IO.File.Exists(location + @"\" + fileId + ".txt"))
+            if (System.IO.File.Exists(serverPath + location + @"\" + fileId + ".txt"))
             {
-                System.IO.File.Delete(location + @"\" + fileId + ".txt");
+                System.IO.File.Delete(serverPath + location + @"\" + fileId + ".txt");
             }
             return true;
         }
@@ -186,7 +184,7 @@ namespace Prettyprinter.Controllers
         {
             try
             {
-                var dir = new DirectoryInfo(location + @"\" + fileId);
+                var dir = new DirectoryInfo(serverPath + location + @"\" + fileId);
                 dir.Attributes = dir.Attributes & ~FileAttributes.ReadOnly;
                 dir.Delete(true);
             }
