@@ -22,5 +22,13 @@ namespace Prettyprinter.DAL
             data.Update(folder);
             base.SaveChanges();
         }
+        public string CopyFile(string fileId, string parentId)
+        {
+            Folder folder = data.Find(fileId);
+            folder.parentId = parentId;
+            folder._id = Guid.NewGuid().ToString();
+            data.Add(folder);
+            return folder._id;
+        }
     }
 }
