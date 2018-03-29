@@ -1,35 +1,125 @@
-﻿body {
+﻿/*CSS FOR COMMENTS please edit here - Daniel*/
+.hiddenForm {
+    display: none
+}
+
+.userProfile {
+    font-family: "Times New Roman", Times, serif;
+    margin-top: 20px;
+    font-size: 14px;
+    margin-bottom: 10px
+}
+
+    .userProfile a {
+        font-weight: bold
+    }
+
+.commentDetails p {
+    font-family: "Lucida Console";
+    margin-top: 20px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: #9c9898
+}
+
+.level0 {
+    margin-left: 40px
+}
+
+.level1 {
+    margin-left: 80px
+}
+
+.level2 {
+    margin-left: 120px
+}
+
+.level3 {
+    margin-left: 160px
+}
+
+.level4 {
+    margin-left: 200px
+}
+
+.level5 {
+    margin-left: 240px
+}
+
+.level6 {
+    margin-left: 280px
+}
+
+.level7 {
+    margin-left: 320px
+}
+
+.level8 {
+    margin-left: 360px
+}
+
+.level9 {
+    margin-left: 400px
+}
+
+
+.actionBar {
+    margin-top: 20px
+}
+
+/*End of Custom*/
+
+body {
+    background-color: oldlace;
     padding-top: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 20px
 }
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
-    padding-right: 15px;
+    padding-right: 15px
 }
 
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;
-    line-height: 1.4;
+    line-height: 1.4
 }
 
 /* Make .svg files in the carousel display properly in older browsers */
 .carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+    width: 100%
 }
 
 /* QR code generator */
 #qrCode {
-    margin: 15px;
+    margin: 15px
 }
 
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */
     .carousel-caption {
-        display: none;
+        display: none
     }
+}
+
+.row {
+    border-bottom-width: 1px;
+    border-bottom-style: inset;
+    border-bottom-color: #d2cece;
+    border-left-style: inset;
+    border-left-width: 1px;
+    border-left-color: lightgray
+}
+
+    .row:hover {
+        border-left-color: chartreuse;
+        border-left-width: 3px
+    }
+
+.form-group {
+    margin-right: 120px
 }

@@ -22,6 +22,10 @@ namespace Prettyprinter
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            //Added for user
+            services.AddMvc().AddSessionStateTempDataProvider();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,12 +41,12 @@ namespace Prettyprinter
             }
 
             app.UseStaticFiles();
-
+            app.UseSession();//added for user
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Comment}/{action=Index}/{id?}");
             });
         }
     }
