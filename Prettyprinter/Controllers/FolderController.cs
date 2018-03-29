@@ -16,10 +16,21 @@ namespace Prettyprinter.Controllers
     {
         public FolderGateway folderGateway;
         //private readonly ApplicationDbContext _context;
-        private static String serverPath = @"2107 File Server";
+        private static String serverPath = @"2107 File Server\";
         public FolderController(ApplicationDbContext context)
         {
             folderGateway = new FolderGateway(context);
+            if (!System.IO.File.Exists(serverPath))
+            {
+                Directory.CreateDirectory(serverPath);
+            }
+            //if (!System.IO.File.Exists(serverPath + HttpContext.Session.GetString("currentUserID"))){
+            //    Directory.CreateDirectory(serverPath + HttpContext.Session.GetString("currentUserID"));
+            //}
+            if (!System.IO.File.Exists(serverPath + "root"))
+            {
+                Directory.CreateDirectory(serverPath + "root");
+            }
         }
 
         // GET: Folder
@@ -39,10 +50,12 @@ namespace Prettyprinter.Controllers
             string parentId = HttpContext.Session.GetString("Path");
             string type = "folder";
             string name = folderName;
+            string id = Guid.NewGuid().ToString();
             DateTime dateNow = DateTime.Now;
             AccessController accessController = new AccessController();
             accessController.createMetaData(new MetaData("", name, parentId, type, new string[4], dateNow));
             Folder folder = new Folder();
+            folder._id = id;
             folder.parentId = parentId;
             folder.type = "folder";
             folder.name = name;
@@ -58,10 +71,10 @@ namespace Prettyprinter.Controllers
         // POST: Folder/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string deleteId)
         {
-            folderGateway.DeleteFile(id);
-            deleteFile(HttpContext.Session.GetString("serverPath"), id);
+            folderGateway.DeleteFile(deleteId);
+            deleteFile(HttpContext.Session.GetString("serverPath"), deleteId);
             return RedirectToAction(nameof(Index));
         }
 
@@ -167,7 +180,6 @@ namespace Prettyprinter.Controllers
         public static Boolean createFile(String location, String fileId)
         {
             Console.WriteLine("\n");
-
             String pathToFile = serverPath +  location + @"\" + fileId + ".txt";
             if (System.IO.File.Exists(pathToFile))
             {
@@ -198,7 +210,6 @@ namespace Prettyprinter.Controllers
                 var dir = new DirectoryInfo(serverPath + location + @"\" + fileId);
                 dir.Attributes = dir.Attributes & ~FileAttributes.ReadOnly;
                 dir.Delete(true);
-
             }
             catch (IOException ex)
             {
@@ -235,7 +246,6 @@ namespace Prettyprinter.Controllers
             {
                 System.IO.File.Move(serverPath + location + @"\" + oldName + ".txt", serverPath + newLocation + @"\" + oldName + ".txt");
                 return true;
-
             }
             return false;
         }

@@ -35,7 +35,11 @@ namespace Prettyprinter.DAL
             db.SaveChanges();
         }
 
-       
+        public virtual void MoveFile(string fileId, string parentId)
+        {
+            data.FromSql("UPDATE File SET path = " + parentId);
+        }
+
         public virtual void RenameFile(string fileId, string fileName)
         {
         }
