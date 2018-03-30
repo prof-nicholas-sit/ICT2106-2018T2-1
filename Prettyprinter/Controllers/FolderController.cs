@@ -126,7 +126,16 @@ namespace Prettyprinter.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-     
+        // POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Rename(string fileId, string fileName)
+        {
+            folderGateway.RenameFile(fileId, fileName);
+            return RedirectToAction(nameof(Index));
+        }
+
+
 
 
 

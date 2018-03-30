@@ -42,6 +42,7 @@ namespace Prettyprinter.DAL
 
         public virtual void RenameFile(string fileId, string fileName)
         {
+        
         }
 
         public IEnumerable<T> SelectAll(string folderId)

@@ -9,12 +9,17 @@ namespace Prettyprinter.DAL
     public class FolderGateway : DataGateway<Folder>
     {
         public FolderGateway(ApplicationDbContext context) : base(context) { }
+        override
         public void MoveFile(string fileId, string parentId)
         {
             Folder folder = data.Find(fileId);
             folder.parentId = parentId;
             data.Update(folder);
+            base.SaveChanges();
+
+
         }
+        override
         public void RenameFile(string fileId, string fileName)
         {
             Folder folder = data.Find(fileId);

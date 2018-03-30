@@ -84,8 +84,8 @@ else
                 <button type="button" id="d+@item._id" name="@item.name" onclick="deleteFile(this.id, this.name)">Delete</button>
                 @if (item.type.Equals("file"))
         {
-            <button type="button" id="m+@item._id" onclick="">Move</button>
-            <button type="button" id="m+@item._id" onclick="">Copy</button>
+            <button type="button" id="@item._id" name="@item.name" onclick="moveFile(this.id, this.name)">Move</button>
+            <button type="button" id="@item._id"name="@item.name"  onclick="copyFile(this.id, this.name)">Copy</button>
 }
             </td>
             <td style="vertical-align:middle">
