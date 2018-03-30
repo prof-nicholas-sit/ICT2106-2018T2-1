@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -129,9 +130,10 @@ namespace Prettyprinter.Controllers
         // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Rename(string fileId, string fileName)
+        public ActionResult Rename(string renameId, string newName)
         {
-            folderGateway.RenameFile(fileId, fileName);
+            
+            folderGateway.RenameFile(renameId, newName);
             return RedirectToAction(nameof(Index));
         }
 

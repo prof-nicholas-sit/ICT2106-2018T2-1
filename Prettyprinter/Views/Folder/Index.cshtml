@@ -46,28 +46,28 @@
     </thead>
     <tbody>
         @{
-            var attributes = new Dictionary<string, object>();
-            attributes.Add("Id", "postActionForm");
+        var attributes = new Dictionary<string, object>();
+        attributes.Add("Id", "postActionForm");
         }
         @using (Html.BeginForm("Index", "Folder", FormMethod.Post, attributes))
-        {
-            @Html.Hidden("id", null)
-            @Html.Hidden("action", null)
-            @Html.Hidden("actionParameter", null)
-            @foreach (var item in Model)
-            {
+    {
+        @Html.Hidden("id", null)
+        @Html.Hidden("action", null)
+        @Html.Hidden("actionParameter", null)
+        @foreach (var item in Model)
+    {
         <tr>
             <td style="align-content:center">
                 @if (item.type.Equals("folder"))
-    {
-            <img src="~/images/folder.png" style="width:50px;height:50px" />
-}
-else
-{
+            {
+                <img src="~/images/folder.png" style="width:50px;height:50px" />
+        }
+        else
+        {
             <img src="~/images/Filetype.png" style="width:50px;height:50px" />}
                 &nbsp;
 
-                @Html.ActionLink(item.name, "Index", "Folder", new { @param = item.name}, null)
+                @Html.ActionLink(item.name, "Index", "Folder", new { @param = item.name }, null)
 
 
 
@@ -83,45 +83,57 @@ else
                 <button type="button" id="r+@item._id" name="@item.name" onclick="renameFile(this.id, this.name)">Rename</button>
                 <button type="button" id="d+@item._id" name="@item.name" onclick="deleteFile(this.id, this.name)">Delete</button>
                 @if (item.type.Equals("file"))
-        {
-            <button type="button" id="@item._id" name="@item.name" onclick="moveFile(this.id, this.name)">Move</button>
-            <button type="button" id="@item._id"name="@item.name"  onclick="copyFile(this.id, this.name)">Copy</button>
-}
+            {
+                <button type="button" id="@item._id" name="@item.name" onclick="moveFile(this.id, this.name)">Move</button>
+                <button type="button" id="@item._id" name="@item.name" onclick="copyFile(this.id, this.name)">Copy</button>
+        }
             </td>
             <td style="vertical-align:middle">
                 @Html.DisplayFor(modelItem => item.date)
             </td>
         </tr>
-            }
-        }
+}
+}
         @{
-            var deleteAttributes = new Dictionary<string, object>();
-            deleteAttributes.Add("Id", "postDeleteForm");
+        var deleteAttributes = new Dictionary<string, object>();
+        deleteAttributes.Add("Id", "postDeleteForm");
         }
         @using (Html.BeginForm("Delete", "Folder", FormMethod.Post, deleteAttributes))
-        {
-            @Html.Hidden("deleteId", null)
-        }
+    {
+        @Html.Hidden("deleteId", null)
+}
 
         @{
-            var moveAttributes = new Dictionary<string, object>();
-            moveAttributes.Add("Id", "postMoveForm");
+        var moveAttributes = new Dictionary<string, object>();
+        moveAttributes.Add("Id", "postMoveForm");
         }
         @using (Html.BeginForm("Move", "Folder", FormMethod.Post, moveAttributes))
-        {
-            @Html.Hidden("moveId", null)
-            @Html.Hidden("movePath", null)
-        }
+    {
+        @Html.Hidden("moveId", null)
+        @Html.Hidden("movePath", null)
+}
 
         @{
-            var copyAttributes = new Dictionary<string, object>();
-            copyAttributes.Add("Id", "postCopyForm");
+        var copyAttributes = new Dictionary<string, object>();
+        copyAttributes.Add("Id", "postCopyForm");
         }
         @using (Html.BeginForm("Copy", "Folder", FormMethod.Post, moveAttributes))
-        {
-            @Html.Hidden("copyId", null)
-            @Html.Hidden("copyPath", null)
+    {
+        @Html.Hidden("copyId", null)
+        @Html.Hidden("copyPath", null)
+}
+
+        @{
+        var renameAttributes = new Dictionary<string, object>();
+        renameAttributes.Add("Id", "postRenameForm");
         }
+        @using (Html.BeginForm("Rename", "Folder", FormMethod.Post, renameAttributes))
+    {
+        @Html.Hidden("renameId", null)
+        @Html.Hidden("newName", null)
+
+}
+
 
     </tbody>
 </table>
@@ -136,14 +148,12 @@ else
     }
     function renameFile(id, originalFileName) {
         var fileName = prompt("What would you like to rename the file to?", originalFileName);
-        if (fileName != null && fileName != "") {
-            var hiddenId = document.getElementById("id");
-            hiddenId.value = id.substring(2);
-            var hiddenAction = document.getElementById("action");
-            hiddenAction.value = "rename"
-            var hiddenInput = document.getElementById("actionParameter");
-            hiddenInput.value = fileName;
-            document.getElementById("postActionForm").submit();
+        if (fileName != null && fileName != "" && fileName.length != 0) {
+            var renameId = document.getElementById("renameId");
+            renameId.value = id.substring(2);
+            var renameName = document.getElementById("newName");
+            renameName.value = fileName;
+            document.getElementById("postRenameForm").submit();
         }
     }
     function deleteFile(id, fileName) {

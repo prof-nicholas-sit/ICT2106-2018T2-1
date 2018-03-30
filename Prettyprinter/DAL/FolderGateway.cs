@@ -20,10 +20,10 @@ namespace Prettyprinter.DAL
 
         }
         override
-        public void RenameFile(string fileId, string fileName)
+        public void RenameFile(string renameId, string newName)
         {
-            Folder folder = data.Find(fileId);
-            folder.name = fileName; 
+            Folder folder = data.Find(renameId);
+            folder.name = newName; 
             data.Update(folder);
             base.SaveChanges();
         }
