@@ -22,6 +22,12 @@ namespace DBLayer.DAL
             return null;
         }
 
+        public bool ValidateLogin(string email, string pw)
+        {
+            var acc = SelectByEmail(email);
+            return acc != null && pw.Equals(acc.Password);
+        }
+
         public bool SetUserPassword(string email, string pw)
         {
             var acc = SelectByEmail(email);
