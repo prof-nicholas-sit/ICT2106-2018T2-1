@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ThreadTest.Models.CommentModule;
 using System.Collections.Specialized;
+using Prettyprinter.Models.CommentModule;
+
 namespace ThreadTest.Controllers
 {
     public class CommentController : Controller
@@ -14,8 +16,8 @@ namespace ThreadTest.Controllers
         const string SessionKeyUsername = "_Username";
         static List<Comment> model = new List<Comment>();
         public static StringBuilder output;
-
-
+        private int noOfLikes;
+        static List<Likes> likesModel = new List<Likes>();
 
         // GET: Comment
         public ActionResult Index()
@@ -285,6 +287,98 @@ namespace ThreadTest.Controllers
             {
                 return View();
             }
+        }
+
+        // GET: Comment/Like/5
+        public ActionResult Like(int id)
+        {
+            try
+            {
+                if (likesModel.Exists(x => x.id == id && x.username == SessionKeyUsername))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    var likes = new Likes();
+                    likes.id = id;
+                    likes.username = SessionKeyUsername;
+                    likesModel.Add(likes);
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        // POST: Comment/Like/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Like(int id, IFormCollection collection)
+        {
+            try
+            {
+                if (likesModel.Exists(x => x.id == id && x.username == SessionKeyUsername))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    var likes = new Likes();
+                    likes.id = id;
+                    likes.username = SessionKeyUsername;
+                    likesModel.Add(likes);
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //To get the number of likes by each comment id
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public int LikeThis(int id)
+        {
+            try
+            {
+                if (likesModel.Count() == 0)
+                {
+                    likesModel = GetLikesStubs();
+                }
+                foreach (var item in likesModel.Where(x => x.id == id))
+                {
+                    noOfLikes++;
+                }
+            }
+            catch (Exception) { }
+            return noOfLikes;
+        }
+
+        //if no data use this as sample
+        public List<Likes> GetLikesStubs()
+        {
+            var likes1 = new Likes();
+            likes1.id = 1;
+            likes1.username = "Steve Rogers";
+
+            var likes2 = new Likes();
+            likes2.id = 2;
+            likes2.username = SessionKeyUsername;
+
+            var likes3 = new Likes();
+            likes3.id = 2;
+            likes3.username = "Laye";
+
+            List<Likes> likesModel = new List<Likes> { };
+            likesModel.Add(likes1);
+            likesModel.Add(likes2);
+            likesModel.Add(likes3);
+            return likesModel;
         }
     }
 }
