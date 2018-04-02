@@ -296,6 +296,7 @@ namespace ThreadTest.Controllers
             {
                 if (likesModel.Exists(x => x.id == id && x.username == SessionKeyUsername))
                 {
+                    likesModel.RemoveAll(x => x.id == id && x.username == SessionKeyUsername);
                     return RedirectToAction(nameof(Index));
                 }
                 else
