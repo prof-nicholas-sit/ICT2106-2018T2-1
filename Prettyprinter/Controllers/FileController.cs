@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,60 +9,59 @@ using Microsoft.EntityFrameworkCore;
 using Prettyprinter.DAL;
 using Prettyprinter.Models;
 
+// Acting as a typewriter
+// String coantent -> receive from FileManager
+// String path -> received from Filemanager
+// Boolean newFile -> True to determine new file and false otherwise
 namespace Prettyprinter.Controllers
 {
+
     public class FileController : Controller
     {
-        public FileGateway fileGateway;
-        public FolderGateway folderGateway;
-        public FileController(ApplicationDbContext context)
+        [Key]
+        public string _id { get; set; }
+        public string content { get; set; }
+        public string path { get; set; }
+        public Boolean newFile { get; set; }
+
+        // Default Create File
+        public FileController(string content, String path, Boolean newFile)
         {
-            fileGateway = new FileGateway(context);
-            folderGateway = new FolderGateway(context);
+            this.content = content;
+            this.path = path;
+            this.newFile = newFile;
         }
 
-        // GET: File
-        [HttpGet]
-        public ActionResult Index(string folderId, int? sortName)
+        public void setContent()
         {
-            if(sortName != null)
-            {
-                if (sortName == 1)
-                {
-                    ViewBag.sortName = 2;
-                    return View(fileGateway.SelectAll(folderId, "ParentID").OrderBy(f => f.name));
-                }
-                ViewBag.sortName = 1;
-                return View(fileGateway.SelectAll(folderId, "ParentID").OrderByDescending(f => f.name));
-            }
-            return View(fileGateway.SelectAll(folderId, "ParentID"));
+            this.content = content;
         }
 
-        // POST
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Index(string folderId, string id, string action, string actionParameter)
+        public string getContent()
         {
-            if (action == "rename")
-            {
-                folderGateway.RenameFile(id, actionParameter);
-                return RedirectToAction(nameof(Index), folderId);
-            }
-            else if(action == "move")
-            {
-                folderGateway.MoveFile(id, actionParameter);
-                return RedirectToAction(nameof(Index), folderId);
-            }
-            return NotFound();
+            return content;
         }
 
-        // POST: File/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string deleteId)
+        public void setPath(string path)
         {
-            folderGateway.DeleteFile(deleteId);
-            return RedirectToAction(nameof(Index));
+            this.path = path;
         }
+
+        public string getPath()
+        {
+            return path;
+        }
+
+        public void setNewFile(Boolean newFile)
+        {
+            this.newFile = newFile;
+        }
+
+        public Boolean getNewFile()
+        {
+            return newFile;
+        }
+
+
     }
 }
