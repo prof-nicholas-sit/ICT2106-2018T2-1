@@ -18,12 +18,13 @@
     }
     @using (Html.BeginForm("Create", "Folder", FormMethod.Post, createAttributes))
     {
-        @Html.Hidden("folderName", null)
+        @Html.Hidden("docName", null)
         @Html.Hidden("creationPath", (string)ViewBag.ServerPath)
+        @Html.Hidden("isFile", 0)
     }
 
-    <button type="button" onclick="createFolder()">Create New Folder</button> |
-    @Html.ActionLink("Create New File", "Create", "File", new { path = ViewBag.ServerPath })
+    <button type="button" onclick="createDocs(0)">Create New Folder</button> |
+    <button type="button" onclick="createDocs(1)">Create New File</button>
 </p>
 <table class="table">
     <thead>
@@ -60,17 +61,22 @@
     {
         <tr>
             <td style="align-content:center">
-                @if (item.type.Equals("folder"))
-            {
-                <img src="~/images/folder.png" style="width:50px;height:50px" />
-        }
-        else
-        {
+                @if (item.type == 0)
+    {
+            <img src="~/images/folder.png" style="width:50px;height:50px" />
+}
+else
+{
             <img src="~/images/Filetype.png" style="width:50px;height:50px" />}
                 &nbsp;
-
-                @Html.ActionLink(item.name, "Index", "Folder", new { param = item.name, id = item._id }, null)
-
+                @if (item.type == 0)
+                {
+                    @Html.ActionLink(item.name, "Index", "Folder", new { param = item.name, id = item._id }, null)
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.name)
+                }
             </td>
 
             <td>
@@ -138,11 +144,19 @@
     </tbody>
 </table>
 <script type="text/javascript">
-    function createFolder() {
-        var folderName = prompt("What would you like to name the new folder?");
-        if (folderName != null && folderName != "") {
-            var newFolderName = document.getElementById("folderName");
-            newFolderName.value = folderName;
+    function createDocs(type) {
+        var isFile = document.getElementById("isFile");
+        if (type == 0) {
+            var name = prompt("What would you like to name the new folder?");
+            isFile.value = 0;
+        }
+        else {
+            var name = prompt("What would you like to name the new file?");
+            isFile.value = 1;
+        }
+        if (name != null && name != "") {
+            var newDocName = document.getElementById("docName");
+            newDocName.value = name;
             document.getElementById("postCreateForm").submit();
         }
     }

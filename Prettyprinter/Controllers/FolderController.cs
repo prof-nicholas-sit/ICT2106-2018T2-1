@@ -80,13 +80,12 @@ namespace Prettyprinter.Controllers
 
 
         // POST: Folder/Create
-        public ActionResult Create(string folderName, String creationPath, Boolean isFile)
+        public ActionResult Create(string docName, string creationPath, int isFile)
         {
-
-      
+            Debug.WriteLine("DEBUG : " + docName + " : " + creationPath + " : "+isFile);
             string parentId;
             string id = Guid.NewGuid().ToString();
-            string name = folderName;
+            string name = docName;
             DateTime dateNow = DateTime.Now;
 
 
@@ -104,7 +103,7 @@ namespace Prettyprinter.Controllers
                 parentId = currentUserID;
             }
 
-            if (isFile == false)
+            if (isFile == 0)
             {
 
                 int type = Folder.TYPE;
@@ -120,7 +119,7 @@ namespace Prettyprinter.Controllers
                 List<AccessControl> accessControls = new List<AccessControl>();
                 accessControls.Add(accessControl);
 
-                Metadata metadata = new Metadata(id, currentUserID, folderName, Folder.TYPE, dateNow, "", parentId, accessControls);
+                Metadata metadata = new Metadata(id, currentUserID, docName, Folder.TYPE, dateNow, "", parentId, accessControls);
 
                 //FileController fc = new FileController();
                 //fc.createFile(parameters);
