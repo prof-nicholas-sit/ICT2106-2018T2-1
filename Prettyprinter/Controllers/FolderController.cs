@@ -99,15 +99,15 @@ namespace Prettyprinter.Controllers
 
             Metadata metadata = new Metadata(id, currentUserID, folderName, Folder.TYPE, dateNow, "", parentId, accessControls);
 
-            //Folder folder = new Folder();
-            //folder._id = id;
-            //folder.parentId = parentId;
-            //folder.type = Folder.TYPE;
-            //folder.name = name;
-            //folder.accessControl = new string[4];
-            //folder.date = dateNow;
+            Folder folder = new Folder();
+            folder._id = id;
+            folder.parentId = parentId;
+            folder.type = Folder.TYPE;
+            folder.name = name;
+            folder.accessControl = new string[4];
+            folder.date = dateNow;
 
-            //folderGateway.CreateFile(folder);
+            folderGateway.CreateFile(folder);
 
             new MetadataController(applicationDbContext).AddMetadata(metadata);
 
