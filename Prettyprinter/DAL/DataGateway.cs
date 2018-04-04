@@ -39,7 +39,7 @@ namespace Prettyprinter.DAL
         {
             string[] tableName = typeof(T).ToString().Split(".");
 
-            return data.FromSql("SELECT * FROM ["+ tableName[2] + "] WHERE "+col+" = "+_id);
+            return data.FromSql("SELECT * FROM [" + tableName[2] + "] WHERE " + col + " = " +"'"+_id+"'");
         }
 
         public T SelectById(string fileId)

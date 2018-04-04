@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
     if (ViewBag.Path == null)
     {
-        ViewBag.Path = "161616";
+        ViewBag.Path = "Root";
     }
 }
 
@@ -19,11 +19,11 @@
     @using (Html.BeginForm("Create", "Folder", FormMethod.Post, createAttributes))
     {
         @Html.Hidden("folderName", null)
-        @Html.Hidden("creationPath", (string)ViewBag.Path)
+        @Html.Hidden("creationPath", (string)ViewBag.ServerPath)
     }
 
     <button type="button" onclick="createFolder()">Create New Folder</button> |
-    @Html.ActionLink("Create New File", "Create", "File", new { path = ViewBag.Path })
+    @Html.ActionLink("Create New File", "Create", "File", new { path = ViewBag.ServerPath })
 </p>
 <table class="table">
     <thead>
@@ -69,9 +69,7 @@
             <img src="~/images/Filetype.png" style="width:50px;height:50px" />}
                 &nbsp;
 
-                @Html.ActionLink(item.name, "Index", "Folder", new { @param = item.name }, null)
-
-
+                @Html.ActionLink(item.name, "Index", "Folder", new { param = item.name, id = item._id }, null)
 
             </td>
 
