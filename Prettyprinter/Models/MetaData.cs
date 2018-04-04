@@ -1,100 +1,103 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace Prettyprinter.Models
 {
     public class Metadata
     {
-        private string itemId;
-	    private string ownerId;	
-        private string name;
-        private int itemType;
-        private DateTime dateTime;
-        private string ancestorId;
-        private string parentId;
-        private List<AccessControl> accessControls;
+        [Key]
+        public string _id { get; set; }
 
-        public Metadata(string itemId, string ownerId, string name, int itemType, DateTime dateTime, string ancestorId, string parentId, List<AccessControl> accessControls)
+        public string Creator { get; set; }
+        public string Name { get; set; }
+        public int Type { get; set; }
+        public DateTime Date { get; set; }
+        public string AncestorID { get; set; }
+        public string ParentID { get; set; }
+        public List<AccessControl> accessControls;
+
+        public Metadata(string _id, string Creator, string Name, int Type, DateTime Date, string AncestorID, string ParentID, List<AccessControl> accessControls)
         {
-            this.itemId = itemId;
-			this.ownerId = ownerId;
-            this.name = name;
-            this.itemType = itemType;
-            this.dateTime = dateTime;
-            this.ancestorId = ancestorId;
-            this.parentId = parentId;
+            this._id = _id;
+			this.Creator = Creator;
+            this.Name = Name;
+            this.Type = Type;
+            this.Date = Date;
+            this.AncestorID = AncestorID;
+            this.ParentID = ParentID;
             this.accessControls = accessControls;
         }
 
         public string GetItemId()
         {
-            return this.itemId;
+            return this._id;
         }
 
         public void SetItemId(string itemId)
         {
-            this.itemId = itemId;
+            this._id = itemId;
         }
 
         public string GetOwnerId()
         {
-            return this.ownerId;
+            return this.Creator;
         }
 
         public void SetOwnerId(string ownerId)
         {
-            this.ownerId = ownerId;
+            this.Creator = ownerId;
         }
 
         public string GetName()
         {
-            return this.name;
+            return this.Name;
         }
 
         public void SetName(string name)
         {
-            this.name = name;
+            this.Name = name;
         }
 
         public int GetItemType()
         {
-            return this.itemType;
+            return this.Type;
         }
 
         public void SetItemType(int itemType)
         {
-            this.itemType = itemType;
+            this.Type = itemType;
         }
 
         public DateTime GetDateTime()
         {
-            return this.dateTime;
+            return this.Date;
         }
 
         public void SetDateTime(DateTime dateTime)
         {
-            this.dateTime = dateTime;
+            this.Date = dateTime;
         }
 
         public string GetAncestorId()
         {
-            return this.ancestorId;
+            return this.AncestorID;
         }
 
         public void SetAncestorId(string ancestorId)
         {
-            this.ancestorId = ancestorId;
+            this.AncestorID = ancestorId;
         }
 
         public string GetParentId()
         {
-            return this.parentId;
+            return this.ParentID;
         }
 
         public void SetParentId(string parentId)
         {
-            this.parentId = parentId;
+            this.ParentID = parentId;
         }
 
         public List<AccessControl> GetAccessControls()
