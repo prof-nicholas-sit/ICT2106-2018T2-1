@@ -77,9 +77,15 @@ namespace Prettyprinter.Controllers
 
 
         // POST: Folder/Create
-        public ActionResult Create(string folderName, String creationPath)
+        public ActionResult Create(string folderName, String creationPath, Boolean isFile)
         {
+
+      
             string parentId;
+            string id = Guid.NewGuid().ToString();
+            string name = folderName;
+            DateTime dateNow = DateTime.Now;
+
 
             //This is the part im abit confused
             //System.Diagnostics.Debug.WriteLine("*** HAHA" + theParentID, "HAHA");
@@ -93,43 +99,74 @@ namespace Prettyprinter.Controllers
                 parentId = currentUserID;
             }
 
-            int type = Folder.TYPE;
-            string name = folderName;
-            string id = Guid.NewGuid().ToString();
-            DateTime dateNow = DateTime.Now;
+            if (isFile == false)
+            {
 
-            AccessControl accessControl = new AccessControl(
-                Guid.NewGuid().ToString(),
-                id,
-                currentUserID,
-                true,
-                true);
+                int type = Folder.TYPE;
+           
 
-            List<AccessControl> accessControls = new List<AccessControl>();
-            accessControls.Add(accessControl);
+                AccessControl accessControl = new AccessControl(
+                    Guid.NewGuid().ToString(),
+                    id,
+                    currentUserID,
+                    true,
+                    true);
 
-            Metadata metadata = new Metadata(id, currentUserID, folderName, Folder.TYPE, dateNow, "", parentId, accessControls);
-            
-            // Sent Data over to the typesetter , when creation of File
-            FileController newData = new FileController(folderName, parentId, true);
-            
+                List<AccessControl> accessControls = new List<AccessControl>();
+                accessControls.Add(accessControl);
 
-            Folder folder = new Folder();
-            folder._id = id;
-            folder.parentId = parentId;
-            folder.type = Folder.TYPE;
-            folder.name = name;
-            folder.accessControl = new string[4];
-            folder.date = dateNow;
+                Metadata metadata = new Metadata(id, currentUserID, folderName, Folder.TYPE, dateNow, "", parentId, accessControls);
 
-            folderGateway.CreateFile(folder);
+                //FileController fc = new FileController();
+                //fc.createFile(parameters);
 
-            new MetadataController(applicationDbContext).AddMetadata(metadata);
+                Folder folder = new Folder();
+                folder._id = id;
+                folder.parentId = parentId;
+                folder.type = Folder.TYPE;
+                folder.name = name;
+                folder.accessControl = new string[4];
+                folder.date = dateNow;
 
-            //Create a real folder locally in file server
-            FileStorageGateway.createFolder(parentId, id);
+                folderGateway.CreateFile(folder);
 
-            //return RedirectToAction(nameof(Index), new { param = HttpContext.Session.GetString("Path"), id = folder.parentId });
+                new MetadataController(applicationDbContext).AddMetadata(metadata);
+
+                //Create a real folder locally in file server
+                FileStorageGateway.createFolder(parentId, id);
+
+                //return RedirectToAction(nameof(Index), new { param = HttpContext.Session.GetString("Path"), id = folder.parentId });
+
+            }
+            else
+            {
+                // Sent Data over to the typesetter , when creation of File
+
+                TypeSetterController action = new TypeSetterController();
+                FileController data = action.onCreate();
+                data.setParentId(parentId);
+
+                AccessControl accessControl = new AccessControl(
+                        Guid.NewGuid().ToString(),
+                        id,
+                        currentUserID,
+                        true,
+                        true);
+
+                List<AccessControl> accessControls = new List<AccessControl>();
+                accessControls.Add(accessControl);
+
+
+                Metadata metadata = new Metadata(id, currentUserID, data.getName(), 1, dateNow, "", parentId, accessControls);
+
+
+
+            }
+
+
+
+
+
             return RedirectToAction(nameof(Index));
         }
 

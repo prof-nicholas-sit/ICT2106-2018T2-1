@@ -20,19 +20,32 @@ namespace Prettyprinter.Controllers
     {
         [Key]
         public string _id { get; set; }
+        public string name { get; set; }
         public string content { get; set; }
-        public string path { get; set; }
+        public string parentId { get; set; }
         public Boolean newFile { get; set; }
 
         // Default Create File
-        public FileController(string content, String path, Boolean newFile)
+        public FileController()
         {
-            this.content = content;
-            this.path = path;
-            this.newFile = newFile;
         }
 
-        public void setContent()
+        public string getId()
+        {
+            return _id;
+        }
+
+        public void setName(string name)
+        {
+            this.name = name;
+        }
+
+        public string getName()
+        {
+            return name;
+        }
+
+        public void setContent(string content)
         {
             this.content = content;
         }
@@ -42,14 +55,14 @@ namespace Prettyprinter.Controllers
             return content;
         }
 
-        public void setPath(string path)
+        public void setParentId(string path)
         {
-            this.path = path;
+            this.parentId = path;
         }
 
-        public string getPath()
+        public string getParentId()
         {
-            return path;
+            return parentId;
         }
 
         public void setNewFile(Boolean newFile)
