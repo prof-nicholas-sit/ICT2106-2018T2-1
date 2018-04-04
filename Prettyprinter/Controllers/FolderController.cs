@@ -55,11 +55,11 @@ namespace Prettyprinter.Controllers
                 if (!HttpContext.Session.GetString("ServerPath").Contains(id))
                 {
                     //Append the SESSION PATH
-                    var currentServerPath = HttpContext.Session.GetString("ServerPath") + "/" + id;
-                    HttpContext.Session.SetString("ServerPath", currentServerPath);
+                    var newServerPath = HttpContext.Session.GetString("ServerPath") + "/" + id;
+                    HttpContext.Session.SetString("ServerPath", newServerPath);
 
-                    var currentPath = HttpContext.Session.GetString("Path") + "/" + param;
-                    HttpContext.Session.SetString("Path", currentPath);
+                    var newPath = HttpContext.Session.GetString("Path") + "/" + param;
+                    HttpContext.Session.SetString("Path", newPath);
                 }
             }
 
@@ -69,10 +69,13 @@ namespace Prettyprinter.Controllers
             serverPath = HttpContext.Session.GetString("ServerPath");
             ViewBag.serverPath = serverPath;
 
-            Debug.WriteLine("serverPath = " + serverPath);
-
+            string[] currentServerPath = serverPath.Split("/");
+            if(currentServerPath.Length >= 2)
+            {
+                Debug.WriteLine("ENTER : "+ currentServerPath[currentServerPath.Length - 1]);
+                return View(folderGateway.SelectAll(currentServerPath[currentServerPath.Length-1], "ParentID"));
+            }
             return View(folderGateway.SelectAll(serverPath, "ParentID"));
-
         }
 
 
@@ -91,7 +94,9 @@ namespace Prettyprinter.Controllers
             //System.Diagnostics.Debug.WriteLine("*** HAHA" + theParentID, "HAHA");
             if (!String.IsNullOrEmpty(creationPath))
             {
-                parentId = creationPath;
+                //Get last part of creationPath
+                string[] parentPath = creationPath.Split("/");
+                parentId = parentPath[parentPath.Length-1];
             }
             else
             {
@@ -131,7 +136,6 @@ namespace Prettyprinter.Controllers
                 folderGateway.CreateFile(folder);
 
                 new MetadataController(applicationDbContext).AddMetadata(metadata);
-
                 //Create a real folder locally in file server
                 FileStorageGateway.createFolder(parentId, id);
 
@@ -159,15 +163,39 @@ namespace Prettyprinter.Controllers
 
                 Metadata metadata = new Metadata(id, currentUserID, data.getName(), 1, dateNow, "", parentId, accessControls);
 
+                Folder folder = new Folder();
+                folder._id = id;
+                folder.parentId = parentId;
+                folder.type = Folder.TYPE;
+                folder.name = name;
+                folder.accessControl = new string[4];
+                folder.date = dateNow;
+
+                folderGateway.CreateFile(folder);
+
+                new MetadataController(applicationDbContext).AddMetadata(metadata);
+                //Create a real folder locally in file server
+                FileStorageGateway.createFolder(parentId, id);
+
+
 
 
             }
 
+            //Create a real folder locally in file server
+            FileStorageGateway.createFolder(creationPath, id);
 
-
-
-
-            return RedirectToAction(nameof(Index));
+            string pathParam;
+            string[] lastPath = HttpContext.Session.GetString("Path").Split("/");
+            if (lastPath.Length >= 2)
+            {
+                pathParam = lastPath[lastPath.Length - 1];
+            }
+            else
+            {
+                pathParam = "Root";
+            }
+            return RedirectToAction(nameof(Index), new { param = pathParam, id = parentId });
         }
 
         // POST: Folder/Delete/5
