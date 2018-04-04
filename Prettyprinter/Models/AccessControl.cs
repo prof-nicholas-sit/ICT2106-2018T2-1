@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Prettyprinter.Models
 {
     public class AccessControl
     {
+        [Key]
         public string aID { get; set; }
         public string _id { get; set; }
         public string uID { get; set; }
