@@ -9,10 +9,13 @@ namespace Prettyprinter.Models
 {
     public class Folder
     {
+
+        public static int TYPE = 0;
+
         [Key]
         public string _id { get; set; }
         public string parentId { get; set; }
-        public string type { get; set; }
+        public int type { get; set; }
 
         public string name { get; set; }
         [NotMapped]

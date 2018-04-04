@@ -7,12 +7,11 @@ namespace Prettyprinter.DAL
 {
     interface IDataGateway<T> where T:class
     {
+        //CRUD to be implemented in DataGateway
         void CreateFile(T obj);
+        IEnumerable<T> SelectAll(string _id, string col);
+        T SelectById(string _id);
         void UpdateFile(T obj);
-        void RenameFile(string fileId, string fileName);
-        void MoveFile(string fileId, string parentId);
         void DeleteFile(string fileId);
-        IEnumerable<T> SelectAll(string folderId);
-        T SelectById(string fileId);
     }
 }

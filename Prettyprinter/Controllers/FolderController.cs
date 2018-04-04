@@ -16,11 +16,15 @@ namespace Prettyprinter.Controllers
     public class FolderController : Controller
     {
         public FolderGateway folderGateway;
+        public ApplicationDbContext applicationDbContext;
         //private readonly ApplicationDbContext _context;
         private static String serverPath = @"2107 File Server\";
+        private static String currentUserID = "161616";
         public FolderController(ApplicationDbContext context)
         {
             folderGateway = new FolderGateway(context);
+            applicationDbContext = context;
+
             if (!System.IO.File.Exists(serverPath))
             {
                 Directory.CreateDirectory(serverPath);
@@ -28,9 +32,9 @@ namespace Prettyprinter.Controllers
             //if (!System.IO.File.Exists(serverPath + HttpContext.Session.GetString("currentUserID"))){
             //    Directory.CreateDirectory(serverPath + HttpContext.Session.GetString("currentUserID"));
             //}
-            if (!System.IO.File.Exists(serverPath + "root"))
+            if (!System.IO.File.Exists(serverPath + currentUserID))
             {
-                Directory.CreateDirectory(serverPath + "root");
+                Directory.CreateDirectory(serverPath + currentUserID);
             }
         }
 
@@ -42,9 +46,9 @@ namespace Prettyprinter.Controllers
             if (String.IsNullOrEmpty(param))
             {
                 if (HttpContext.Session.GetString("Path") == null)
-                    HttpContext.Session.SetString("Path", "root");
+                    HttpContext.Session.SetString("Path", currentUserID);
                 else
-                    HttpContext.Session.SetString("Path", "root");
+                    HttpContext.Session.SetString("Path", currentUserID);
 
             }
             else
@@ -57,37 +61,56 @@ namespace Prettyprinter.Controllers
             path = HttpContext.Session.GetString("Path");
             ViewBag.Path = path;
 
-            return View(folderGateway.SelectAll(path));
+            return View(folderGateway.SelectAll(path, "ParentID"));
 
         }
 
 
         // POST: Folder/Create
-        public ActionResult Create(string folderName,String theParentID)
+        public ActionResult Create(string folderName,String creationPath)
         {
-            string parentId = HttpContext.Session.GetString("Path");
+            string parentId;
 
             //This is the part im abit confused
-            System.Diagnostics.Debug.WriteLine("*** HAHA" + theParentID, "HAHA");
-            if (!String.IsNullOrEmpty(theParentID)) {
-                parentId = theParentID;
+            //System.Diagnostics.Debug.WriteLine("*** HAHA" + theParentID, "HAHA");
+            if (!String.IsNullOrEmpty(creationPath)) {
+                parentId = creationPath;
+            }
+            else
+            {
+                //parentId = HttpContext.Session.GetString("Path");
+                parentId = currentUserID;
             }
 
-            string type = "folder";
+            int type = Folder.TYPE;
             string name = folderName;
             string id = Guid.NewGuid().ToString();
             DateTime dateNow = DateTime.Now;
-            AccessController accessController = new AccessController();
-            accessController.createMetaData(new MetaData("", name, parentId, type, new string[4], dateNow));
-            Folder folder = new Folder();
-            folder._id = id;
-            folder.parentId = parentId;
-            folder.type = "folder";
-            folder.name = name;
-            folder.accessControl = new string[4];
-            folder.date = dateNow;
 
-            folderGateway.CreateFile(folder);
+            AccessControl accessControl = new AccessControl(
+                Guid.NewGuid().ToString(),
+                id,
+                currentUserID,
+                true,
+                true);
+
+            List<AccessControl> accessControls = new List<AccessControl>();
+            accessControls.Add(accessControl);
+
+            Metadata metadata = new Metadata(id, currentUserID, folderName, Folder.TYPE, dateNow, "", parentId, accessControls);
+
+            //Folder folder = new Folder();
+            //folder._id = id;
+            //folder.parentId = parentId;
+            //folder.type = Folder.TYPE;
+            //folder.name = name;
+            //folder.accessControl = new string[4];
+            //folder.date = dateNow;
+
+            //folderGateway.CreateFile(folder);
+
+            new MetadataController(applicationDbContext).AddMetadata(metadata);
+
             createFolder(parentId, id);
             
             return RedirectToAction(nameof(Index));

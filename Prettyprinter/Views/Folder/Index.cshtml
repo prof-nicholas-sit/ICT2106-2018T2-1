@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
     if (ViewBag.Path == null)
     {
-        ViewBag.Path = "Root";
+        ViewBag.Path = "161616";
     }
 }
 
@@ -16,12 +16,14 @@
         var createAttributes = new Dictionary<string, object>();
         createAttributes.Add("Id", "postCreateForm");
     }
-    @using (Html.BeginForm("Create", "Folder", FormMethod.Post, createAttributes)) {
+    @using (Html.BeginForm("Create", "Folder", FormMethod.Post, createAttributes))
+    {
         @Html.Hidden("folderName", null)
+        @Html.Hidden("creationPath", (string)ViewBag.Path)
     }
 
     <button type="button" onclick="createFolder()">Create New Folder</button> |
-    @Html.ActionLink("Create New File", "Create", "File", new { path = ViewBag.Path})
+    @Html.ActionLink("Create New File", "Create", "File", new { path = ViewBag.Path })
 </p>
 <table class="table">
     <thead>
@@ -141,8 +143,8 @@
     function createFolder() {
         var folderName = prompt("What would you like to name the new folder?");
         if (folderName != null && folderName != "") {
-            var creationPath = document.getElementById("folderName");
-            creationPath.value = folderName;
+            var newFolderName = document.getElementById("folderName");
+            newFolderName.value = folderName;
             document.getElementById("postCreateForm").submit();
         }
     }

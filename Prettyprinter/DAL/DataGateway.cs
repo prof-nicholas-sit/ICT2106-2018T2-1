@@ -34,20 +34,12 @@ namespace Prettyprinter.DAL
             db.Remove(obj);
             db.SaveChanges();
         }
-
-        public virtual void MoveFile(string fileId, string parentId)
-        {
-            data.FromSql("UPDATE File SET path = " + parentId);
-        }
-
-        public virtual void RenameFile(string fileId, string fileName)
-        {
         
-        }
-
-        public IEnumerable<T> SelectAll(string folderId)
+        public virtual IEnumerable<T> SelectAll(string _id, string col)
         {
-            return data.FromSql("SELECT * FROM [Folder] WHERE parentId = '" + folderId + "'");
+            string[] tableName = typeof(T).ToString().Split(".");
+
+            return data.FromSql("SELECT * FROM ["+ tableName[2] + "] WHERE "+col+" = "+_id);
         }
 
         public T SelectById(string fileId)

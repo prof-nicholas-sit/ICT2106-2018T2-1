@@ -8,25 +8,18 @@ namespace Prettyprinter.Controllers
 {
     public class AccessController
     {
-        public string _id { get; set; }
-        public string name { get; set; }
-        public string parentId { get; set; }
-        public string type { get; set; }
-        public string[] accessControl { get; set; }
-        public DateTime date { get; set; }
-
-        public List<MetaData> getMetaData(string path)
+        public List<Metadata> getMetaData(string path)
         {
-            List<MetaData> result = new List<MetaData>();
+            List<Metadata> result = new List<Metadata>();
 
-            result.Add(new MetaData("id1", "file1", "parentId1", "file", new string[] { "email1", "true", "true" }, new DateTime()));
-            result.Add(new MetaData("id1", "folder1", "parentId1", "folder", new string[] { "email2", "true", "true" }, new DateTime()));
-            result.Add(new MetaData("id1", "file2", "parentId1", "file", new string[] { "email3", "true", "true" }, new DateTime()));
+            //result.Add(new Metadata("id1", "file1", "parentId1", "file", new List<AccessControl>(), new DateTime()));
+            //result.Add(new Metadata("id1", "folder1", "parentId1", "folder", new List<AccessControl>(), new DateTime()));
+            //result.Add(new Metadata("id1", "file2", "parentId1", "file", new List<AccessControl>(), new DateTime()));
 
             return result;
         }
 
-        public void createMetaData(MetaData metaData)
+        public void createMetaData(Metadata metaData)
         {
             System.Diagnostics.Debug.WriteLine("Create MetaData DONE !");
         }

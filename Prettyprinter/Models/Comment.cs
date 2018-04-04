@@ -9,6 +9,9 @@ namespace Prettyprinter.Models
 {
     public class Comment
     {
+
+        public static int TYPE = 2;
+
         [Required]
         public int _id { get; set; }
         public int parentId { get; set; }

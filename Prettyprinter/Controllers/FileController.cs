@@ -12,10 +12,12 @@ namespace Prettyprinter.Controllers
 {
     public class FileController : Controller
     {
-        public FileGateway dataGateway;
+        public FileGateway fileGateway;
+        public FolderGateway folderGateway;
         public FileController(ApplicationDbContext context)
         {
-            dataGateway = new FileGateway(context);
+            fileGateway = new FileGateway(context);
+            folderGateway = new FolderGateway(context);
         }
 
         // GET: File
@@ -27,12 +29,12 @@ namespace Prettyprinter.Controllers
                 if (sortName == 1)
                 {
                     ViewBag.sortName = 2;
-                    return View(dataGateway.SelectAll(folderId).OrderBy(f => f.name));
+                    return View(fileGateway.SelectAll(folderId, "ParentID").OrderBy(f => f.name));
                 }
                 ViewBag.sortName = 1;
-                return View(dataGateway.SelectAll(folderId).OrderByDescending(f => f.name));
+                return View(fileGateway.SelectAll(folderId, "ParentID").OrderByDescending(f => f.name));
             }
-            return View(dataGateway.SelectAll(folderId));
+            return View(fileGateway.SelectAll(folderId, "ParentID"));
         }
 
         // POST
@@ -42,12 +44,12 @@ namespace Prettyprinter.Controllers
         {
             if (action == "rename")
             {
-                dataGateway.RenameFile(id, actionParameter);
+                folderGateway.RenameFile(id, actionParameter);
                 return RedirectToAction(nameof(Index), folderId);
             }
             else if(action == "move")
             {
-                dataGateway.MoveFile(id, actionParameter);
+                folderGateway.MoveFile(id, actionParameter);
                 return RedirectToAction(nameof(Index), folderId);
             }
             return NotFound();
@@ -58,7 +60,7 @@ namespace Prettyprinter.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string deleteId)
         {
-            dataGateway.DeleteFile(deleteId);
+            folderGateway.DeleteFile(deleteId);
             return RedirectToAction(nameof(Index));
         }
     }
