@@ -1,0 +1,40 @@
+﻿Text Color
+@@FF0000 Text Color @@`
+
+Spacings
+  
+                   
+
+Hyperlinks
+[HYPALINK](link.me)
+
+Lists
++Item1+`
+++Item2++`
+%1.Item3%`
+%%1.Item4%%`
+
+Headers
+Alt-H1 Text
+!!!some other text following header tag
+#Header 1
+##Header 2
+### Header 3
+###### header 6
+
+Emojis
+:smile::joy:
+:wink:
+:fearful:
+
+Alignments
+<-Align Left</-
+->Align Right-/>
+<->Align Center<-/>
+<-->Justify<--/>
+
+Other tests
+This is s**__me text sample__`**`
+is some text
+to test
+==Reading==`
