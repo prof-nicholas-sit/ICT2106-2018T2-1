@@ -36,8 +36,7 @@ namespace Prettyprinter.DAL
                 {
                     return false;
                 }
-            }
-            System.Diagnostics.Debug.WriteLine("Create Folder");
+            }   
             Directory.CreateDirectory(path + @"\" + fileID);
             return true;
         }
