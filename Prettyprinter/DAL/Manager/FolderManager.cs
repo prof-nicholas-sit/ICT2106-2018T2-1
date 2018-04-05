@@ -25,7 +25,7 @@ namespace Prettyprinter.DAL
             String Path = path + fileID;
 
 
-            String pathToFile = path;
+            String pathToFile = serverPath + path;
             List<String> AllEntries = Directory.GetDirectories(pathToFile).ToList();
 
             // Console.WriteLine("\n\n");

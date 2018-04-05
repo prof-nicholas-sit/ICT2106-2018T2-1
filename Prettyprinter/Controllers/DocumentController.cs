@@ -135,7 +135,7 @@ namespace Prettyprinter.Controllers
 
                 new MetadataController(applicationDbContext).AddMetadata(metadata);
                 //Create a real folder locally in file server
-                folderManager.createDocument(parentId, id);
+                folderManager.createDocument(creationPath, id);
 
                 //return RedirectToAction(nameof(Index), new { param = HttpContext.Session.GetString("Path"), id = folder.parentId });
 
@@ -158,11 +158,11 @@ namespace Prettyprinter.Controllers
 
                 new MetadataController(applicationDbContext).AddMetadata(metadata);
                 //Create a real folder locally in file server
-                folderManager.createDocument(parentId, id);
+                folderManager.createDocument(creationPath, id);
             }
 
             //Create a real folder locally in file server
-            folderManager.createDocument(creationPath, id);
+            //folderManager.createDocument(creationPath, id);
             
             string[] lastPath = HttpContext.Session.GetString("Path").Split("/");
 
