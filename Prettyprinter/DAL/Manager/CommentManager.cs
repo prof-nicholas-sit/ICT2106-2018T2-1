@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace Prettyprinter.DAL
 {
 
-
     public class CommentManager : DocumentManager
     {
         private static String serverPath = @"2107 File Server\";
