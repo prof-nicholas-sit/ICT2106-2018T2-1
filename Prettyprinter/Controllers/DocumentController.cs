@@ -158,7 +158,7 @@ namespace Prettyprinter.Controllers
 
                 new MetadataController(applicationDbContext).AddMetadata(metadata);
                 //Create a real folder locally in file server
-                folderManager.createDocument(creationPath, id);
+                fileManager.createDocument(creationPath, id);
             }
 
             //Create a real folder locally in file server

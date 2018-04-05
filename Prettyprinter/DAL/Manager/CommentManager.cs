@@ -12,13 +12,6 @@ namespace Prettyprinter.DAL
         private static String serverPath = @"2107 File Server\";
 
         //Implementations of Abstract Methods
-        public override String readDocument(String fileID)
-        {
-            String pathToFile = serverPath + @"\" + fileID + ".txt";
-            String lines = System.IO.File.ReadAllLines(pathToFile).ToString();
-            return lines;
-        }
-
         // Done
         public override String getParentOfDocument(String fileID)
         {
@@ -51,5 +44,12 @@ namespace Prettyprinter.DAL
             return true;
         }
 
+        //CommentManager-Only's Method
+        public String readDocument(String fileID)
+        {
+            String pathToFile = serverPath + @"\" + fileID + ".txt";
+            String lines = System.IO.File.ReadAllLines(pathToFile).ToString();
+            return lines;
+        }
     }
 }

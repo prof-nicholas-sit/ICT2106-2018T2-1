@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Prettyprinter.DAL
 {
-    public class FolderManager : FileManager
+    public class FolderManager : DocumentManager
     {
 
         private static String serverPath = @"2107 File Server\";
@@ -27,18 +27,17 @@ namespace Prettyprinter.DAL
 
             String pathToFile = serverPath + path;
             List<String> AllEntries = Directory.GetDirectories(pathToFile).ToList();
-
-            // Console.WriteLine("\n\n");
+            
             foreach (String line in AllEntries)
             {
                 String currentFolder = line;
                 currentFolder = currentFolder.Replace(pathToFile + @"\", "");
                 if (currentFolder.Equals(fileID))
                 {
-
                     return false;
                 }
             }
+            System.Diagnostics.Debug.WriteLine("Create Folder");
             Directory.CreateDirectory(path + @"\" + fileID);
             return true;
         }

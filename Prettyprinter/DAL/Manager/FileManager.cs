@@ -13,13 +13,6 @@ namespace Prettyprinter.DAL
 
         // Done
         //Implementations of Abstract Methods
-        public override String readDocument(String fileID)
-        {
-            String pathToFile = serverPath + @"\" + fileID + ".txt";
-            String lines = System.IO.File.ReadAllLines(pathToFile).ToString();
-            return lines;
-        }
-
         // Done
         public override String getParentOfDocument(String fileID)
         {
@@ -38,7 +31,6 @@ namespace Prettyprinter.DAL
 
                 return false;
             }
-
             System.IO.File.AppendAllText(pathToFile, "");
             return true;
         }
@@ -55,6 +47,13 @@ namespace Prettyprinter.DAL
 
         // Done
         // FileManager-Only Method
+        public String readDocument(String fileID)
+        {
+            String pathToFile = serverPath + @"\" + fileID + ".txt";
+            String lines = System.IO.File.ReadAllLines(pathToFile).ToString();
+            return lines;
+        }
+
         public Boolean copyDocument(String source, String destination, String fileID)
         {
             if (!System.IO.File.Exists(serverPath + source + @"\" + fileID + ".txt"))
