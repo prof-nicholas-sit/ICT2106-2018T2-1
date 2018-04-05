@@ -15,11 +15,16 @@ namespace Prettyprinter.Controllers
 {
     public class DocumentController : Controller
     {
+        public FolderManager folderManager = new FolderManager();
+        public FileManager fileManager = new FileManager();
+
         public FolderGateway folderGateway;
         public ApplicationDbContext applicationDbContext;
-        //private readonly ApplicationDbContext _context;
+
         private static String serverDirectory = @"2107 File Server\";
         private static String currentUserID = "161616";
+
+
         public DocumentController(ApplicationDbContext context)
         {
             folderGateway = new FolderGateway(context);
@@ -90,7 +95,6 @@ namespace Prettyprinter.Controllers
 
 
             //This is the part im abit confused
-            //System.Diagnostics.Debug.WriteLine("*** HAHA" + theParentID, "HAHA");
             if (!String.IsNullOrEmpty(creationPath))
             {
                 //Get last part of creationPath
@@ -138,7 +142,7 @@ namespace Prettyprinter.Controllers
 
                 new MetadataController(applicationDbContext).AddMetadata(metadata);
                 //Create a real folder locally in file server
-                FileStorageGateway.createFolder(parentId, id);
+                folderManager.createDocument(parentId, id);
 
                 //return RedirectToAction(nameof(Index), new { param = HttpContext.Session.GetString("Path"), id = folder.parentId });
 
@@ -146,10 +150,6 @@ namespace Prettyprinter.Controllers
             // File
             else
             {
-
-                System.Diagnostics.Debug.WriteLine("Im creating File");
-
-
                 // Sent Data over to the typesetter , when creation of File
 
                 TypeSetterController action = new TypeSetterController();
@@ -165,22 +165,17 @@ namespace Prettyprinter.Controllers
 
                 new MetadataController(applicationDbContext).AddMetadata(metadata);
                 //Create a real folder locally in file server
-                FileStorageGateway.createFolder(parentId, id);
+                folderManager.createDocument(parentId, id);
             }
 
             //Create a real folder locally in file server
-            FileStorageGateway.createFolder(creationPath, id);
-
-            string pathParam;
+            folderManager.createDocument(creationPath, id);
+            
             string[] lastPath = HttpContext.Session.GetString("Path").Split("/");
-            if (lastPath.Length >= 2)
-            {
-                pathParam = lastPath[lastPath.Length - 1];
-            }
-            else
-            {
-                pathParam = "Root";
-            }
+
+            string pathParam = (lastPath.Length >= 2) 
+                ? lastPath[lastPath.Length - 1] : "Root";
+
             return RedirectToAction(nameof(Index), new { param = pathParam, id = parentId });
         }
 
@@ -191,15 +186,8 @@ namespace Prettyprinter.Controllers
         {
             folderGateway.DeleteFile(deleteId);
             //Delete the file locally from file server
-            FileStorageGateway.deleteFile(HttpContext.Session.GetString("serverPath"), deleteId);
-
-            //deleteFile(HttpContext.Session.GetString("serverPath"), deleteId);
+            fileManager.deleteDocument(HttpContext.Session.GetString("serverPath"), deleteId);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool FolderExists(string id)
-        {
-            return (folderGateway.SelectById(id) != null);
         }
 
         // POST
@@ -208,8 +196,7 @@ namespace Prettyprinter.Controllers
         public ActionResult Move(string moveId, string movePath)
         {
             folderGateway.MoveFile(moveId, movePath);
-            FileStorageGateway.moveFile(HttpContext.Session.GetString("serverPath"), movePath, moveId);
-
+            fileManager.moveDocument(HttpContext.Session.GetString("serverPath"), movePath, moveId);
             return RedirectToAction(nameof(Index));
         }
 
@@ -219,7 +206,7 @@ namespace Prettyprinter.Controllers
         public ActionResult Copy(string copyId, string copyPath)
         {
             string createdId = folderGateway.CopyFile(copyId, copyPath);
-            FileStorageGateway.copyFile(HttpContext.Session.GetString("serverPath"), copyPath, copyId);
+            fileManager.copyDocument(HttpContext.Session.GetString("serverPath"), copyPath, copyId);
             return RedirectToAction(nameof(Index));
         }
 
@@ -228,9 +215,13 @@ namespace Prettyprinter.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Rename(string renameId, string newName)
         {
-
             folderGateway.RenameFile(renameId, newName);
             return RedirectToAction(nameof(Index));
+        }
+
+        private bool FolderExists(string id)
+        {
+            return (folderGateway.SelectById(id) != null);
         }
     }
 }
