@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ThreadTest.Models.CommentModule;
 using System.Collections.Specialized;
 using Prettyprinter.Models.CommentModule;
+using ThreadTest.Models.CommentModule;
+using ThreadTest.Models.CommentModule.Html;
 
 namespace ThreadTest.Controllers
 {
@@ -91,7 +92,7 @@ namespace ThreadTest.Controllers
         //Be careful of the quotes ' ", double quotes must be escaped \" - Daniel
         public string buildComment(Comment item, int level)
         {
-            HtmlDocumentBuilder builder = new HtmlDocumentBuilder();
+            HtmlCommentBuilder builder = new HtmlCommentBuilder();
 
             // start building
             builder.OpenDocument();
@@ -103,9 +104,9 @@ namespace ThreadTest.Controllers
             builder.BuildAction(item.id.ToString(), item.parentId.ToString(), item.username, level, HttpContext.Session.GetString(SessionKeyUsername));
 
             // finished building
-            builder.CloseDocument();
+            builder.CloseComment();
 
-            return builder.GetDocument().GetString();
+            return builder.GetComment().GetString();
 
         }
 

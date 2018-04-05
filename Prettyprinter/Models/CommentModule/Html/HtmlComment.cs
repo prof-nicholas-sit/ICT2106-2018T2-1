@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Prettyprinter.Models.CommentModule;
 
-namespace ThreadTest.Models.CommentModule
+namespace ThreadTest.Models.CommentModule.Html
 {
-    public class HtmlDocument
+    public class HtmlComment : IComment
     {
-        // the title of the document
-        private string title = "";
-
         // the elements making up the body of the document
         private IList<HtmlElement> body = new List<HtmlElement>();
 
 
         // constructor
-        public HtmlDocument()
+        public HtmlComment()
         {
             // nothing to do
         }
@@ -48,11 +46,5 @@ namespace ThreadTest.Models.CommentModule
             return sbuilder.ToString();
         }
 
-
-        // set the title of the document
-        public void SetTitle(string titleIn)
-        {
-            title = titleIn;
-        }
     }
 }

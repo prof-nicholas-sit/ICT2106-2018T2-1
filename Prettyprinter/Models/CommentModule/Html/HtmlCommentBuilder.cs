@@ -1,9 +1,11 @@
 ﻿using System;
-namespace ThreadTest.Models.CommentModule
+using Prettyprinter.Models.CommentModule;
+
+namespace ThreadTest.Models.CommentModule.Html
 {
-    class HtmlDocumentBuilder 
+    class HtmlCommentBuilder : ICommentBuilder
     {
-        private HtmlDocument doc;
+        private HtmlComment doc;
         private string id;
         private string parentId;
         private string username;
@@ -12,7 +14,7 @@ namespace ThreadTest.Models.CommentModule
         private string currentUser;
 
         // constructor
-        public HtmlDocumentBuilder()
+        public HtmlCommentBuilder()
         {
             // nothing to do
         }
@@ -20,21 +22,13 @@ namespace ThreadTest.Models.CommentModule
         // start building a new document
         public void OpenDocument()
         {
-            doc = new HtmlDocument();
+            doc = new HtmlComment();
 
             // erase the title and author
             username = "";
             level = 0;
         }
-        // build the header
-        public void BuildHead(string titleIn, string authorIn)
-        {
-        }
-
-        // build the body
-        public void BuildBody(string textIn)
-        {
-        }
+ 
         // build the <content section> element
         public void BuildContent(string usernameIn, string descriptionIn, int levelIn)
         {
@@ -59,13 +53,13 @@ namespace ThreadTest.Models.CommentModule
         }
 
         // finish the document
-        public void CloseDocument()
+        public void CloseComment()
         {
             // nothing to do
         }
 
         // get the document being built
-        public HtmlDocument GetDocument()
+        public IComment GetComment()
         {
             return doc;
         }
