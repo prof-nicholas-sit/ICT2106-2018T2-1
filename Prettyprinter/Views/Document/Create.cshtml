@@ -1,0 +1,132 @@
+﻿
+@model Interpreter.Models.InterpreterJob
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<link rel="stylesheet" href="~/css/toolbar.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="~/js/editor.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous">
+</script>
+
+<h2>Create New Document</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Document</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <input type="button" id="markdownSyntaxBtn" onclick="markdownSyntax()" value="Help" class="btn btn-default" />
+        </div>
+        <div class="form-group">
+            <img src="~/images/Markdown Help.png" id="markdownsyntax" style="display:none" class="hide" />
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <label class="control-label">Document Name</label>
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.FileName, new { htmlAttributes = new { @class = "form-control", @style = "width:100%; max-width: 100%;" } })
+                @Html.ValidationMessageFor(model => model.FileName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2">
+                <label class="control-label">Font Type</label>
+            </div>
+            <div class="col-md-4">
+                @*<select asp-for="FontFamily">
+                        <option value="None"></option>
+                        <option value="Helvetica">Helvetica</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Tahoma">Tahoma</option>
+                        <option value="TimesNewRoman">Times New Roman</option>
+                    </select>*@
+                @Html.EditorFor(model => model.FontFamily, new { htmlAttributes = new { placeholder = "San Serif", @class = "form -control" } })
+                @Html.ValidationMessageFor(model => model.FontFamily, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2">
+                <label class="control-label">Font Size</label>
+            </div>
+            <div class="col-md-4">
+                @*<select class="editableBox" asp-for="FontSize">
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="14">14</option>
+                        <option value="18">18</option>
+                        <option value="24">24</option>
+                        <option value="30">30</option>
+                        <option value="36">36</option>
+                        <option value="48">48</option>
+                        <option value="60">60</option>
+                        <option value="72">72</option>
+                        <option value="96">96</option>
+                    </select>*@
+                @Html.EditorFor(model => model.FontSize, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FontSize, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <label class="control-label">Document</label>
+            </div>
+            <div class="col-md-12">
+                <ul id="toolbar">
+                    <li id="bold"><img src="~/images/toolbar/Bold.png"></li>
+                    <li id="italic"><img src="~/images/toolbar/Italic.png"></li>
+                    <li id="underline"><img src="~/images/toolbar/Underline.png"></li>
+                    <li id="strikethrough"><img src="~/images/toolbar/Strikeout.png"></li>
+                    <li id="redtext"><img src="~/images/toolbar/RedText.png"></li>
+                    <li id="highlight"><img src="~/images/toolbar/Highlight.png"></li>
+                    <li id="alignleft"><img src="~/images/toolbar/AlignLeft.png"></li>
+                    <li id="aligncenter"><img src="~/images/toolbar/AlignCenter.png"></li>
+                    <li id="alignright"><img src="~/images/toolbar/AlignRight.png"></li>
+                    <li id="justify"><img src="~/images/toolbar/justify.png"></li>
+                    <li id="unorderedlist"><img src="~/images/toolbar/UnorderedList.png"></li>
+                    <li id="orderedlist"><img src="~/images/toolbar/OrderedList.png"></li>
+                    <li id="hyperlink"><img src="~/images/toolbar/hyperlink.png"></li>
+
+
+                    <li id="smileEmo"><img src="~/images/toolbar/smile.png"></li>
+                    <li id="winkEmo"><img src="~/images/toolbar/wink.png"></li>
+                    <li id="joyEmo"><img src="~/images/toolbar/joy.png"></li>
+                    <li id="fearfulEmo"><img src="~/images/toolbar/fearful.png"></li>
+                    <li id="grinEmo"><img src="~/images/toolbar/grin.png"></li>
+                    <li id="angryEmo"><img src="~/images/toolbar/angry.png"></li>
+                </ul>
+
+                @*changed @class from form-control to long-text-editor*@
+                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "long-text-editor", @id = "tooltest", @style = "width:100%; max-width: 100%; height:500px;" } })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-5 col-md-7">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+

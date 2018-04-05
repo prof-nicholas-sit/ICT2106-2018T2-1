@@ -1,0 +1,42 @@
+
+#toolbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #FFF;
+    width: inherit;
+    border-style: solid;
+}
+
+#toolbar li {
+    float: left;
+    width: 30px;
+    height: 30px;
+}
+
+#toolbar li a {
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#toolbar li a:hover {
+    background-color: #DCDCDC;
+}
+
+#tooltest {
+  width: 100%;
+}
+#container {
+  width: 700px;
+}
+/* fsdfsdf */
+
+.editableBox {
+    width: 75px;
+    height: 30px;
+}
+

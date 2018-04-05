@@ -1,0 +1,84 @@
+﻿@model Interpreter.Models.InterpreterJob
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>InterpreterJob</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DestinationFlag)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DestinationFlag)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FontFamily)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FontFamily)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FontSize)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FontSize)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EmojiSupport)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmojiSupport)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModified)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastModified)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsConverted)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsConverted)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ConvertedContent)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ConvertedContent)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PreHeaderMetaData)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PreHeaderMetaData)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DividerIdentifier)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DividerIdentifier)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
