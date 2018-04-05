@@ -9,8 +9,10 @@
     }
 }
 
-
-<h3 style="text-transform:uppercase">@ViewBag.Path</h3>
+<br />
+<span >   
+    <img src="~/images/directory.png" style="width:25px;height:25px" />&nbsp
+    Current Directory: </span><span style="text-transform:uppercase;font-size:15px;font-weight:bold;text-decoration:underline">@ViewBag.Path</span>
 <p>
     @{
         var createAttributes = new Dictionary<string, object>();
@@ -23,35 +25,51 @@
         @Html.Hidden("isFile", 0)
         @Html.Hidden("permission", true)
     }
-
-    <button type="button" onclick="createDocs(0)">Create New Folder</button> |
-    <button type="button" onclick="createDocs(1)">Create New File</button>
+    @if (ViewBag.Path != "Root/SHARED")
+    {
+        <!-- Create folder & Create file buttons -->
+        <button type="button"  onclick="createDocs(0)"   style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;font-weight:bold;background-color:gainsboro;color:black;box-shadow:initial"> + Create New Folder</button> <span class="text-nowrap">&nbsp&nbsp</span>
+        <button type="button" onclick="createDocs(1)"   style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;font-weight:bold;background-color:gainsboro;color:black;box-shadow:initial"> + Create New File</button>
+    }
 </p>
 <table class="table">
-    <thead>
+
+    <!-- Table headers -->
+    <thead style="margin:0;padding:0;background-color:lightgray;">
         <tr>
             <th>
                 Name
             </th>
             <th>
-                Operations
+                Operations <img src="~/images/operations.png" style="width:25px;height:25px" />
             </th>
             <th>
-                Date Created
+                @if (ViewBag.Path != "Root/SHARED")
+                {
+                    <div>Date Created</div>
+                }
+                else
+                {
+                    <div>Date Shared</div>
+
+
+                }
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody style="background-color:lightyellow;">
 
-        @if (ViewBag.Path == "Root") { 
+        <!-- Only display shared folder at Root -->
+        @if (ViewBag.Path == "Root")
+    {
         <tr>
 
             <td style="align-content:center">
 
                 <img src="~/images/sharedfolder.png" style="width:50px;height:50px" />
 
-                @Html.ActionLink("SHARED FOLDER", "Index", "Document", new { param = "SHARED", id = ViewBag.user+".SHARED" }, null)
+                <span style="font-weight:bolder">  @Html.ActionLink("Shared Folder", "Index", "Document", new { param = "SHARED", id = ViewBag.user + ".SHARED" }, null)</span>
 
             </td>
 
@@ -59,13 +77,13 @@
             <td style="vertical-align:middle"></td>
             <td style="vertical-align:middle"></td>
         </tr>
-        }
+}
 
 
 
         @{
-            var attributes = new Dictionary<string, object>();
-            attributes.Add("Id", "postActionForm");
+        var attributes = new Dictionary<string, object>();
+        attributes.Add("Id", "postActionForm");
         }
         @using (Html.BeginForm("Index", "Document", FormMethod.Post, attributes))
     {
@@ -76,36 +94,53 @@
     {
         <tr>
             <td style="align-content:center">
+                <!-- Appropriate images for the documents -->
                 @if (item.type == 0)
-            {
-                <img src="~/images/folder.png" style="width:50px;height:50px" />
-        }
-        else
-        {
+    {
+            <img src="~/images/folder.png" style="width:50px;height:50px" />
+}
+else
+{
             <img src="~/images/Filetype.png" style="width:50px;height:50px" />}
+
+                <!-- Appropriate controller links -->
                 @if (item.type == 0)
-            {
+    {
+            <span style="font-weight:bolder">
                 @Html.ActionLink(item.Name, "Index", "Document", new { param = item.Name, id = item._id }, null)
-        }
-        else
-        {
-            @Html.ActionLink(item.Name, "openFile", "TypeSetter")
-    }
+            </span>
+}
+else
+{
+            <span style="font-weight:bolder">
+                @Html.ActionLink(item.Name, "openFile", "TypeSetter")
+            </span>
+}
             </td>
 
 
             <td style="vertical-align:middle">
-                <button type="button" id="r+@item._id" name="@item.Name" onclick="renameFile(this.id, this.name)">Rename</button>
-                <button type="button" id="d+@item._id" name="@item.Name" onclick="deleteFile(this.id, this.name, @item.type)">Delete</button>
-                @if (item.type == 1)
-            {
-                <button type="button" id="@item._id" name="@item.Name" onclick="moveFile(this.id, this.name)">Move</button>
-                <button type="button" id="@item._id" name="@item.Name" onclick="copyFile(this.id, this.name)">Copy</button>
-                <button type="button" id="@item._id" name="@item.Name" onclick="shareFile(this.id, this.name)">Share</button>
-        }
+
+                @if (ViewBag.Path != "Root/SHARED")
+    {
+            <button type="button" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;font-weight:bold;background-color:gainsboro;color:black;box-shadow:initial" id="r+@item._id" name="@item.Name" onclick="renameFile(this.id, this.name)">RENAME</button>
+            <span>&nbsp</span><button type="button" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;font-weight:bold;background-color:gainsboro;color:black;box-shadow:initial" id="d+@item._id" name="@item.Name" onclick="deleteFile(this.id, this.name, @item.type)">DELETE</button>
+            @if (item.type == 1)
+{
+            <span>&nbsp</span><button type="button" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;font-weight:bold;background-color:gainsboro;color:black;box-shadow:initial" id="@item._id" name="@item.Name" onclick="moveFile(this.id, this.name)">MOVE</button>
+            <span>&nbsp</span><button type="button" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;font-weight:bold;background-color:gainsboro;color:black;box-shadow:initial" id="@item._id" name="@item.Name" onclick="copyFile(this.id, this.name)">COPY</button>
+            <span>&nbsp</span><button type="button" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;font-weight:bold;background-color:gainsboro;color:black;box-shadow:initial" id="@item._id" name="@item.Name" onclick="shareFile(this.id, this.name)">SHARE</button>
+}
+}
+           // READ ONLY TEXT with no operations 
+                else
+                {
+
+                <div style="color:red">Read Only</div>
+                }
             </td>
             <td style="vertical-align:middle">
-                @Html.DisplayFor(modelItem => item.Date)
+                <span style="font-weight:bolder"> @Html.DisplayFor(modelItem => item.Date)</span>
             </td>
         </tr>
 }
@@ -164,7 +199,7 @@
 
 
 
-    </tbody>
+        </tbodystyle="background-color:lightyellow;">
 </table>
 <script type="text/javascript">
     function createDocs(type) {

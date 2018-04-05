@@ -23,7 +23,7 @@ namespace Prettyprinter.Controllers
         //Constants
         private const String serverDirectory = @"2107 File Server\";
         private const String currentUserID = "JENKINS";
-        
+        //  private const String currentUserID = "tom";
         //Constructor
         public DocumentController(ApplicationDbContext context)
         {
@@ -36,7 +36,8 @@ namespace Prettyprinter.Controllers
             if (!System.IO.File.Exists(serverDirectory + currentUserID))
             {
                 Directory.CreateDirectory(serverDirectory + currentUserID);
-                Directory.CreateDirectory(serverDirectory + currentUserID + @"\SHARED");
+                //Create a shared folder
+                Directory.CreateDirectory(serverDirectory + currentUserID + @"\" + currentUserID +".SHARED");
             }
           
         }
@@ -140,7 +141,7 @@ namespace Prettyprinter.Controllers
             else
             {
 
-                
+
 
                 //Specify type is File
                 document.type = 1;
@@ -151,7 +152,7 @@ namespace Prettyprinter.Controllers
                 //Builder Pattern
                 FileBuilder fileBuilder = new FileBuilder();
                 fileBuilder.BuildDocument(applicationDbContext, id, currentUserID, parentId, name);
-
+                
                 //Stub to simulate passing builder over to Typesetter and calling Builder's BuildContent() and SaveDocument()
                 typeSetterController.onCreate(fileBuilder);
 

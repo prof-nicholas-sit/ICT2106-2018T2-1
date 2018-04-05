@@ -18,10 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\images\backbutton.png" />
+    <None Include="wwwroot\images\directory.png" />
     <None Include="wwwroot\images\filetext.png" />
     <None Include="wwwroot\images\Filetype.png" />
     <None Include="wwwroot\images\folder.png" />
     <None Include="wwwroot\images\folder_yellow.png" />
+    <None Include="wwwroot\images\operations.png" />
     <None Include="wwwroot\images\sharedfolder.png" />
   </ItemGroup>
 
