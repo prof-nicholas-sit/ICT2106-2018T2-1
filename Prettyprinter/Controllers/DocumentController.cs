@@ -29,14 +29,7 @@ namespace Prettyprinter.Controllers
         {
             folderGateway = new FolderGateway(context);
             applicationDbContext = context;
-
-            if (!System.IO.File.Exists(serverDirectory))
-            {
-                Directory.CreateDirectory(serverDirectory);
-            }
-            //if (!System.IO.File.Exists(serverPath + HttpContext.Session.GetString("currentUserID"))){
-            //    Directory.CreateDirectory(serverPath + HttpContext.Session.GetString("currentUserID"));
-            //}
+            
             if (!System.IO.File.Exists(serverDirectory + currentUserID))
             {
                 Directory.CreateDirectory(serverDirectory + currentUserID);
@@ -219,9 +212,9 @@ namespace Prettyprinter.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FolderExists(string id)
-        {
-            return (folderGateway.SelectById(id) != null);
-        }
+        //private bool FolderExists(string id)
+        //{
+        //    return (folderGateway.SelectById(id) != null);
+        //}
     }
 }
