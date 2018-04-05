@@ -32,7 +32,7 @@ namespace ThreadTest.Controllers
             }
 
             output = new StringBuilder();
-
+            output.Append(buildDocument());
             output.Append(buildTopLevelComment());
 
             if (Request.QueryString.HasValue){
@@ -371,6 +371,14 @@ namespace ThreadTest.Controllers
             comment.username = username;
             comment.description = commentText;
             model.Add(comment);
+        }
+
+        public String buildDocument()
+        {
+            StringBuilder raw = new StringBuilder();
+            raw.Append("<div><h1>This is a Document</h1><p>This is a paragraph of my document. Please like and comment below. </p>");
+            raw.Append("<p>Blah blah blah random content of my document. I am so lonely here all by myself.</p></div>");
+            return raw.ToString();
         }
     }
 }
