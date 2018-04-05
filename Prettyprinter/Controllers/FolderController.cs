@@ -102,35 +102,37 @@ namespace Prettyprinter.Controllers
                 //parentId = HttpContext.Session.GetString("Path");
                 parentId = currentUserID;
             }
+            System.Diagnostics.Debug.WriteLine(parentId);
 
+            AccessControl accessControl = new AccessControl(
+                   Guid.NewGuid().ToString(),
+                   id,
+                   currentUserID,
+                   true,
+                   true);
+
+            List<AccessControl> accessControls = new List<AccessControl>();
+            accessControls.Add(accessControl);
+
+            Folder folder = new Folder();
+            folder._id = id;
+            folder.parentId = parentId;
+            folder.name = name;
+            folder.accessControl = new string[4];
+            folder.date = dateNow;
+
+            // 0 = Folder, 1 = File
             if (isFile == 0)
             {
 
-                int type = Folder.TYPE;
            
-
-                AccessControl accessControl = new AccessControl(
-                    Guid.NewGuid().ToString(),
-                    id,
-                    currentUserID,
-                    true,
-                    true);
-
-                List<AccessControl> accessControls = new List<AccessControl>();
-                accessControls.Add(accessControl);
-
                 Metadata metadata = new Metadata(id, currentUserID, docName, Folder.TYPE, dateNow, "", parentId, accessControls);
 
                 //FileController fc = new FileController();
                 //fc.createFile(parameters);
 
-                Folder folder = new Folder();
-                folder._id = id;
-                folder.parentId = parentId;
+
                 folder.type = Folder.TYPE;
-                folder.name = name;
-                folder.accessControl = new string[4];
-                folder.date = dateNow;
 
                 folderGateway.CreateFile(folder);
 
@@ -141,34 +143,23 @@ namespace Prettyprinter.Controllers
                 //return RedirectToAction(nameof(Index), new { param = HttpContext.Session.GetString("Path"), id = folder.parentId });
 
             }
+            // File
             else
             {
+
+                System.Diagnostics.Debug.WriteLine("Im creating File");
+
+
                 // Sent Data over to the typesetter , when creation of File
 
                 TypeSetterController action = new TypeSetterController();
                 FileController data = action.onCreate();
                 data.setParentId(parentId);
 
-                AccessControl accessControl = new AccessControl(
-                        Guid.NewGuid().ToString(),
-                        id,
-                        currentUserID,
-                        true,
-                        true);
-
-                List<AccessControl> accessControls = new List<AccessControl>();
-                accessControls.Add(accessControl);
-
-
                 Metadata metadata = new Metadata(id, currentUserID, data.getName(), 1, dateNow, "", parentId, accessControls);
 
-                Folder folder = new Folder();
-                folder._id = id;
-                folder.parentId = parentId;
-                folder.type = Folder.TYPE;
-                folder.name = name;
-                folder.accessControl = new string[4];
-                folder.date = dateNow;
+                // Set File Type
+                folder.type = 1;
 
                 folderGateway.CreateFile(folder);
 
