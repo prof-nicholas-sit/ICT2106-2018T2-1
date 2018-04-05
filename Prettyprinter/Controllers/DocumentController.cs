@@ -22,7 +22,7 @@ namespace Prettyprinter.Controllers
 
         //Constants
         private const String serverDirectory = @"2107 File Server\";
-        private const String currentUserID = "161616";
+        private const String currentUserID = "JENKINS";
         
         //Constructor
         public DocumentController(ApplicationDbContext context)
@@ -36,7 +36,9 @@ namespace Prettyprinter.Controllers
             if (!System.IO.File.Exists(serverDirectory + currentUserID))
             {
                 Directory.CreateDirectory(serverDirectory + currentUserID);
+                Directory.CreateDirectory(serverDirectory + currentUserID + @"\SHARED");
             }
+          
         }
 
         // GET: Document
@@ -72,6 +74,8 @@ namespace Prettyprinter.Controllers
             serverPath = HttpContext.Session.GetString("ServerPath");
             ViewBag.serverPath = serverPath;
 
+            ViewBag.user = currentUserID;
+
             //Retrieve last part of Server Path (Folder ID)
             string[] currentServerPath = serverPath.Split("/");
             if(currentServerPath.Length >= 2)
@@ -83,18 +87,30 @@ namespace Prettyprinter.Controllers
 
 
         // Create for both File and Folder
-        public ActionResult Create(string docName, string creationPath, int isFile)
+        public ActionResult Create(string docName, string creationPath, int isFile,Boolean permission)
         {
             string parentId;
             string name = docName;
             string id = Guid.NewGuid().ToString();
-            
-            if (!String.IsNullOrEmpty(creationPath))
+
+            Debug.WriteLine("************* " + docName);
+
+            if (permission == false)
+            {
+                string[] parentPath = creationPath.Split("\\");
+
+                // Make the shared file parent ID to the [personID].[SHARED]
+                parentId = parentPath[0]+"."+ parentPath[1];
+        
+
+            }
+            else if (!String.IsNullOrEmpty(creationPath))
             {
                 //If not root - get last part of creationPath
                 string[] parentPath = creationPath.Split("/");
                 parentId = parentPath[parentPath.Length-1];
             }
+            
             else
             {
                 //Else - Set folder is root
@@ -102,7 +118,7 @@ namespace Prettyprinter.Controllers
             }
 
             AccessControl accessControl = new AccessControl(
-                   Guid.NewGuid().ToString(), id, currentUserID, true, true);
+                   Guid.NewGuid().ToString(), id, currentUserID, permission, permission);
 
             List<AccessControl> accessControls = new List<AccessControl>();
             accessControls.Add(accessControl);
@@ -123,6 +139,9 @@ namespace Prettyprinter.Controllers
             // File
             else
             {
+
+                
+
                 //Specify type is File
                 document.type = 1;
 
@@ -151,8 +170,14 @@ namespace Prettyprinter.Controllers
             string pathParam = (lastPath.Length >= 2) 
                 ? lastPath[lastPath.Length - 1] : "Root";
 
+            if (permission == true) { 
             //Redirect to Index to update display
             return RedirectToAction(nameof(Index), new { param = pathParam, id = parentId });
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // Delete for both File and Folder
@@ -192,6 +217,25 @@ namespace Prettyprinter.Controllers
             fileManager.copyDocument(HttpContext.Session.GetString("serverPath"), copyPath, copyId);
             return RedirectToAction(nameof(Index));
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Share(string userId, string fileId,String fileName)
+        {
+            //(string docName, string creationPath, int isFile,Boolean permission)
+         // Create(docName, userId + @"\SHARED", false);
+            //string createdId = folderGateway.CopyFile(copyId, copyPath);
+            //JENKINS/FOLDER/FOLDER
+            //fileManager.copyDocument(HttpContext.Session.GetString("serverPath"), copyPath, copyId);
+            Debug.WriteLine("*************"+ fileName + "***************************** " + HttpContext.Session.GetString("ServerPath") + " | " + fileId);
+            // fileManager.copyDocument(HttpContext.Session.GetString("ServerPath"), userId+@"\SHARED", fileId);
+            return RedirectToAction("Create", "Document", new { docName = fileName, creationPath = userId + @"\SHARED", isFile = 1, permission = false });
+
+            // return RedirectToAction(nameof(Index));
+        }
+
+
 
         // POST
         [HttpPost]

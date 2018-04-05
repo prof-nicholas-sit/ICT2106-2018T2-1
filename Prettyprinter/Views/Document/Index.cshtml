@@ -21,6 +21,7 @@
         @Html.Hidden("docName", null)
         @Html.Hidden("creationPath", (string)ViewBag.ServerPath)
         @Html.Hidden("isFile", 0)
+        @Html.Hidden("permission", true)
     }
 
     <button type="button" onclick="createDocs(0)">Create New Folder</button> |
@@ -42,9 +43,29 @@
         </tr>
     </thead>
     <tbody>
+
+        @if (ViewBag.Path == "Root") { 
+        <tr>
+
+            <td style="align-content:center">
+
+                <img src="~/images/sharedfolder.png" style="width:50px;height:50px" />
+
+                @Html.ActionLink("SHARED FOLDER", "Index", "Document", new { param = "SHARED", id = ViewBag.user+".SHARED" }, null)
+
+            </td>
+
+
+            <td style="vertical-align:middle"></td>
+            <td style="vertical-align:middle"></td>
+        </tr>
+        }
+
+
+
         @{
-        var attributes = new Dictionary<string, object>();
-        attributes.Add("Id", "postActionForm");
+            var attributes = new Dictionary<string, object>();
+            attributes.Add("Id", "postActionForm");
         }
         @using (Html.BeginForm("Index", "Document", FormMethod.Post, attributes))
     {
@@ -56,30 +77,31 @@
         <tr>
             <td style="align-content:center">
                 @if (item.type == 0)
-                {
-            <img src="~/images/folder.png" style="width:50px;height:50px" />
-                }
-                else
-                {
+            {
+                <img src="~/images/folder.png" style="width:50px;height:50px" />
+        }
+        else
+        {
             <img src="~/images/Filetype.png" style="width:50px;height:50px" />}
                 @if (item.type == 0)
-                {
-                    @Html.ActionLink(item.Name, "Index", "Document", new { param = item.Name, id = item._id }, null)
-                }
-                else
-                {
-                    @Html.ActionLink(item.Name, "openFile", "TypeSetter") //Placeholder Method, out of our boundary
-                }
+            {
+                @Html.ActionLink(item.Name, "Index", "Document", new { param = item.Name, id = item._id }, null)
+        }
+        else
+        {
+            @Html.ActionLink(item.Name, "openFile", "TypeSetter")
+    }
             </td>
 
-           
+
             <td style="vertical-align:middle">
                 <button type="button" id="r+@item._id" name="@item.Name" onclick="renameFile(this.id, this.name)">Rename</button>
                 <button type="button" id="d+@item._id" name="@item.Name" onclick="deleteFile(this.id, this.name, @item.type)">Delete</button>
                 @if (item.type == 1)
-                {
+            {
                 <button type="button" id="@item._id" name="@item.Name" onclick="moveFile(this.id, this.name)">Move</button>
                 <button type="button" id="@item._id" name="@item.Name" onclick="copyFile(this.id, this.name)">Copy</button>
+                <button type="button" id="@item._id" name="@item.Name" onclick="shareFile(this.id, this.name)">Share</button>
         }
             </td>
             <td style="vertical-align:middle">
@@ -128,6 +150,18 @@
         @Html.Hidden("newName", null)
 
 }
+
+        @{
+        var shareAttributes = new Dictionary<string, object>();
+        shareAttributes.Add("Id", "postShareForm");
+        }
+        @using (Html.BeginForm("Share", "Document", FormMethod.Post, shareAttributes))
+    {
+        @Html.Hidden("userId", null)
+        @Html.Hidden("fileId", null)
+        @Html.Hidden("fileName", null)
+}
+
 
 
     </tbody>
@@ -207,4 +241,28 @@
             }
         }
     }
+
+    function shareFile(id, fileName) {
+        // prompt user for new filepath
+        var newFilename = prompt("Enter username to share to: ");
+
+        // proceed if user input something
+        if (newFilename != 0 && newFilename != "") {
+            // confirmation to proceed
+            var fileName2 = confirm("Are you sure you want to share this file - " + fileName + " ?");
+            if (fileName2 == true) {
+                // get the value of the moce element
+                var hiddenPath = document.getElementById("userId");
+                hiddenPath.value = newFilename;
+                var hiddenId = document.getElementById("fileId");
+                hiddenId.value = id;
+                var hiddenName = document.getElementById("fileName");
+                hiddenName.value = fileName; 
+                document.getElementById("postShareForm").submit();
+            }
+        }
+    }
+
+
+
 </script>

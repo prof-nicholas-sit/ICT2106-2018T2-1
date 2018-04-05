@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -56,7 +57,9 @@ namespace Prettyprinter.DAL
 
         public Boolean copyDocument(String source, String destination, String fileID)
         {
-            if (!System.IO.File.Exists(serverPath + source + @"\" + fileID + ".txt"))
+            Debug.WriteLine("My debug string here "+source+ " | "+destination+" | "+fileID);
+
+            if (System.IO.File.Exists(serverPath + source + @"\" + fileID + ".txt"))
             {
                 System.IO.File.Copy(serverPath + source + @"\" + fileID + ".txt", serverPath + destination + @"\" + fileID + ".txt");
                 return true;
