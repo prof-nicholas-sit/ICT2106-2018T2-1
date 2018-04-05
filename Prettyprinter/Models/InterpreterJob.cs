@@ -18,6 +18,7 @@ namespace Interpreter.Models
         // 1 - To Typesetter (Editor to Typesetter)
         // 2 - To Editor (Typesetter to Editor)
         public int DestinationFlag { get; set; }
+        public int modifiedFlag { get; set; }
 
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }

@@ -8,10 +8,11 @@ using System.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Editor.Interfaces;
 
 namespace Editor.Controllers
 {
-    public class DocumentController : Controller
+    public class DocumentController : Controller , IInterpreterToEditor
     {
         static InterpreterJob currentJob;
         // GET: Document
@@ -44,6 +45,7 @@ namespace Editor.Controllers
             {
                 // TODO: Add insert logic here
                 job.DestinationFlag = 1;
+                job.modifiedFlag = 0;
                 job.LastModified = DateTime.UtcNow.Date.ToString("d");
                 currentJob= job;
                 return RedirectToAction(nameof(Details));
@@ -55,9 +57,9 @@ namespace Editor.Controllers
         }
 
         // GET: Document/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
-            return View();
+            return View(currentJob);
         }
 
         // POST: Document/Edit/5
@@ -67,7 +69,11 @@ namespace Editor.Controllers
             try
             {
                 // TODO: Add update logic here
-                return RedirectToAction("Index");
+                job.DestinationFlag = 1;
+                job.modifiedFlag = 1;
+                job.LastModified = DateTime.UtcNow.Date.ToString("d");
+                currentJob = job;
+                return RedirectToAction(nameof(Details));
             }
             catch
             {
@@ -95,6 +101,13 @@ namespace Editor.Controllers
             {
                 return View();
             }
+        }
+
+        // Markdown Interpreter to Document Editor
+        public ActionResult ConvertToDocument(InterpreterJob job)
+        {
+            currentJob = job;
+            return RedirectToAction("Edit");
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using Interpreter.Interfaces;
+﻿using Editor.Controllers;
+using Editor.Interfaces;
+using Interpreter.Interfaces;
 using Interpreter.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +19,8 @@ namespace Interpreter.Controllers
             builder.OpenJob(job.DestinationFlag, job.FileName);
             builder.BuildPreHeaderMetadata(job.FontFamily, job.FontSize, job.EmojiSupport, job.LastModified);
             builder.BuildContent(job.Content);
-
+            IInterpreterToEditor ioe = new DocumentController();
+            ActionResult editPage = ioe.ConvertToDocument(builder.GetCompletedJob());
             return builder.GetCompletedJob();
         }
 
