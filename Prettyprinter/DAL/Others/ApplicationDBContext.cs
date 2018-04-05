@@ -19,7 +19,6 @@ namespace Prettyprinter.DAL
             base.OnModelCreating(builder);
         }
 
-        public DbSet<File> File { get; set; }
         public DbSet<Folder> Folder { get; set; }
         public DbSet<Metadata> Metadata { get; set; }
         public DbSet<AccessControl> AccessControl { get; set; }

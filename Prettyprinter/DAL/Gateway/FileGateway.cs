@@ -8,9 +8,15 @@ namespace Prettyprinter.DAL
 {
     public class FileGateway : DataGateway<File>
     {
+        private readonly ApplicationDbContext db;
         public FileGateway(ApplicationDbContext context) : base(context)
         {
-
+            db = context;
+        }
+        public void CreateFile(File obj)
+        {
+            db.Add(obj);
+            db.SaveChanges();
         }
     }
 }

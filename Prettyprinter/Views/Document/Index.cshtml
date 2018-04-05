@@ -56,35 +56,34 @@
         <tr>
             <td style="align-content:center">
                 @if (item.type == 0)
-    {
-            <img src="~/images/folder.png" style="width:50px;height:50px" />
-}
-else
-{
-            <img src="~/images/Filetype.png" style="width:50px;height:50px" />}
-                &nbsp;
-                @if (item.type == 0)
                 {
-                    @Html.ActionLink(item.name, "Index", "Document", new { param = item.name, id = item._id }, null)
+            <img src="~/images/folder.png" style="width:50px;height:50px" />
                 }
                 else
                 {
-                    @Html.DisplayFor(modelItem => item.name)
+            <img src="~/images/Filetype.png" style="width:50px;height:50px" />}
+                @if (item.type == 0)
+                {
+                    @Html.ActionLink(item.Name, "Index", "Document", new { param = item.Name, id = item._id }, null)
+                }
+                else
+                {
+                    @Html.ActionLink(item.Name, "openFile", "TypeSetter")
                 }
             </td>
 
            
             <td style="vertical-align:middle">
-                <button type="button" id="r+@item._id" name="@item.name" onclick="renameFile(this.id, this.name)">Rename</button>
-                <button type="button" id="d+@item._id" name="@item.name" onclick="deleteFile(this.id, this.name)">Delete</button>
+                <button type="button" id="r+@item._id" name="@item.Name" onclick="renameFile(this.id, this.name)">Rename</button>
+                <button type="button" id="d+@item._id" name="@item.Name" onclick="deleteFile(this.id, this.name, @item.type)">Delete</button>
                 @if (item.type == 1)
-            {
-                <button type="button" id="@item._id" name="@item.name" onclick="moveFile(this.id, this.name)">Move</button>
-                <button type="button" id="@item._id" name="@item.name" onclick="copyFile(this.id, this.name)">Copy</button>
+                {
+                <button type="button" id="@item._id" name="@item.Name" onclick="moveFile(this.id, this.name)">Move</button>
+                <button type="button" id="@item._id" name="@item.Name" onclick="copyFile(this.id, this.name)">Copy</button>
         }
             </td>
             <td style="vertical-align:middle">
-                @Html.DisplayFor(modelItem => item.date)
+                @Html.DisplayFor(modelItem => item.Date)
             </td>
         </tr>
 }
@@ -96,6 +95,7 @@ else
         @using (Html.BeginForm("Delete", "Document", FormMethod.Post, deleteAttributes))
     {
         @Html.Hidden("deleteId", null)
+        @Html.Hidden("itemType", 0)
 }
 
         @{
@@ -146,7 +146,6 @@ else
         if (name != null && name != "") {
             var newDocName = document.getElementById("docName");
             newDocName.value = name;
-            alert(isFile.value);
             document.getElementById("postCreateForm").submit();
         }
     }
@@ -160,11 +159,15 @@ else
             document.getElementById("postRenameForm").submit();
         }
     }
-    function deleteFile(id, fileName) {
+    function deleteFile(id, fileName, itemType) {
         var fileName = confirm("Are you sure you want to delete the file - " + fileName + " ?");
         if (fileName == true) {
             var hiddenId = document.getElementById("deleteId");
             hiddenId.value = id.substring(2);
+
+            var itemType = document.getElementById("itemType");
+            itemType.value = itemType;
+
             document.getElementById("postDeleteForm").submit();
         }
     }

@@ -13,7 +13,7 @@ namespace Prettyprinter.DAL
         public void MoveFile(string fileId, string parentId)
         {
             Folder folder = data.Find(fileId);
-            folder.parentId = parentId;
+            folder.ParentId = parentId;
             data.Update(folder);
             base.SaveChanges();
         }
@@ -21,7 +21,7 @@ namespace Prettyprinter.DAL
         public void RenameFile(string renameId, string newName)
         {
             Folder folder = data.Find(renameId);
-            folder.name = newName; 
+            folder.Name = newName; 
             data.Update(folder);
             base.SaveChanges();
         }
@@ -29,7 +29,7 @@ namespace Prettyprinter.DAL
         public string CopyFile(string fileId, string parentId)
         {
             Folder folder = data.Find(fileId);
-            folder.parentId = parentId;
+            folder.ParentId = parentId;
             folder._id = Guid.NewGuid().ToString();
             data.Add(folder);
             return folder._id;

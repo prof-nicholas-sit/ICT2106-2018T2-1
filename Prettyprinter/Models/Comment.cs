@@ -1,23 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Prettyprinter.Models
 {
-    public class Comment
+    public class Comment : Document
     {
+        public int type { get; }
 
-        public static int TYPE = 2;
-
-        [Required]
-        public int _id { get; set; }
-        public int parentId { get; set; }
-
-        public int ancestorId { get; set; }
-        public string username { get; set; }
-        public string description { get; set; }
+        public Comment(string id, string parentId, string name, AccessControl accessControl)
+        {
+            this.type = 2;
+            this._id = id;
+            this.ParentId = parentId;
+            this.Name = name;
+            this.AccessControl = accessControl;
+            this.Date = DateTime.Now;
+        }
     }
 }

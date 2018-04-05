@@ -12,18 +12,15 @@ namespace Prettyprinter.DAL
         private static String serverPath = @"2107 File Server\";
 
         //Implementations of Abstract Methods
-        // Done
         public override String getParentOfDocument(String fileID)
         {
             String ParentName = Directory.GetParent(fileID).ToString();
             return ParentName;
         }
-
-        // Done
+        
         public override Boolean createDocument(String path, String fileID)
         {
             String Path = path + fileID;
-
 
             String pathToFile = serverPath + path;
             List<String> AllEntries = Directory.GetDirectories(pathToFile).ToList();
@@ -40,8 +37,7 @@ namespace Prettyprinter.DAL
             Directory.CreateDirectory(pathToFile + @"\" + fileID);
             return true;
         }
-
-        // Done
+        
         public override Boolean deleteDocument(String path, String fileID)
         {
             try
