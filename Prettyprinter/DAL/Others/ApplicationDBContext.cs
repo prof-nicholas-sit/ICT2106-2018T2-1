@@ -20,6 +20,7 @@ namespace Prettyprinter.DAL
         }
 
         public DbSet<Folder> Folder { get; set; }
+        public DbSet<Comment> Comment { get; set; }
         public DbSet<Metadata> Metadata { get; set; }
         public DbSet<AccessControl> AccessControl { get; set; }
     }

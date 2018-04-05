@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
-
+using Prettyprinter.Controllers;
 
 namespace Prettyprinter.Controllers
 {
     public class TypeSetterController
     {
-        public FileController onCreate() {
-            FileController data = new FileController();
-            data.setContent(null);
-            data.setParentId("apath");
-            data.setNewFile(true);
-            return data;
+        public void onCreate(FileBuilder fileBuilder) {
+            fileBuilder.BuildContent("CONTENT");
         }
 
         public FileController editFile()

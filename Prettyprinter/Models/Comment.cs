@@ -6,6 +6,8 @@ namespace Prettyprinter.Models
     {
         public int type { get; }
 
+        public Comment() { }
+
         public Comment(string id, string parentId, string name, AccessControl accessControl)
         {
             this.type = 2;

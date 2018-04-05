@@ -17,6 +17,12 @@ namespace Prettyprinter.DAL
                 context.Folder.Add(folder);
                 context.SaveChanges();
             }
+            if (!context.Comment.Any())
+            {
+                var comment = new Comment { };
+                context.Comment.Add(comment);
+                context.SaveChanges();
+            }
         }
     }
 }

@@ -116,11 +116,9 @@ namespace Prettyprinter.Controllers
                 Metadata metadata = new Metadata(id, currentUserID, docName, document.type, "", parentId, accessControls);
                 new MetadataController(applicationDbContext).AddMetadata(metadata);
 
-                //Storing Folder's Meta Data(Stub Method to store both Folder and File into SQL)
-                folderGateway.CreateFile(document);
-
-                //Create Folder on physical server
-                folderManager.createDocument(creationPath, id);
+                FolderBuilder folderBuilder = new FolderBuilder();
+                folderBuilder.BuildDocument(applicationDbContext, id, currentUserID, parentId, name);
+                folderBuilder.SaveDocument();
             }
             // File
             else
@@ -128,19 +126,24 @@ namespace Prettyprinter.Controllers
                 //Specify type is File
                 document.type = 1;
 
-                // Sent Data over to the typesetter , when creation of File
-                TypeSetterController action = new TypeSetterController();
-                FileController data = action.onCreate();
-                data.setParentId(parentId);
-                
+                // Simulate TypeSetter Controller Stub
+                TypeSetterController typeSetterController = new TypeSetterController();
+
+                //Builder Pattern
+                FileBuilder fileBuilder = new FileBuilder();
+                fileBuilder.BuildDocument(applicationDbContext, id, currentUserID, parentId, name);
+
+                //Stub to simulate passing builder over to Typesetter and calling Builder's BuildContent() and SaveDocument()
+                typeSetterController.onCreate(fileBuilder);
+
                 Metadata metadata = new Metadata(id, currentUserID, name, document.type, "", parentId, accessControls);
                 new MetadataController(applicationDbContext).AddMetadata(metadata);
 
                 //Storing File's Meta Data (Stub Method to store both Folder and File into SQL)
-                folderGateway.CreateFile(document);
+                //folderGateway.CreateFile(document);
 
                 //Create File on physical server
-                fileManager.createDocument(creationPath, id);
+                //fileManager.createDocument(creationPath, id);
             }
 
             //Retrieve last part of Path (Human-Readable)
