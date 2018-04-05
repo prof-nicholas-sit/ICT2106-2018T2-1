@@ -8,11 +8,11 @@ namespace Prettyprinter.DAL
     public class FolderManager : FileManager
     {
         //Implementations of Abstract Methods
-        public override String readFile(String fileID)
+        public override String readDocument(String fileID)
         {
             return "";
         }
-        public override String getParentOfFile(String fileID)
+        public override String getParentOfDocument(String fileID)
         {
             return "";
         }
