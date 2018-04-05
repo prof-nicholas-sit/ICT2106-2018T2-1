@@ -34,15 +34,15 @@
     @foreach (var item in Model) {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.name)
+                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.date)
+                    @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
-                    <button type="button" id="r+@item._id" name="@item.name" onclick="renameFile(this.id, this.name)">Rename</button> 
-                    <button type="button" id="d+@item._id" name="@item.name" onclick="deleteFile(this.id, this.name)">Delete</button> 
-                    <button type="button" id="m+@item._id" name="@item.name" onclick="moveFile(this.id, this.name)">onclick="">Move</button>
+                    <button type="button" id="r+@item._id" name="@item.Name" onclick="renameFile(this.id, this.name)">Rename</button> 
+                    <button type="button" id="d+@item._id" name="@item.Name" onclick="deleteFile(this.id, this.name)">Delete</button> 
+                    <button type="button" id="m+@item._id" name="@item.Name" onclick="moveFile(this.id, this.name)">onclick="">Move</button>
                 </td>
             </tr>
     }
