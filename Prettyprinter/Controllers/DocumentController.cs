@@ -13,14 +13,14 @@ using Prettyprinter.Models;
 
 namespace Prettyprinter.Controllers
 {
-    public class FolderController : Controller
+    public class DocumentController : Controller
     {
         public FolderGateway folderGateway;
         public ApplicationDbContext applicationDbContext;
         //private readonly ApplicationDbContext _context;
         private static String serverDirectory = @"2107 File Server\";
         private static String currentUserID = "161616";
-        public FolderController(ApplicationDbContext context)
+        public DocumentController(ApplicationDbContext context)
         {
             folderGateway = new FolderGateway(context);
             applicationDbContext = context;
@@ -166,10 +166,6 @@ namespace Prettyprinter.Controllers
                 new MetadataController(applicationDbContext).AddMetadata(metadata);
                 //Create a real folder locally in file server
                 FileStorageGateway.createFolder(parentId, id);
-
-
-
-
             }
 
             //Create a real folder locally in file server
