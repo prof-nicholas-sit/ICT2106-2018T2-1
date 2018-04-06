@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -9,8 +10,7 @@ namespace DBLayer.DAL
 {
     public class DbObj
     {
-        // private const string DbAddress = "mongodb://localhost:27017";
-        private const string DbAddress = "mongodb://52.91.110.127:27017";
+        private const string DbAddress = "mongodb://18.221.150.56:27017";
         private const string DbName = "ICT2106";
 
         private static MongoClient _client;
@@ -26,7 +26,7 @@ namespace DBLayer.DAL
         private static IMongoCollection<BsonDocument> _bsonfilesCollection;
         
         // for reading
-        private static IMongoCollection<ItemModel> _filesCollectionModel;
+        private static IMongoCollection<MetadataModel> _filesCollectionModel;
         
         /**
          * Constructor that makes sure required db and collections are created
@@ -46,58 +46,8 @@ namespace DBLayer.DAL
                 CreateCollection("Files").Wait();
             
             _bsonfilesCollection = _database.GetCollection<BsonDocument>("Files");
-            _filesCollectionModel = _database.GetCollection<ItemModel>("Files"); 
-            /*
-             (if(CollectionExistsAsync("Files").Result == false)
-                CreateFiles().Wait();
-
-            MainAsync().Wait();*/
-        }
-        
-        /*
-         * Main ASync 
-         */
-        private static async Task MainAsync()
-        {
-            /*var itemList = new List<ItemModel>();
-            var acctList = new List<AccountModel>();
+            _filesCollectionModel = _database.GetCollection<MetadataModel>("Files"); 
             
-            // Method 1
-            using (IAsyncCursor<AccountModel> cursor = await userCollectionModel.FindAsync(new BsonDocument()))
-            {
-                while (await cursor.MoveNextAsync())
-                {
-                    IEnumerable<AccountModel> batch = cursor.Current;
-                    foreach (AccountModel document2 in batch)
-                    {
-                        //acctList.Add(document2);
-                        acctList.Add(document2);
-                        Console.WriteLine(document2.ToJson());
-                        Console.WriteLine();
-                    }
-                }
-            }
-
-            using (IAsyncCursor<ItemModel> cursor = await fileMgrCollectionModel.FindAsync(new BsonDocument()))
-            {
-                while (await cursor.MoveNextAsync())
-                {
-                    IEnumerable<ItemModel> batch = cursor.Current;
-                    foreach (ItemModel document in batch)
-                    {
-                        //Console.WriteLine(document);
-                        itemList.Add(document);
-                        Console.WriteLine(document.ToJson());
-                        Console.WriteLine();
-                    }
-                }
-            }
-            
-            _userCollectionModel = _database.GetCollection<AccountModel>("User_Account");
-            
-            if (CollectionExistsAsync("User_Account").Result == false)
-                CreateCollection("User_Account").Wait();
-                */
         }
         
         /*
@@ -129,13 +79,11 @@ namespace DBLayer.DAL
         {
             if (type == typeof(AccountModel))
             {
-                Console.WriteLine("SelectAll collection AccountModel");
                 return _userCollectionModel.Find(new BsonDocument()).ToEnumerable();
             }
 
-            if (type == typeof(ItemModel))
+            if (type == typeof(MetadataModel))
             {
-                Console.WriteLine("SelectAll collection ItemModel");
                 return _filesCollectionModel.Find(new BsonDocument()).ToEnumerable();
             }
             
@@ -152,15 +100,13 @@ namespace DBLayer.DAL
             
             if (type == typeof(AccountModel))
             {
-                Console.WriteLine("Selectwhere collection AccountModel");
                 var filter = Builders<AccountModel>.Filter.Eq(field, value);
                 return _userCollectionModel.Find(filter).ToEnumerable();
             }
             
-            if (type == typeof(ItemModel))
+            if (type == typeof(MetadataModel))
             {
-                Console.WriteLine("Selectwhere collection ItemModel");
-                var filter = Builders<ItemModel>.Filter.Eq(field, value);
+                var filter = Builders<MetadataModel>.Filter.Eq(field, value);
                 return _filesCollectionModel.Find(filter).ToEnumerable();
             }
             
@@ -187,7 +133,6 @@ namespace DBLayer.DAL
             return null;
         }
         
-        
         /**
          * Save changes for genericsets to db
          */
@@ -196,51 +141,45 @@ namespace DBLayer.DAL
             
             if (typeof(T) == typeof(AccountModel))
             {
-                Console.WriteLine("Writing changes to AccountModel database");
+                Console.WriteLine("Writing changes to AccountModel database...");
                 // CREATE
                 if (set.NewList.Count > 0) 
                 {
-                    Console.WriteLine("Writing Create to AccountModel database");
                     await _bsonuserCollection.InsertManyAsync(ListToBson(set.NewList));
                 }
                 
                 // UPDATE
                 foreach (var doc in set.DirtyList as List<AccountModel>)
                 {
-                    Console.WriteLine("Writing Update to AccountModel database");
                     await _bsonuserCollection.ReplaceOneAsync(Builders<BsonDocument>.Filter.Eq("_id", doc.ID), doc.ToBsonDocument());
                 }
                 
                 // DELETE
                 foreach (var doc in set.RemovedList  as List<AccountModel>)
                 {
-                    Console.WriteLine("Writing Delete to AccountModel database");
                     await _bsonuserCollection.DeleteOneAsync(Builders<BsonDocument>.Filter.Eq("_id", doc.ID));
                 }
             }
             
-            if (typeof(T) == typeof(ItemModel))
+            if (typeof(T) == typeof(MetadataModel))
             {
-                Console.WriteLine("Writing changes to Files database");
+                Console.WriteLine("Writing changes to Files database...");
                 // CREATE
                 if (set.NewList.Count > 0) 
                 {
-                    Console.WriteLine("Writing Create to Files database");
                     await _bsonfilesCollection.InsertManyAsync(ListToBson(set.NewList));
                 }
                 
                 // UPDATE
-                foreach (var doc in set.DirtyList as List<ItemModel>)
+                foreach (var doc in set.DirtyList as List<MetadataModel>)
                 {
-                    Console.WriteLine("Writing Update to Files database");
-                    await _bsonfilesCollection.ReplaceOneAsync(Builders<BsonDocument>.Filter.Eq("_id", doc.ID), doc.ToBsonDocument());
+                    await _bsonfilesCollection.ReplaceOneAsync(Builders<BsonDocument>.Filter.Eq("_id", doc.itemId), doc.ToBsonDocument());
                 }
                 
                 // DELETE
-                foreach (var doc in set.RemovedList as List<ItemModel>)
+                foreach (var doc in set.RemovedList as List<MetadataModel>)
                 {
-                    Console.WriteLine("Writing Delete to Files database");
-                    await _bsonfilesCollection.DeleteOneAsync(Builders<BsonDocument>.Filter.Eq("_id", doc.ID));
+                    await _bsonfilesCollection.DeleteOneAsync(Builders<BsonDocument>.Filter.Eq("_id", doc.itemId));
                 }
             }
             
