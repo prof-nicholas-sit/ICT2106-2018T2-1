@@ -9,6 +9,8 @@ namespace Editor.Interfaces
 {
     interface IInterpreterToEditor
     {
+        //Markdown Interpreter will call this method to pass a document from typesetter for editing
+        //An ActionResult will be returned which will be the Edit Document Page with document initialized
         ActionResult ConvertToDocument(InterpreterJob job);
     }
 }

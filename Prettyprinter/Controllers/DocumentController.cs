@@ -21,7 +21,9 @@ namespace Editor.Controllers
             return View();
         }
 
-        // GET: Document/Details/5
+        // GET: Document/Details/
+        //This method will show the details of a document after it is processed by
+        //markdown interpreter and it will include the preview 
         public ActionResult Details()
         {
             InterpreterJob content = currentJob;
@@ -43,7 +45,10 @@ namespace Editor.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+                // When a document is created, it will be strongly typed into a InterpreterJob object
+                // The destination flag is set so that interpreter knows this should be passed to the typesetter
+                // modifiedFlag is 0 because this is a new document and the current time will be the LastModified date
+                // It will redirect to details page for users to preview information
                 job.DestinationFlag = 1;
                 job.modifiedFlag = 0;
                 job.LastModified = DateTime.UtcNow.Date.ToString("d");
@@ -68,7 +73,10 @@ namespace Editor.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                // When a document is edited, it will be strongly typed into a InterpreterJob object
+                // The destination flag is set so that interpreter knows this should be passed to the typesetter
+                // modifiedFlag is 1 because this is a existing document and the current time will be the LastModified date
+                // It will redirect to details page for users to preview information
                 job.DestinationFlag = 1;
                 job.modifiedFlag = 1;
                 job.LastModified = DateTime.UtcNow.Date.ToString("d");
@@ -103,7 +111,8 @@ namespace Editor.Controllers
             }
         }
 
-        // Markdown Interpreter to Document Editor
+        // Markdown Interpreter to Document Editor for editing of documents
+        //currentJob will be initialized to this and redirected to edit page for editing
         public ActionResult ConvertToDocument(InterpreterJob job)
         {
             currentJob = job;
