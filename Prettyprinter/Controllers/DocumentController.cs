@@ -149,17 +149,16 @@ namespace Prettyprinter.Controllers
                 // Simulate TypeSetter Controller Stub
                 TypeSetterController typeSetterController = new TypeSetterController();
                 FileBuilder fileBuilder = new FileBuilder();
-                fileBuilder.BuildDocument(applicationDbContext, id, currentUserID, creationPath, parentId, name, true);
+                fileBuilder.BuildDocument(applicationDbContext, id, currentUserID, creationPath, parentId, name, permission);
                 
                 //Stub to simulate passing builder over to Typesetter and calling Builder's BuildContent() and SaveDocument()
                 typeSetterController.onCreate(fileBuilder);
 
-                //replace content
+                //replace content of new text file with the old one
                 if (permission == false)
                 {
                     string sourcePath = HttpContext.Session.GetString("ServerPath");
                     string lines = fileManager.readDocument(sourcePath, sourceId);
-
                     fileManager.writeDocument(creationPath, lines, id, true);
                     
                 }
