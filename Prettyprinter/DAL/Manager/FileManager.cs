@@ -11,9 +11,6 @@ namespace Prettyprinter.DAL
     {
 
         private static String serverPath = @"2107 File Server\";
-
-        //Stub constant to represent getting userID from Session
-        private static String currentUserID = "161616";
         
         //Implementations of Abstract Methods
         public override String getParentOfDocument(String fileID)

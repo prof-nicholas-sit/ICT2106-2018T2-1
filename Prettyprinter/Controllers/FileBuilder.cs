@@ -33,6 +33,7 @@ namespace Prettyprinter.Controllers
         public void BuildContent(String content)
         {
             SaveDocument();
+            //Writing the content to the physical files in server
             fileManager.writeDocument(creationPath, content, file._id, true);
         }
 
