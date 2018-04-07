@@ -45,7 +45,7 @@ namespace Prettyprinter.DAL
         public string readDocument(string path, string fileID)
         {
 
-            string lines = "CONTENT";
+            string lines = "";
             string pathToFile = serverPath + path + @"\" + fileID + ".txt";
 
             if (System.IO.File.Exists(pathToFile))

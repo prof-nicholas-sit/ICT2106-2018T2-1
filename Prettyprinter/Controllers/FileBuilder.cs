@@ -15,7 +15,7 @@ namespace Prettyprinter.Controllers
         
 
         public override void BuildDocument(ApplicationDbContext context, string fileID, string userID, string creationPath,
-            string parentID, string Name, Boolean permission)
+            string parentID, string Name, bool permission)
         {
             //Initialising components
             db = context;
