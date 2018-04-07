@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{662D738A-983C-4776-889A-FE5D2D0B2881}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Interpreter</RootNamespace>
+    <AssemblyName>Interpreter</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="Interfaces\IContentBuilder.cs" />
+    <Compile Include="Interfaces\IEditorToTypesetter.cs" />
+    <Compile Include="Interfaces\IInterpreterJobBuilder.cs" />
+    <Compile Include="Interfaces\ITypesetterToEditor.cs" />
+    <Compile Include="Models\Content.cs" />
+    <Compile Include="Models\ContentBuilder.cs" />
+    <Compile Include="Models\InterpreterJob.cs" />
+    <Compile Include="Models\InterpreterJobBuilder.cs" />
+    <Compile Include="Interfaces\IPreHeaderMetadataBuilder.cs" />
+    <Compile Include="Models\PreHeaderMetadata.cs" />
+    <Compile Include="Models\PreHeaderMetadataBuilder.cs" />
+    <Compile Include="Models\Tags\Advance.cs" />
+    <Compile Include="Models\Tags\Alignment.cs" />
+    <Compile Include="Models\Tags\Basic.cs" />
+    <Compile Include="Models\Tags\Emoji.cs" />
+    <Compile Include="Models\Tags\Header.cs" />
+    <Compile Include="Models\Tags\Hyperlink.cs" />
+    <Compile Include="Models\Tags\List.cs" />
+    <Compile Include="Models\Tags\MarkdownPreHeadings.cs" />
+    <Compile Include="Models\Tags\Spacing.cs" />
+    <Compile Include="Models\Tags\TypesetterPreHeadings.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\test1.txt" />
+    <Content Include="Data\test2.txt" />
+    <Content Include="Data\Text.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
