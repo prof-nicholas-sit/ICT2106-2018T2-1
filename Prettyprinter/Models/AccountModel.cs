@@ -1,27 +1,13 @@
 ﻿using System;
-using System.Xml;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using Formatting = Newtonsoft.Json.Formatting;
 
-namespace DBLayer
-{    
-    [BsonIgnoreExtraElements]
+namespace Prettyprinter.Models
+{
     public class AccountModel
     {
-        /*
-         * { "_id" : ObjectId("5a67ddb3e2d82c35250dbe50"),
-         * "Name" : "Test",
-         * "Title" : "Tester",
-         * "Email" : "test@email.com",
-         * "Password" : "12345",
-         * "Birthday" : ISODate("2017-12-31T16:00:00Z"),
-         * "AdminRole" : true,
-         * "DisplayPicURL" : "",
-         * "Bio" : "BIODATA" }
-         */
         [BsonId]
         [BsonElement(elementName:"_id")]
         public ObjectId ID { get; set; }

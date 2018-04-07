@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using MongoDB.Bson;
 
-namespace DBLayer.DAL
+namespace Prettyprinter.DAL
 {
     public interface IDataGateway<T> where T : class
     {

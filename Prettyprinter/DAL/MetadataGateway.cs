@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MongoDB.Bson;
+using Prettyprinter.Models;
 
-namespace DBLayer.DAL
+namespace Prettyprinter.DAL
 {
     public class MetadataGateway : DataGateway<MetadataModel>
     {

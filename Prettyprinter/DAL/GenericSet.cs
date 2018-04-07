@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using MongoDB.Bson;
 
-namespace DBLayer.DAL
+namespace Prettyprinter.DAL
 {
     public class GenericSet<T> where T : class 
     {
@@ -20,7 +18,6 @@ namespace DBLayer.DAL
 
         public void RegisterNew(T obj)
         {
-            Console.WriteLine("Registering new.");
             NewList.Add(obj);
         }
 
@@ -32,7 +29,6 @@ namespace DBLayer.DAL
             if (NewList.Contains(obj))
             {
                 // if obj is newly created, not yet saved in db, then just remove it from new list
-                Console.WriteLine("Delete from new list.");
                 NewList.Remove(obj);
             }
             else if (!RemovedList.Contains(obj))

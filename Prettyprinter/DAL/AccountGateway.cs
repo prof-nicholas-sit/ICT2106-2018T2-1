@@ -1,6 +1,7 @@
 ﻿using System;
+using Prettyprinter.Models;
 
-namespace DBLayer.DAL
+namespace Prettyprinter.DAL
 {
     public class AccountGateway : DataGateway<AccountModel>
     {
