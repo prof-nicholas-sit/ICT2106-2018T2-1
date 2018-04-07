@@ -24,7 +24,7 @@ namespace Prettyprinter.Controllers
         private const string serverDirectory = @"2107 File Server\";
 
         //Stub constant to represent getting userID from Session
-        private const String currentUserID = "tom";
+        private const String currentUserID = "161616";
 
         //Constructor
         public DocumentController(ApplicationDbContext context)
@@ -95,15 +95,17 @@ namespace Prettyprinter.Controllers
             string parentId;
             string name = docName;
             string id = Guid.NewGuid().ToString();
-
-            Debug.WriteLine("************* " + creationPath);
+            string sourceId = ""; //For Sharing
+            
 
             if (permission == false)
             {
                 string[] parentPath = creationPath.Split("\\");
 
                 // Make the shared file parent ID to the [personID].[SHARED]
-                parentId =  parentPath[1];
+                sourceId = parentPath[0];
+                parentId =  parentPath[2];
+                creationPath = parentPath[1] + @"\" + parentPath[2];
         
 
             }
@@ -147,18 +149,21 @@ namespace Prettyprinter.Controllers
                 // Simulate TypeSetter Controller Stub
                 TypeSetterController typeSetterController = new TypeSetterController();
                 FileBuilder fileBuilder = new FileBuilder();
-
-
-                if (permission == true) {
-                //Builder Pattern
+                fileBuilder.BuildDocument(applicationDbContext, id, currentUserID, creationPath, parentId, name, true);
                 
-                fileBuilder.BuildDocument(applicationDbContext, id, currentUserID, creationPath, parentId, name,true);
-                }
-               
-
                 //Stub to simulate passing builder over to Typesetter and calling Builder's BuildContent() and SaveDocument()
                 typeSetterController.onCreate(fileBuilder);
 
+                //replace content
+                if (permission == false)
+                {
+                    string sourcePath = HttpContext.Session.GetString("ServerPath");
+                    string lines = fileManager.readDocument(sourcePath, sourceId);
+
+                    fileManager.writeDocument(creationPath, lines, id, true);
+                    
+                }
+                
                 Metadata metadata = new Metadata(id, currentUserID, name, document.type, "", parentId, accessControls);
 
                 //Stub method to add metadata through AccessControl
@@ -223,8 +228,8 @@ namespace Prettyprinter.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Share(string userId, string fileId, string fileName)
         {
-           
-            return RedirectToAction("Create", "Document", new { docName = fileName, creationPath = userId + @"\"+userId+".SHARED", isFile = 1, permission = false });
+            string sourceIdDest = fileId + @"\" + userId + @"\" + userId + ".SHARED";
+            return RedirectToAction("Create", "Document", new { docName = fileName, creationPath = sourceIdDest, isFile = 1, permission = false });
             
         }
 

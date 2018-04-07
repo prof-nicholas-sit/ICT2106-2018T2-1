@@ -42,10 +42,22 @@ namespace Prettyprinter.DAL
         }
         
         // FileManager's Method
-        public string readDocument(string fileID)
+        public string readDocument(string path, string fileID)
         {
-            string pathToFile = serverPath + @"\" + fileID + ".txt";
-            string lines = System.IO.File.ReadAllLines(pathToFile).ToString();
+
+            string lines = "CONTENT";
+            string pathToFile = serverPath + path + @"\" + fileID + ".txt";
+
+            if (System.IO.File.Exists(pathToFile))
+            {
+                string[] contents = System.IO.File.ReadAllLines(pathToFile);
+                lines = "";
+                for(int x = 0; x < contents.Length; x++)
+                {
+                    lines += (contents[x] + " "+Environment.NewLine); 
+                }
+               
+            }
             return lines;
         }
 
