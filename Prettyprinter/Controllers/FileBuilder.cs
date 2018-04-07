@@ -12,15 +12,16 @@ namespace Prettyprinter.Controllers
         ApplicationDbContext db;
         FileManager fileManager = new FileManager();
         string creationPath;
+        
 
         public override void BuildDocument(ApplicationDbContext context, string fileID, string userID, string creationPath,
-            string parentID, string Name)
+            string parentID, string Name, Boolean permission)
         {
             //Initialising components
             db = context;
             this.creationPath = creationPath;
             string accessControlID = Guid.NewGuid().ToString();
-            AccessControl accessControl = new AccessControl(accessControlID, fileID, userID, true, true);
+            AccessControl accessControl = new AccessControl(accessControlID, fileID, userID, permission, permission);
             file = new Folder(fileID, parentID, Name, accessControl);
             file.type = 1;
         }
@@ -46,5 +47,12 @@ namespace Prettyprinter.Controllers
             //To create the physical file using FileManager
             fileManager.createDocument(creationPath, file._id);
         }
+
+
+        
+
+
+
+
     }
 }

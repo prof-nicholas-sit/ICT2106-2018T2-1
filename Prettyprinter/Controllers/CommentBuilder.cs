@@ -13,7 +13,7 @@ namespace Prettyprinter.Controllers
         CommentManager commentManager = new CommentManager();
 
         public override void BuildDocument(ApplicationDbContext context, string commentID, string userID, string creationPath,
-            string parentID, string Name)
+            string parentID, string Name, Boolean permission)
         {
             //Initialising components
             db = context;
@@ -22,7 +22,7 @@ namespace Prettyprinter.Controllers
             //Generating new random ID
             string accessControlID = Guid.NewGuid().ToString();
 
-            AccessControl accessControl = new AccessControl(accessControlID, commentID, userID, true, true);
+            AccessControl accessControl = new AccessControl(accessControlID, commentID, userID, permission, permission);
             comment = new Comment(commentID, parentID, Name, accessControl);
         }
 

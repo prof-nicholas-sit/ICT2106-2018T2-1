@@ -11,13 +11,13 @@ namespace Prettyprinter.Controllers
         string creationPath;
 
         public override void BuildDocument(ApplicationDbContext context, string folderID, string userID, string creationPath,
-            string parentID, string Name)
+            string parentID, string Name, Boolean permission)
         {
             //Initialising components
             db = context;
             this.creationPath = creationPath;
             string accessControlID = Guid.NewGuid().ToString();
-            AccessControl accessControl = new AccessControl(accessControlID, folderID, userID, true, true);
+            AccessControl accessControl = new AccessControl(accessControlID, folderID, userID, permission, permission);
             folder = new Folder(folderID, parentID, Name, accessControl);
         }
 

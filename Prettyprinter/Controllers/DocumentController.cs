@@ -24,7 +24,7 @@ namespace Prettyprinter.Controllers
         private const string serverDirectory = @"2107 File Server\";
 
         //Stub constant to represent getting userID from Session
-        private const string currentUserID = "161616";
+        private const String currentUserID = "tom";
 
         //Constructor
         public DocumentController(ApplicationDbContext context)
@@ -103,7 +103,7 @@ namespace Prettyprinter.Controllers
                 string[] parentPath = creationPath.Split("\\");
 
                 // Make the shared file parent ID to the [personID].[SHARED]
-                parentId = parentPath[0]+"."+ parentPath[1];
+                parentId =  parentPath[1];
         
 
             }
@@ -135,7 +135,7 @@ namespace Prettyprinter.Controllers
                 new MetadataController(applicationDbContext).AddMetadata(metadata);
 
                 FolderBuilder folderBuilder = new FolderBuilder();
-                folderBuilder.BuildDocument(applicationDbContext, id, currentUserID, creationPath, parentId, name);
+                folderBuilder.BuildDocument(applicationDbContext, id, currentUserID, creationPath, parentId, name,true);
                 folderBuilder.SaveDocument();
             }
             // File
@@ -146,11 +146,16 @@ namespace Prettyprinter.Controllers
 
                 // Simulate TypeSetter Controller Stub
                 TypeSetterController typeSetterController = new TypeSetterController();
-
-                //Builder Pattern
                 FileBuilder fileBuilder = new FileBuilder();
-                fileBuilder.BuildDocument(applicationDbContext, id, currentUserID, creationPath, parentId, name);
+
+
+                if (permission == true) {
+                //Builder Pattern
                 
+                fileBuilder.BuildDocument(applicationDbContext, id, currentUserID, creationPath, parentId, name,true);
+                }
+               
+
                 //Stub to simulate passing builder over to Typesetter and calling Builder's BuildContent() and SaveDocument()
                 typeSetterController.onCreate(fileBuilder);
 
@@ -218,16 +223,9 @@ namespace Prettyprinter.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Share(string userId, string fileId, string fileName)
         {
-            //(string docName, string creationPath, int isFile,Boolean permission)
-            // Create(docName, userId + @"\SHARED", false);
-            //string createdId = folderGateway.CopyFile(copyId, copyPath);
-            //JENKINS/FOLDER/FOLDER
-            //fileManager.copyDocument(HttpContext.Session.GetString("serverPath"), copyPath, copyId);
-            Debug.WriteLine("*************"+ fileName + "***************************** " + HttpContext.Session.GetString("ServerPath") + " | " + fileId);
-            // fileManager.copyDocument(HttpContext.Session.GetString("ServerPath"), userId+@"\SHARED", fileId);
-            return RedirectToAction("Create", "Document", new { docName = fileName, creationPath = userId + @"\SHARED", isFile = 1, permission = false });
-
-            // return RedirectToAction(nameof(Index));
+           
+            return RedirectToAction("Create", "Document", new { docName = fileName, creationPath = userId + @"\"+userId+".SHARED", isFile = 1, permission = false });
+            
         }
 
         //Rename Method
