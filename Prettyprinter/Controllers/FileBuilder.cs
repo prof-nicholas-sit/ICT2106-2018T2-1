@@ -30,7 +30,7 @@ namespace Prettyprinter.Controllers
             return file;
         }
 
-        public void BuildContent(String content)
+        public void BuildContent(string content)
         {
             SaveDocument();
             //Writing the content to the physical files in server

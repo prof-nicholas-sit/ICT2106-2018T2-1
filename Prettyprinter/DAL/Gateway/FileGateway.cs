@@ -6,6 +6,7 @@ using Prettyprinter.Models;
 
 namespace Prettyprinter.DAL
 {
+    //Stub gateway for DataLink, storing File's metadata
     public class FileGateway : DataGateway<File>
     {
         private readonly ApplicationDbContext db;

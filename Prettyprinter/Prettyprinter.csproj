@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Others\FileController.cs" />
     <Compile Remove="Models\MetaDatas.cs" />
   </ItemGroup>
 

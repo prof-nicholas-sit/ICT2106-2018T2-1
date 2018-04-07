@@ -31,7 +31,7 @@ namespace Prettyprinter.Controllers
             return comment;
         }
 
-        public void BuildContent(String content)
+        public void BuildContent(string content)
         {
             SaveDocument();
             commentManager.writeDocument(creationPath, content, comment._id, true);

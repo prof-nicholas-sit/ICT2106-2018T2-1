@@ -21,10 +21,10 @@ namespace Prettyprinter.Controllers
         public ApplicationDbContext applicationDbContext;
 
         //Constants
-        private const String serverDirectory = @"2107 File Server\";
+        private const string serverDirectory = @"2107 File Server\";
 
         //Stub constant to represent getting userID from Session
-        private const String currentUserID = "161616";
+        private const string currentUserID = "161616";
 
         //Constructor
         public DocumentController(ApplicationDbContext context)
@@ -45,7 +45,7 @@ namespace Prettyprinter.Controllers
         }
 
         // GET: Document
-        public ActionResult Index(String param, String id)
+        public ActionResult Index(string param, string id)
         {
             var path = "";
             var serverPath = "";
@@ -90,7 +90,7 @@ namespace Prettyprinter.Controllers
 
 
         // Create for both File and Folder
-        public ActionResult Create(string docName, string creationPath, int isFile,Boolean permission)
+        public ActionResult Create(string docName, string creationPath, int isFile, bool permission)
         {
             string parentId;
             string name = docName;
@@ -216,7 +216,7 @@ namespace Prettyprinter.Controllers
         //Share File Method
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Share(string userId, string fileId,String fileName)
+        public ActionResult Share(string userId, string fileId, string fileName)
         {
             //(string docName, string creationPath, int isFile,Boolean permission)
             // Create(docName, userId + @"\SHARED", false);

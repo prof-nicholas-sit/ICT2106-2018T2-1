@@ -5,6 +5,7 @@ namespace Prettyprinter.DAL
 {
     public class FolderGateway : DataGateway<Folder>
     {
+        //Stub gateway for DataLink, storing Folder's metadata
         public FolderGateway(ApplicationDbContext context) : base(context) { }
 
         public void MoveFile(string fileId, string parentId)

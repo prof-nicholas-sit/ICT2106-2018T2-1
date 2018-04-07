@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Prettyprinter.DAL
 {
+    //Our Stub gateway that should be DataLink module
     public class DataGateway<T> : IDataGateway<T> where T : class
     {
         private readonly ApplicationDbContext db;

@@ -5,18 +5,14 @@ namespace Prettyprinter.Controllers
 {
     public class TypeSetterController
     {
+        //Stub method for TypeSetter to build content into already created File object
         public void onCreate(FileBuilder fileBuilder) {
             fileBuilder.BuildContent("CONTENT");
         }
 
-        public FileController editFile()
+        public void onEdit(FileBuilder fileBuilder)
         {
-            FileController data = new FileController();
-            data.setContent("asd");
-            data.setParentId("aPath");
-            data.setNewFile(true);
-            return data;
+            fileBuilder.BuildContent("CONTENT");
         }
-
     }
 }

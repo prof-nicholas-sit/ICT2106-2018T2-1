@@ -9,25 +9,25 @@ namespace Prettyprinter.DAL
     public class FolderManager : DocumentManager
     {
 
-        private static String serverPath = @"2107 File Server\";
+        private static string serverPath = @"2107 File Server\";
 
         //Implementations of Abstract Methods
-        public override String getParentOfDocument(String fileID)
+        public override string getParentOfDocument(string fileID)
         {
-            String ParentName = Directory.GetParent(fileID).ToString();
+            string ParentName = Directory.GetParent(fileID).ToString();
             return ParentName;
         }
         
-        public override Boolean createDocument(String path, String fileID)
+        public override bool createDocument(string path, string fileID)
         {
-            String Path = path + fileID;
+            string Path = path + fileID;
 
-            String pathToFile = serverPath + path;
-            List<String> AllEntries = Directory.GetDirectories(pathToFile).ToList();
+            string pathToFile = serverPath + path;
+            List<string> AllEntries = Directory.GetDirectories(pathToFile).ToList();
             
-            foreach (String line in AllEntries)
+            foreach (string line in AllEntries)
             {
-                String currentFolder = line;
+                string currentFolder = line;
                 currentFolder = currentFolder.Replace(pathToFile + @"\", "");
                 if (currentFolder.Equals(fileID))
                 {
@@ -38,7 +38,7 @@ namespace Prettyprinter.DAL
             return true;
         }
         
-        public override Boolean deleteDocument(String path, String fileID)
+        public override bool deleteDocument(string path, string fileID)
         {
             try
             {
