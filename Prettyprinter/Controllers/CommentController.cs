@@ -18,6 +18,7 @@ namespace ThreadTest.Controllers
         static List<Comment> model = new List<Comment>();
         public static StringBuilder output;
         private int noOfLikes;
+        private string statusStr;
         static List<Likes> likesModel = new List<Likes>();
 
         // GET: Comment
@@ -278,7 +279,25 @@ namespace ThreadTest.Controllers
             return noOfLikes;
         }
 
-
+        //if user liked, show red down button, else show blue up button
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public string StatusOfLike(int id)
+        {
+            try
+            {
+                if (likesModel.Exists(x => x.id == id && x.username == SessionKeyUsername))
+                {
+                    statusStr = "glyphicon glyphicon-thumbs-down' style = 'color:red' title='Unlike";
+                }
+                else
+                {
+                    statusStr = "glyphicon glyphicon-thumbs-up' title='Like";
+                }
+            }
+            catch (Exception) { }
+            return statusStr;
+        }
 
 
         /*============================= STUBS for integration with other modules ============================*/

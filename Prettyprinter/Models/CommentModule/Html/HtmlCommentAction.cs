@@ -41,7 +41,7 @@ namespace ThreadTest.Models.CommentModule
             {
                 raw.Append("<a href='#' onclick='showReplyBox(\"edit" + id + "\")'><span class='glyphicon glyphicon-pencil' title='Edit'></span></a> | <a href='/Comment/Delete?id=" + id + "'><span class='glyphicon glyphicon-trash' title='Delete'></span></a> | ");
             }
-            raw.Append("<a href='#' onclick='showReplyBox(\"reply" + id + "\")'><span class='glyphicon glyphicon-share-alt' title='Reply'></span></a> | <a href='/Comment/Like?id=" + id + "'><span class='glyphicon glyphicon-thumbs-up' title='Like'></span></a> | <a href='/Comment?id=" + id + "'><span class='glyphicon glyphicon-pushpin' title='Permalink'></span></a></div>");
+            raw.Append("<a href='#' onclick='showReplyBox(\"reply" + id + "\")'><span class='glyphicon glyphicon-share-alt' title='Reply'></span></a> | <a href='/Comment/Like?id=" + id + "'><span class='" + cc.StatusOfLike(Int32.Parse(id)) +"'></span></a> | <a href='/Comment?id=" + id + "'><span class='glyphicon glyphicon-pushpin' title='Permalink'></span></a></div>");
             raw.Append(cc.LikeThis(Int32.Parse(id)) + " likes");
 
             raw.Append("</div>");
