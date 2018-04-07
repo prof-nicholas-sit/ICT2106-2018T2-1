@@ -2,7 +2,7 @@
 
 namespace Prettyprinter.DAL
 {
-    public class DataGateway<T> : IDataGateway<T> where T : class 
+    public abstract class DataGateway<T> : IDataGateway<T> where T : class 
     {
         protected DbObj db;
         protected GenericSet<T> data;

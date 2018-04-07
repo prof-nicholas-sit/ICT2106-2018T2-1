@@ -6,9 +6,20 @@ namespace Prettyprinter.DAL
 {
     public class MetadataGateway : DataGateway<MetadataModel>
     {
-        public MetadataGateway(DbObj dbObject) : base(dbObject)
+        private static MetadataGateway _instance;
+        
+        private MetadataGateway(DbObj dbObject) : base(dbObject)
         {
-            // empty constructor
+        }
+
+        public static MetadataGateway GetInstance(DbObj dbObject)
+        {
+            if (_instance == null)
+            {
+                _instance = new MetadataGateway(dbObject);
+            }
+
+            return _instance;
         }
 
         public IEnumerable<MetadataModel> GetChildren(ObjectId objId)

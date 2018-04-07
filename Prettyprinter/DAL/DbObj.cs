@@ -10,6 +10,8 @@ namespace Prettyprinter.DAL
 {
     public class DbObj
     {
+        private static DbObj _instance;
+        
         private const string DbAddress = "mongodb://18.221.150.56:27017";
         private const string DbName = "ICT2106";
 
@@ -29,25 +31,35 @@ namespace Prettyprinter.DAL
         private static IMongoCollection<MetadataModel> _filesCollectionModel;
         
         /**
-         * Constructor that makes sure required db and collections are created
+         * Private constructor. nobody can use
          */
-        public DbObj()
+        private DbObj()
         {
-            _client = new MongoClient(DbAddress);
-            _database = _client.GetDatabase(DbName);
+        }
+
+        public static DbObj GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new DbObj();
+                    
+                _client = new MongoClient(DbAddress);
+                _database = _client.GetDatabase(DbName);
             
-            if (CollectionExistsAsync("User_Account").Result == false)
-                CreateCollection("User_Account").Wait();
+                if (CollectionExistsAsync("User_Account").Result == false)
+                    CreateCollection("User_Account").Wait();
             
-            _bsonuserCollection = _database.GetCollection<BsonDocument>("User_Account");
-            _userCollectionModel = _database.GetCollection<AccountModel>("User_Account"); 
+                _bsonuserCollection = _database.GetCollection<BsonDocument>("User_Account");
+                _userCollectionModel = _database.GetCollection<AccountModel>("User_Account"); 
             
-            if (CollectionExistsAsync("Files").Result == false)
-                CreateCollection("Files").Wait();
+                if (CollectionExistsAsync("Files").Result == false)
+                    CreateCollection("Files").Wait();
             
-            _bsonfilesCollection = _database.GetCollection<BsonDocument>("Files");
-            _filesCollectionModel = _database.GetCollection<MetadataModel>("Files"); 
-            
+                _bsonfilesCollection = _database.GetCollection<BsonDocument>("Files");
+                _filesCollectionModel = _database.GetCollection<MetadataModel>("Files"); 
+            }
+
+            return _instance;
         }
         
         /*

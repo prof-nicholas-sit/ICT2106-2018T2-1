@@ -6,8 +6,20 @@ namespace Prettyprinter.DAL
     public class AccountGateway : DataGateway<AccountModel>
     {
         
-        public AccountGateway(DbObj dbObject) : base(dbObject)
+        private static AccountGateway _instance;
+        
+        private AccountGateway(DbObj dbObject) : base(dbObject)
         {
+        }
+
+        public static AccountGateway GetInstance(DbObj dbObject)
+        {
+            if (_instance == null)
+            {
+                _instance = new AccountGateway(dbObject);
+            }
+
+            return _instance;
         }
 
         public AccountModel SelectByEmail(string email)
