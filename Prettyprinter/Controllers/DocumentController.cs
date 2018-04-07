@@ -22,8 +22,10 @@ namespace Prettyprinter.Controllers
 
         //Constants
         private const String serverDirectory = @"2107 File Server\";
-        private const String currentUserID = "JENKINS";
-        //  private const String currentUserID = "tom";
+
+        //Stub constant to represent getting userID from Session
+        private const String currentUserID = "161616";
+
         //Constructor
         public DocumentController(ApplicationDbContext context)
         {
@@ -94,7 +96,7 @@ namespace Prettyprinter.Controllers
             string name = docName;
             string id = Guid.NewGuid().ToString();
 
-            Debug.WriteLine("************* " + docName);
+            Debug.WriteLine("************* " + creationPath);
 
             if (permission == false)
             {
@@ -118,8 +120,7 @@ namespace Prettyprinter.Controllers
                 parentId = currentUserID;
             }
 
-            AccessControl accessControl = new AccessControl(
-                   Guid.NewGuid().ToString(), id, currentUserID, permission, permission);
+            AccessControl accessControl = new AccessControl(Guid.NewGuid().ToString(), id, currentUserID, permission, permission);
 
             List<AccessControl> accessControls = new List<AccessControl>();
             accessControls.Add(accessControl);
@@ -134,15 +135,12 @@ namespace Prettyprinter.Controllers
                 new MetadataController(applicationDbContext).AddMetadata(metadata);
 
                 FolderBuilder folderBuilder = new FolderBuilder();
-                folderBuilder.BuildDocument(applicationDbContext, id, currentUserID, parentId, name);
+                folderBuilder.BuildDocument(applicationDbContext, id, currentUserID, creationPath, parentId, name);
                 folderBuilder.SaveDocument();
             }
             // File
             else
             {
-
-
-
                 //Specify type is File
                 document.type = 1;
 
@@ -151,19 +149,15 @@ namespace Prettyprinter.Controllers
 
                 //Builder Pattern
                 FileBuilder fileBuilder = new FileBuilder();
-                fileBuilder.BuildDocument(applicationDbContext, id, currentUserID, parentId, name);
+                fileBuilder.BuildDocument(applicationDbContext, id, currentUserID, creationPath, parentId, name);
                 
                 //Stub to simulate passing builder over to Typesetter and calling Builder's BuildContent() and SaveDocument()
                 typeSetterController.onCreate(fileBuilder);
 
                 Metadata metadata = new Metadata(id, currentUserID, name, document.type, "", parentId, accessControls);
+
+                //Stub method to add metadata through AccessControl
                 new MetadataController(applicationDbContext).AddMetadata(metadata);
-
-                //Storing File's Meta Data (Stub Method to store both Folder and File into SQL)
-                //folderGateway.CreateFile(document);
-
-                //Create File on physical server
-                //fileManager.createDocument(creationPath, id);
             }
 
             //Retrieve last part of Path (Human-Readable)
@@ -199,7 +193,7 @@ namespace Prettyprinter.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // POST
+        //Move File Method
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Move(string moveId, string movePath)
@@ -209,7 +203,7 @@ namespace Prettyprinter.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // POST
+        //Copy File Method
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Copy(string copyId, string copyPath)
@@ -219,13 +213,13 @@ namespace Prettyprinter.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        //Share File Method
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Share(string userId, string fileId,String fileName)
         {
             //(string docName, string creationPath, int isFile,Boolean permission)
-         // Create(docName, userId + @"\SHARED", false);
+            // Create(docName, userId + @"\SHARED", false);
             //string createdId = folderGateway.CopyFile(copyId, copyPath);
             //JENKINS/FOLDER/FOLDER
             //fileManager.copyDocument(HttpContext.Session.GetString("serverPath"), copyPath, copyId);
@@ -236,9 +230,7 @@ namespace Prettyprinter.Controllers
             // return RedirectToAction(nameof(Index));
         }
 
-
-
-        // POST
+        //Rename Method
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Rename(string renameId, string newName)
@@ -246,10 +238,5 @@ namespace Prettyprinter.Controllers
             folderGateway.RenameFile(renameId, newName);
             return RedirectToAction(nameof(Index));
         }
-
-        //private bool FolderExists(string id)
-        //{
-        //    return (folderGateway.SelectById(id) != null);
-        //}
     }
 }

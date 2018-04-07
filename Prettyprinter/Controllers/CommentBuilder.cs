@@ -9,11 +9,19 @@ namespace Prettyprinter.Controllers
     {
         Comment comment;
         ApplicationDbContext db;
+        string creationPath;
+        CommentManager commentManager = new CommentManager();
 
-        public override void BuildDocument(ApplicationDbContext context, string commentID, string userID, string parentID, string Name)
+        public override void BuildDocument(ApplicationDbContext context, string commentID, string userID, string creationPath,
+            string parentID, string Name)
         {
+            //Initialising components
             db = context;
+            this.creationPath = creationPath;
+
+            //Generating new random ID
             string accessControlID = Guid.NewGuid().ToString();
+
             AccessControl accessControl = new AccessControl(accessControlID, commentID, userID, true, true);
             comment = new Comment(commentID, parentID, Name, accessControl);
         }
@@ -26,16 +34,17 @@ namespace Prettyprinter.Controllers
         public void BuildContent(String content)
         {
             SaveDocument();
-            //commentManager.populateDocument(id, content);
+            commentManager.writeDocument(creationPath, content, comment._id, true);
         }
 
         public override void SaveDocument()
         {
+            //Storing Comment's Meta Data(Stub Method to store comment into SQL)
             CommentGateway commentGateWay = new CommentGateway(db);
             commentGateWay.CreateFile(comment);
 
-            CommentManager commentManager = new CommentManager();
-            commentManager.createDocument(comment.ParentId, comment._id);
+            //Create Comment file on physical server
+            commentManager.createDocument(creationPath, comment._id);
         }
     }
 }

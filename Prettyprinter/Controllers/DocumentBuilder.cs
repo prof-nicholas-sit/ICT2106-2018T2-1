@@ -8,7 +8,8 @@ namespace Prettyprinter.Controllers
     {
         Document document;
 
-        public abstract void BuildDocument(ApplicationDbContext context, string fileID, string userID, string parentID, string Name);
+        public abstract void BuildDocument(ApplicationDbContext context, string fileID, string userID, string creationPath,
+            string parentID, string Name);
 
         public abstract void SaveDocument();
 

@@ -9,20 +9,20 @@ namespace Prettyprinter.DAL
 
     public class CommentManager : DocumentManager
     {
-        private static String serverPath = @"2107 File Server\";
+        private static String serverPath = @"2107 File Server\Comment\";
+
+        //Stub constant to represent getting userID from Session
+        private static String currentUserID = "161616";
 
         //Implementations of Abstract Methods
-        // Done
         public override String getParentOfDocument(String fileID)
         {
             String ParentName = Directory.GetParent(fileID).ToString();
             return ParentName;
         }
-
-        // Done
+        
         public override Boolean createDocument(String path, String fileID)
         {
-            Console.WriteLine("\n");
             String pathToFile = serverPath + path + @"\" + fileID + ".txt";
             if (System.IO.File.Exists(pathToFile))
             {
@@ -33,8 +33,7 @@ namespace Prettyprinter.DAL
             System.IO.File.AppendAllText(pathToFile, "");
             return true;
         }
-
-        // Done
+        
         public override Boolean deleteDocument(String path, String fileID)
         {
             if (System.IO.File.Exists(serverPath + path + @"\" + fileID + ".txt"))
@@ -44,12 +43,27 @@ namespace Prettyprinter.DAL
             return true;
         }
 
-        //CommentManager-Only's Method
+        //CommentManager's Method
         public String readDocument(String fileID)
         {
             String pathToFile = serverPath + @"\" + fileID + ".txt";
             String lines = System.IO.File.ReadAllLines(pathToFile).ToString();
             return lines;
+        }
+
+        public void writeDocument(String path, String content, String fileId, Boolean doReplace)
+        {
+            if (File.Exists(serverPath + path + @"\" + fileId + ".txt"))
+            {
+                if (doReplace == false)
+                {
+                    File.AppendAllText(serverPath + path + @"\" + fileId + ".txt", content + Environment.NewLine);
+                }
+                else
+                {
+                    File.WriteAllText(serverPath + path + @"\" + fileId + ".txt", content + Environment.NewLine);
+                }
+            }
         }
     }
 }

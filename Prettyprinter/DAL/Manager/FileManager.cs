@@ -12,20 +12,19 @@ namespace Prettyprinter.DAL
 
         private static String serverPath = @"2107 File Server\";
 
-        // Done
+        //Stub constant to represent getting userID from Session
+        private static String currentUserID = "161616";
+        
         //Implementations of Abstract Methods
-        // Done
         public override String getParentOfDocument(String fileID)
         {
             String ParentName = Directory.GetParent(fileID).ToString();
             return ParentName;
 
         }
-
-        // Done
+        
         public override Boolean createDocument(String path, String fileID)
         {
-            Console.WriteLine("\n");
             String pathToFile = serverPath + path + @"\" + fileID + ".txt";
             if (System.IO.File.Exists(pathToFile))
             {
@@ -35,8 +34,7 @@ namespace Prettyprinter.DAL
             System.IO.File.AppendAllText(pathToFile, "");
             return true;
         }
-
-        // Done
+        
         public override Boolean deleteDocument(String path, String fileID)
         {
             if (System.IO.File.Exists(serverPath + path + @"\" + fileID + ".txt"))
@@ -45,9 +43,8 @@ namespace Prettyprinter.DAL
             }
             return true;
         }
-
-        // Done
-        // FileManager-Only Method
+        
+        // FileManager's Method
         public String readDocument(String fileID)
         {
             String pathToFile = serverPath + @"\" + fileID + ".txt";
@@ -57,8 +54,6 @@ namespace Prettyprinter.DAL
 
         public Boolean copyDocument(String source, String destination, String fileID)
         {
-            Debug.WriteLine("My debug string here "+source+ " | "+destination+" | "+fileID);
-
             if (System.IO.File.Exists(serverPath + source + @"\" + fileID + ".txt"))
             {
                 System.IO.File.Copy(serverPath + source + @"\" + fileID + ".txt", serverPath + destination + @"\" + fileID + ".txt");
@@ -67,8 +62,7 @@ namespace Prettyprinter.DAL
             }
             return false;
         }
-
-        // Done
+        
         public Boolean moveDocument(String source, String destination, String fileID)
         {
             if (!System.IO.File.Exists(serverPath + source + @"\" + fileID + ".txt"))
@@ -77,6 +71,21 @@ namespace Prettyprinter.DAL
                 return true;
             }
             return false;
+        }
+
+        public void writeDocument(String path, String content, String fileId, Boolean doReplace)
+        {
+            if (File.Exists(serverPath + path + @"\" + fileId + ".txt"))
+            {
+                if (doReplace == false)
+                {
+                    File.AppendAllText(serverPath + path + @"\" + fileId + ".txt", content + Environment.NewLine);
+                }
+                else
+                {
+                    File.WriteAllText(serverPath + path + @"\" + fileId + ".txt", content + Environment.NewLine);
+                }
+            }
         }
     }
 }

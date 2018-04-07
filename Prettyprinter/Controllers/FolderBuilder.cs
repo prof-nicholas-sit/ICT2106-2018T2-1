@@ -8,10 +8,14 @@ namespace Prettyprinter.Controllers
     {
         Folder folder;
         ApplicationDbContext db;
+        string creationPath;
 
-        public override void BuildDocument(ApplicationDbContext context, string folderID, string userID, string parentID, string Name)
+        public override void BuildDocument(ApplicationDbContext context, string folderID, string userID, string creationPath,
+            string parentID, string Name)
         {
+            //Initialising components
             db = context;
+            this.creationPath = creationPath;
             string accessControlID = Guid.NewGuid().ToString();
             AccessControl accessControl = new AccessControl(accessControlID, folderID, userID, true, true);
             folder = new Folder(folderID, parentID, Name, accessControl);
@@ -30,7 +34,7 @@ namespace Prettyprinter.Controllers
 
             //Create Folder on physical server
             FolderManager folderManager = new FolderManager();
-            folderManager.createDocument(folder.ParentId, folder._id);
+            folderManager.createDocument(creationPath, folder._id);
         }
     }
 }
