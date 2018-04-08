@@ -1,0 +1,22 @@
+﻿.user-profile-pic {
+    height: 150px;
+    width: 150px;
+    margin: auto;
+}
+
+.profile-pic-container {
+    text-align: center
+}
+
+.button-row {
+    text-align: right;
+}
+
+    .button-row > button {
+        width: 130px;
+        height: 40px;
+        padding: 5px;
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 3px;
+    }

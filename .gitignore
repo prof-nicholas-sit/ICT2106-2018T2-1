@@ -1,0 +1,5 @@
+*.cache
+PrettyPrinter/.vs/
+PrettyPrinter/obj/
+PrettyPrinter/bin/
+PrettyPrinter/*.csproj

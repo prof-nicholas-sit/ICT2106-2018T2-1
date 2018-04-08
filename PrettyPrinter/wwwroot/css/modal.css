@@ -1,0 +1,97 @@
+﻿.modal-container{
+    width: 72%;
+    border: 1px solid black;
+    border-radius: 5px;
+    height: 90%;
+    position: fixed;
+    background-color:white;
+    top: 60px;
+    right: 14%;
+}
+.modal-user-profile{
+    width: 100%;
+    height: 250px;
+    margin: auto;
+    padding: 20px 40px 20px 40px;
+}
+
+.modal-bio-container {
+    width: 100%;
+    padding: 0px 40px 20px 40px;
+    height: 250px;
+}
+.modal-bio-container > .modal-bio{
+    overflow-y: scroll;
+    height: 100%;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.modal-user-profile > .modal-profile-pic-container > img {
+    width: 100%;
+    height: 100%;
+}
+
+.modal-user-profile > .modal-profile-pic-container{
+    width:200px;
+    height:200px;
+    float:left;
+    padding:1px;
+    margin-right: 20px;
+}
+
+.modal-user-profile > .modal-user-details{
+    padding: 0px 10px 5px 30px;
+    width:65%;
+}
+
+.modal-user-profile > .modal-user-details:last-child {
+    bottom:0;
+}
+
+.modal-close {
+    top: 12px;
+    right: 8px;
+    position: absolute;
+}
+.modal-heading{
+    width:100%;
+    font-size: 20px;
+    border-bottom: 1px solid black;
+    padding: 10px 40px 10px 40px;
+}
+.modal-button-row {
+    bottom: 0;
+    text-align: right;
+    position: absolute;
+    width: 100%;
+    padding: 0px 40px 10px 0px;
+}
+.modal-button-row > button {
+    width: 150px;
+    height: 50px;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+.modal-display{
+    display:none;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

@@ -1,0 +1,38 @@
+﻿.table-style{
+    text-align:center;
+}
+
+.table-style > tr{
+
+}
+
+
+.table-style > tbody > tr > th {
+    text-align:center;
+    padding: 10px;
+    background-color: dimgrey;
+    color: white;
+}
+
+.table-style > tbody > tr > td {
+    text-align:center;
+    padding: 10px;
+    color: black;
+    background-color: lightgrey;
+}
+
+.table-style > tbody > tr > th:not(:last-child) {
+    border-right: 1px solid grey;
+}
+
+.table-style > tbody > tr > td:not(:last-child) {
+    border-right: 1px solid grey;
+}
+
+.table-style > tbody > tr:not(:last-child){
+    border-bottom: 1px solid grey;
+}
+
+.table-button{
+    width:100%;
+}

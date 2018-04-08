@@ -1,0 +1,29 @@
+﻿.row-container{
+    margin-top: 20px;
+    width:100%;
+    display:inline-block;
+}
+
+.button-row > button{
+    width: 100px;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.button-row{
+    text-align: right;
+}
+
+.search-row{
+    width:100%;
+    text-align: center;
+    height: 50%;
+    margin-top: 8%;
+    margin-bottom: 8%;
+}
+
+.search-textbox{
+    width:80% !important;
+}

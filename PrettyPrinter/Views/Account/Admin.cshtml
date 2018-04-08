@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewData["Title"] = "User management";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/adminPage.css" />
+<link rel="stylesheet" href="~/css/table.css" />
+<link rel="stylesheet" href="~/css/modal.css" />
+<div class="row-container">
+    <h2>User Management</h2>
+</div>
+<div class="row-container search-row">
+    <form  asp-controller="Account" asp-action="Admin" id="search">
+        <div class="form-inline">
+            <label for="searchKeyword" class="control-label search-label">Search: </label>
+            <input name="searchKeyword" class="form-control search-textbox" />
+            <button class="btn btn-default" onclick="search()">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </div>
+    </form>
+</div>
+<div class="row-container">
+    <table id="userList" class="col-md-12, col-lg-12, col-sm-12 table-style">
+        <tr>
+            <th>Select</th>
+            <th>E-mail</th>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        @{
+            var users = ViewBag.users;
+        }
+        @foreach(var user in users)
+        {
+             <tr>
+                <td><input type="checkbox" class="userCheckbox" value="@user["email"]"/></td>
+                <td>@user["email"]</td>
+                <td>@user["name"]</td>
+                <td><button class="table-button" onclick='getUserProfile("@user["email"]")'>View</button></td>
+            </tr>
+        }
+
+    </table>
+</div>
+<div class="row-container button-row">
+    <button onclick="deleteMultiple()">Delete</button>
+    <button onclick="resetMultiple()">Reset</button>
+</div>
+
+<div class="modal-container modal-display">
+    <div id="modal-close"><span class="modal-close glyphicon glyphicon-remove" onclick="closeProfileModal()"> </span></div>
+    <div id="heading" class="modal-heading"> User profile</div>
+    <div id="modal-content" class="modal-content-container">
+        <div class="modal-user-profile">
+            <div class="modal-profile-pic-container">
+                <img id="modal-user-img" src="" />
+            </div>
+            <div class="modal-user-details">
+                <h1 id="modal-user-name">Tan Ah Gao</h1>
+                <div id="modal-user-title">CEO of ahgao co.</div>
+                <div>birthday: <span id="modal-user-birthday">01/01/1990</span></div>
+                <div class="modal-user-email" id="modal-user-email">E-mail: Ahgao@ahgao.com</div>
+            </div>
+        </div>
+        <div class="modal-bio-container">
+            <div class="modal-bio-label"><h3>Bio:</h3></div>
+            <div class="modal-bio" id="modal-user-bio">
+                Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsumLorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsumLorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsumLorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsumLorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsumLorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsumLorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsumLorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsumLorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+            </div>
+        </div>
+    </div>
+    <div id="" class="modal-button-row">
+        <button>Reset Password</button>
+        <button>Remove User</button>
+    </div>
+</div>
+
+
+
+<script src="~/js/modal.js"></script>
+<script src="~/js/admin.js"></script>
