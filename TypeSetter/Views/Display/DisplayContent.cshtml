@@ -1,0 +1,23 @@
+@model System.String
+
+@{
+	ViewData["title"] = "Display";
+}
+<h2>DisplayContent</h2>
+<p align="right">
+	<a href="/Home">Edit</a>
+</p>
+
+
+<div class="output_doc">
+	<h1>As a text</h1>
+	<pre>@Model</pre>
+</div>
+
+<div class="output_doc">
+	<h1>As HTML document</h1>
+	<!-- renders what it is given without doing any html encoding -->
+	<div class="View">@Html.Raw(@Model)</div>
+</div>
+
+

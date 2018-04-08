@@ -1,0 +1,51 @@
+﻿{
+  "version": "1.0.0",
+  "restore": {
+    "projectUniqueName": "/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/TypeSetter.csproj",
+    "projectName": "TypeSetter",
+    "projectPath": "/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/TypeSetter.csproj",
+    "outputPath": "/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/obj/",
+    "projectStyle": "PackageReference",
+    "fallbackFolders": [
+      "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+    ],
+    "originalTargetFrameworks": [
+      "netcoreapp2.0"
+    ],
+    "frameworks": {
+      "netcoreapp2.0": {
+        "projectReferences": {}
+      }
+    },
+    "warningProperties": {
+      "warnAsError": [
+        "NU1605"
+      ]
+    }
+  },
+  "frameworks": {
+    "netcoreapp2.0": {
+      "dependencies": {
+        "Microsoft.AspNetCore.All": {
+          "target": "Package",
+          "version": "[2.0.5, )"
+        },
+        "Microsoft.NETCore.App": {
+          "suppressParent": "All",
+          "target": "Package",
+          "version": "[2.0.0, )",
+          "autoReferenced": true
+        },
+        "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+          "target": "Package",
+          "version": "[2.0.2, )"
+        }
+      },
+      "imports": [
+        "net461"
+      ],
+      "assetTargetFallback": true,
+      "warn": true
+    }
+  }
+}

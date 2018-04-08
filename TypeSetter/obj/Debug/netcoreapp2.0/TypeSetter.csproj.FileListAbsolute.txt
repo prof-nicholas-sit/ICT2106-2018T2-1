@@ -1,0 +1,77 @@
+C:/Users/Yanxing/source/repos/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.csprojResolveAssemblyReference.cache
+C:/Users/Yanxing/source/repos/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.csproj.CoreCompileInputs.cache
+C:/Users/Yanxing/source/repos/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.AssemblyInfoInputs.cache
+C:/Users/Yanxing/source/repos/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.AssemblyInfo.cs
+C:/Users/Yanxing/source/repos/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.deps.json
+C:/Users/Yanxing/source/repos/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.runtimeconfig.json
+C:/Users/Yanxing/source/repos/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.runtimeconfig.dev.json
+C:/Users/Yanxing/source/repos/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.dll
+C:/Users/Yanxing/source/repos/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.pdb
+C:/Users/Yanxing/source/repos/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.dll
+C:/Users/Yanxing/source/repos/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.pdb
+C:/Users/Zulfiqah/Desktop/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.deps.json
+C:/Users/Zulfiqah/Desktop/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.runtimeconfig.json
+C:/Users/Zulfiqah/Desktop/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.runtimeconfig.dev.json
+C:/Users/Zulfiqah/Desktop/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.dll
+C:/Users/Zulfiqah/Desktop/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.pdb
+C:/Users/Zulfiqah/Desktop/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.csprojResolveAssemblyReference.cache
+C:/Users/Zulfiqah/Desktop/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.csproj.CoreCompileInputs.cache
+C:/Users/Zulfiqah/Desktop/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.AssemblyInfoInputs.cache
+C:/Users/Zulfiqah/Desktop/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.AssemblyInfo.cs
+C:/Users/Zulfiqah/Desktop/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.dll
+C:/Users/Zulfiqah/Desktop/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.pdb
+C:/Users/Zulfiqah/Desktop/Year 2/Tri 2/ICT2106_Project/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.deps.json
+C:/Users/Zulfiqah/Desktop/Year 2/Tri 2/ICT2106_Project/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.runtimeconfig.json
+C:/Users/Zulfiqah/Desktop/Year 2/Tri 2/ICT2106_Project/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.runtimeconfig.dev.json
+C:/Users/Zulfiqah/Desktop/Year 2/Tri 2/ICT2106_Project/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.dll
+C:/Users/Zulfiqah/Desktop/Year 2/Tri 2/ICT2106_Project/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.pdb
+C:/Users/Zulfiqah/Desktop/Year 2/Tri 2/ICT2106_Project/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.csprojResolveAssemblyReference.cache
+C:/Users/Zulfiqah/Desktop/Year 2/Tri 2/ICT2106_Project/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.csproj.CoreCompileInputs.cache
+C:/Users/Zulfiqah/Desktop/Year 2/Tri 2/ICT2106_Project/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.AssemblyInfoInputs.cache
+C:/Users/Zulfiqah/Desktop/Year 2/Tri 2/ICT2106_Project/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.AssemblyInfo.cs
+C:/Users/Zulfiqah/Desktop/Year 2/Tri 2/ICT2106_Project/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.dll
+C:/Users/Zulfiqah/Desktop/Year 2/Tri 2/ICT2106_Project/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.pdb
+C:/Users/weeko/Documents/ICT2106/Project/Final/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.deps.json
+C:/Users/weeko/Documents/ICT2106/Project/Final/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.runtimeconfig.json
+C:/Users/weeko/Documents/ICT2106/Project/Final/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.runtimeconfig.dev.json
+C:/Users/weeko/Documents/ICT2106/Project/Final/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.dll
+C:/Users/weeko/Documents/ICT2106/Project/Final/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.pdb
+C:/Users/weeko/Documents/ICT2106/Project/Final/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.csprojResolveAssemblyReference.cache
+C:/Users/weeko/Documents/ICT2106/Project/Final/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.csproj.CoreCompileInputs.cache
+C:/Users/weeko/Documents/ICT2106/Project/Final/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.AssemblyInfoInputs.cache
+C:/Users/weeko/Documents/ICT2106/Project/Final/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.AssemblyInfo.cs
+C:/Users/weeko/Documents/ICT2106/Project/Final/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.dll
+C:/Users/weeko/Documents/ICT2106/Project/Final/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.pdb
+/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.deps.json
+/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.runtimeconfig.json
+/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.runtimeconfig.dev.json
+/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.dll
+/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/bin/Debug/netcoreapp2.0/TypeSetter.pdb
+/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.csprojResolveAssemblyReference.cache
+/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.csproj.CoreCompileInputs.cache
+/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.AssemblyInfoInputs.cache
+/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.AssemblyInfo.cs
+/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.dll
+/Users/weileong/Documents/Year2Trim2/ICT2106_Software_Design/Project/Project files/latest/TypeSetter/TypeSetter/TypeSetter/obj/Debug/netcoreapp2.0/TypeSetter.pdb
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\TypeSetter\TypeSetter\bin\Debug\netcoreapp2.0\TypeSetter.deps.json
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\TypeSetter\TypeSetter\bin\Debug\netcoreapp2.0\TypeSetter.runtimeconfig.json
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\TypeSetter\TypeSetter\bin\Debug\netcoreapp2.0\TypeSetter.runtimeconfig.dev.json
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\TypeSetter\TypeSetter\bin\Debug\netcoreapp2.0\TypeSetter.dll
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\TypeSetter\TypeSetter\bin\Debug\netcoreapp2.0\TypeSetter.pdb
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\TypeSetter\TypeSetter\obj\Debug\netcoreapp2.0\TypeSetter.csprojResolveAssemblyReference.cache
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\TypeSetter\TypeSetter\obj\Debug\netcoreapp2.0\TypeSetter.csproj.CoreCompileInputs.cache
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\TypeSetter\TypeSetter\obj\Debug\netcoreapp2.0\TypeSetter.AssemblyInfoInputs.cache
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\TypeSetter\TypeSetter\obj\Debug\netcoreapp2.0\TypeSetter.AssemblyInfo.cs
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\TypeSetter\TypeSetter\obj\Debug\netcoreapp2.0\TypeSetter.dll
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\TypeSetter\TypeSetter\obj\Debug\netcoreapp2.0\TypeSetter.pdb
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\bin\Debug\netcoreapp2.0\TypeSetter.deps.json
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\bin\Debug\netcoreapp2.0\TypeSetter.runtimeconfig.json
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\bin\Debug\netcoreapp2.0\TypeSetter.runtimeconfig.dev.json
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\bin\Debug\netcoreapp2.0\TypeSetter.dll
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\bin\Debug\netcoreapp2.0\TypeSetter.pdb
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\obj\Debug\netcoreapp2.0\TypeSetter.csprojResolveAssemblyReference.cache
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\obj\Debug\netcoreapp2.0\TypeSetter.csproj.CoreCompileInputs.cache
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\obj\Debug\netcoreapp2.0\TypeSetter.AssemblyInfoInputs.cache
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\obj\Debug\netcoreapp2.0\TypeSetter.AssemblyInfo.cs
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\obj\Debug\netcoreapp2.0\TypeSetter.dll
+C:\Users\Zulfiqah\Desktop\TypeSetter\TypeSetter\obj\Debug\netcoreapp2.0\TypeSetter.pdb
