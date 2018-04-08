@@ -14,12 +14,8 @@ namespace Prettyprinter
          */
         public static void Main(string[] args){
             
-            // FOR PROTOTYPE DEMO, START WITH EMPTY DB
-            
-            var db = new DbObj();
-            var db2 = new DbObj();
-            var accGateway = new AccountGateway(db);
-            var metadataGateway = new MetadataGateway(db2);
+            var accGateway = AccountGateway.GetInstance(DbObj.GetInstance());
+            var metadataGateway = MetadataGateway.GetInstance(DbObj.GetInstance());
             
             string email = "ryan@email.com";
             ObjectId objId;
